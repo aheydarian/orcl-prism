@@ -1,0 +1,1527 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ORCL Prism</title>
+<meta name="description" content="Opening page for the Omni-Reality and Cognition Lab at the University of Virginia: a glass prism with a 3D head in a VR headset, circled by small portals into the lab's research projects.">
+<meta name="theme-color" content="#17212B">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Franklin:wght@300;400;500;600;700&display=swap">
+<style>
+:root{
+  /* Lab palette: Deep Space, Slate Blue, Immersive Teal, Warm Coral, Sand, Soft White */
+  --space:#17212B;
+  --slate:#34495E;
+  --teal:#2A7F7F;
+  --coral:#E76F51;
+  --sand:#E9C9A5;
+  --white:#F5F3EE;
+  --ink:var(--space);
+  --text:var(--white);
+  --text-2:rgba(245,243,238,.8);
+  --muted:rgba(245,243,238,.6);
+  --line:rgba(245,243,238,.12);
+  --line-2:rgba(245,243,238,.3);
+  --font-display:"Libre Franklin","Franklin Gothic Medium","Helvetica Neue",Arial,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --gutter:clamp(16px,3vw,40px);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--ink);color:var(--text)}
+body{font-family:var(--font-display);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--sand);outline-offset:3px}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+.app{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;isolation:isolate;pointer-events:none}
+.app a,.app button,.top,.index,.foot{pointer-events:auto}
+#scene{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:-1;opacity:0;transition:opacity 1.2s ease;pointer-events:auto;touch-action:pan-y}
+.app.is-3d #scene{opacity:1}
+
+/* Header */
+.top{position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px var(--gutter) 6px}
+.brand{display:inline-flex;align-items:center;gap:12px;color:var(--text);text-decoration:none;border-radius:10px}
+.brand-mark{position:relative;width:24px;height:24px;border-radius:50%;flex:none;border:2px solid var(--sand)}
+.brand-mark::after{content:"";position:absolute;right:-4px;top:0;width:9px;height:9px;border-radius:50%;background:var(--coral);box-shadow:0 0 0 2px var(--space)}
+.brand-name{font-weight:700;font-size:15px;letter-spacing:.18em}
+.brand-sub{font-family:var(--font-mono);font-size:11px;line-height:1.35;color:var(--muted);padding-left:12px;border-left:1px solid var(--line)}
+.top-nav{display:flex;align-items:center;gap:2px;flex-wrap:wrap;justify-content:flex-end}
+.top-nav a{font-size:13.5px;color:var(--text-2);text-decoration:none;padding:8px 12px;border-radius:999px;transition:color .2s,background-color .2s,border-color .2s}
+.top-nav a:hover{color:var(--white);background:var(--slate)}
+.top-nav a.enter{margin-left:6px;color:var(--white);border:1px solid rgba(233,201,165,.55);padding:8px 15px}
+.top-nav a.enter:hover{color:var(--space);background:var(--sand);border-color:var(--sand)}
+
+/* Stage */
+.stage{position:relative;flex:1 0 auto;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 var(--gutter);min-height:480px}
+.intro{position:relative;z-index:2;padding-top:clamp(4px,1.4vh,16px)}
+.eyebrow{margin:0 0 8px;font-family:var(--font-mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--sand)}
+.headline{margin:0;font-weight:300;font-size:clamp(27px,3.1vw,46px);line-height:1.08;letter-spacing:-.018em;color:var(--white);text-wrap:balance}
+.headline strong{font-weight:600;color:var(--sand)}
+.slot{position:relative;flex:1 1 auto;width:100%;min-height:320px}
+.stage-foot{position:relative;z-index:3;width:100%;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;padding:0 0 10px}
+.hint{grid-column:2;margin:0;display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:12px;color:var(--muted)}
+.hint::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--teal);flex:none}
+.motion{grid-column:3;justify-self:end;display:inline-flex;align-items:center;gap:8px;font:500 11.5px/1 var(--font-mono);letter-spacing:.04em;color:var(--text-2);background:rgba(23,33,43,.72);border:1px solid var(--line-2);border-radius:999px;padding:9px 13px;cursor:pointer;transition:color .2s,border-color .2s,background-color .2s}
+.motion:hover{color:var(--white);background:var(--slate);border-color:var(--sand)}
+.motion svg{width:10px;height:10px;fill:currentColor;flex:none}
+
+/* Static orb: shown while the 3D scene loads, and as the fallback */
+.css-orb{--s:min(300px,34vh,58vw);position:absolute;left:50%;top:50%;width:var(--s);height:var(--s);transform:translate(-50%,-50%);transition:opacity 1s ease .15s,visibility 0s linear 0s;pointer-events:none}
+.app.is-3d .css-orb{opacity:0;visibility:hidden;transition:opacity 1s ease,visibility 0s linear 1s}
+.app.is-fallback .css-orb{pointer-events:auto;cursor:pointer}
+.css-orb::before{content:"";position:absolute;inset:-80%;border-radius:50%;background:radial-gradient(closest-side,rgba(52,73,94,.55),rgba(52,73,94,.2) 45%,rgba(23,33,43,0) 100%);z-index:-2}
+.css-orb i{position:absolute;display:block;border-radius:50%}
+.css-ring{left:50%;top:50%;border:1px solid;transform:translate(-50%,-50%) rotate(var(--r));z-index:-1}
+.css-ring.r1{width:142%;height:125%;--r:-32deg;border-color:rgba(233,201,165,.4)}
+.css-ring.r2{width:178%;height:124%;--r:24deg;border-color:rgba(42,127,127,.65)}
+.css-ring.r3{width:218%;height:109%;--r:-8deg;border-color:rgba(231,111,81,.5)}
+.css-glass{inset:0;background:radial-gradient(circle at 33% 27%,rgba(245,243,238,.42),rgba(245,243,238,0) 13%),radial-gradient(circle at 50% 50%,rgba(52,73,94,.28),rgba(23,33,43,.62) 74%);box-shadow:inset 0 0 0 1px rgba(245,243,238,.18),0 0 60px rgba(52,73,94,.4)}
+.css-head{position:absolute;left:15%;top:12%;width:70%;height:70%}
+.css-head .h{fill:#34495E;stroke:rgba(245,243,238,.3);stroke-width:.6}
+.css-head .s{fill:none;stroke:#17212B;stroke-width:2.6;stroke-linecap:round}
+.css-head .v{fill:#F5F3EE}
+.css-head .o{stroke:#E76F51;stroke-width:2.2;stroke-linecap:round}
+.css-rim{inset:0;box-shadow:inset 0 0 0 1.5px rgba(245,243,238,.3)}
+
+/* Project card */
+.card{position:fixed;left:0;top:0;z-index:6;width:min(330px,calc(100vw - 24px));visibility:hidden;pointer-events:none;will-change:transform;transform:translate3d(-9999px,-9999px,0);--c:var(--teal)}
+.card.is-on{visibility:visible;pointer-events:auto;cursor:pointer}
+.card-inner{position:relative;padding:15px 18px 14px;border-radius:16px;text-align:left;background:rgba(52,73,94,.97);border:1px solid rgba(245,243,238,.1);box-shadow:0 16px 40px rgba(0,0,0,.35);overflow:hidden;opacity:0;transform:translateY(8px) scale(.98);transition:opacity .22s ease,transform .32s cubic-bezier(.2,.8,.2,1)}
+.card.is-on .card-inner{opacity:1;transform:none}
+.card.swap .card-inner{animation:orcl-swap .34s ease}
+@keyframes orcl-swap{from{opacity:.2;transform:translateY(4px)}to{opacity:1;transform:none}}
+.card-top{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.card-id{display:inline-flex;align-items:center;gap:10px;min-width:0}
+.card-ico{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;color:var(--c);background:var(--space);box-shadow:inset 0 0 0 1.5px var(--c)}
+.card-ico svg{width:17px;height:17px;display:block}
+.card-ico path,.pi path{fill:none;stroke:currentColor;stroke-width:1.85;stroke-linecap:round;stroke-linejoin:round}
+.card-ico circle,.pi circle{fill:currentColor}
+.chip{display:inline-flex;align-items:center;font-family:var(--font-mono);font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--sand)}
+.card-num{font-family:var(--font-mono);font-size:10.5px;color:var(--muted);letter-spacing:.08em;white-space:nowrap}
+.card-title{position:relative;z-index:1;margin:0 0 6px;font-size:17px;font-weight:600;line-height:1.28;color:var(--white)}
+.card-text{position:relative;z-index:1;margin:0 0 12px;font-size:13.5px;line-height:1.5;color:var(--text-2)}
+.card-link{position:relative;z-index:1;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--sand);text-decoration:none}
+.card-link:hover{text-decoration:underline;text-underline-offset:3px}
+
+/* Leader line from a point of light to its card */
+.leader{position:fixed;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;overflow:visible;opacity:0;transition:opacity .25s ease;--c:var(--teal)}
+.leader.is-on{opacity:1}
+.leader line{stroke:var(--c);stroke-width:1;stroke-opacity:.8;stroke-dasharray:2 3}
+.lm-ring{fill:none;stroke:var(--c);stroke-width:1.2;transform-box:fill-box;transform-origin:center;animation:orcl-ping 1.8s ease-out infinite}
+.lm-dot{fill:var(--white)}
+@keyframes orcl-ping{0%{transform:scale(1);opacity:.95}100%{transform:scale(1.5);opacity:0}}
+.app.motion-off .lm-ring{animation:none;opacity:.9}
+
+/* Project index */
+.index{position:relative;z-index:2;padding:6px var(--gutter) 8px;background:linear-gradient(180deg,rgba(23,33,43,0),rgba(23,33,43,.86) 30%,rgba(23,33,43,.96))}
+.index-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:0 0 10px;padding-top:12px;border-top:1px solid var(--line)}
+.index-title{margin:0;font-family:var(--font-mono);font-weight:500;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.index-all{font-family:var(--font-mono);font-size:11.5px;color:var(--text-2);text-decoration:none}
+.index-all:hover{color:var(--white)}
+.index-cols{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1.05fr) minmax(0,.7fr);gap:10px 40px}
+.area{--c:var(--teal)}
+.area[data-area=road]{--c:var(--coral)}
+.area[data-area=train]{--c:var(--teal)}
+.area[data-area=sense]{--c:var(--sand)}
+.area-name{display:flex;align-items:center;gap:9px;margin:0 0 6px;font-size:12.5px;font-weight:600;color:var(--text)}
+.area-name::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c);flex:none}
+.area ul{list-style:none;margin:0 0 0 -9px;padding:0;display:flex;flex-wrap:wrap;gap:0 2px}
+.area a{display:inline-flex;align-items:center;gap:7px;padding:5px 9px;border-radius:999px;border:1px solid transparent;font-size:13.5px;line-height:1.35;color:var(--text-2);text-decoration:none;transition:color .2s,background-color .2s,border-color .2s}
+.pi{width:15px;height:15px;flex:none;display:block;color:var(--c)}
+.area a:hover,.area a.is-active{color:var(--white);background:var(--slate)}
+.area a:focus-visible{outline-color:var(--c)}
+
+/* Footer */
+.foot{position:relative;z-index:2;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 20px;padding:10px var(--gutter) 18px;font-family:var(--font-mono);font-size:11.5px;color:var(--muted);background:rgba(23,33,43,.96)}
+.foot-links{display:flex;gap:18px}
+.foot a{color:var(--text-2);text-decoration:none;border-bottom:1px solid var(--line-2)}
+.foot a:hover{color:var(--white)}
+
+/* Embedded in the Drupal page: the UVA header and footer are already there */
+.app.is-embed .top,.app.is-embed .foot,.app.is-embed .index{display:none}
+.app.is-embed .intro{padding-top:14px}
+
+@media (max-width:900px){
+  .brand-sub{display:none}
+}
+@media (max-width:720px){
+  .top{padding-top:12px}
+  .top-nav a:not(.enter){display:none}
+  .stage{min-height:calc(100svh - 58px)}
+  .headline{font-size:clamp(25px,7.2vw,32px)}
+  .stage-foot{grid-template-columns:1fr;justify-items:center;gap:10px}
+  .hint{grid-column:1;text-align:center}
+  .hint::before{display:none}
+  .motion{grid-column:1;justify-self:center}
+  .css-orb{top:calc(50% - 105px)}
+  .index-cols{grid-template-columns:1fr;gap:16px}
+  .foot{flex-direction:column;align-items:flex-start}
+}
+@media (forced-colors:active){
+  .headline{background:none;color:CanvasText}
+}
+</style>
+</head>
+<body>
+<div class="app is-loading" id="app">
+  <canvas id="scene" aria-hidden="true"></canvas>
+
+  <header class="top">
+    <a class="brand" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">ORCL</span>
+      <span class="brand-sub">Omni-Reality and Cognition Lab<br>University of Virginia</span>
+    </a>
+    <nav class="top-nav" aria-label="Lab website">
+      <a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research">Research</a>
+      <a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/who-we-are">People</a>
+      <a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/contact">Contact</a>
+      <a class="enter" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab">Lab website <span aria-hidden="true">→</span></a>
+    </nav>
+  </header>
+
+  <main class="stage" id="stage">
+    <div class="intro">
+      <p class="eyebrow">10 projects · 3 research themes</p>
+      <h1 class="headline">Where virtual worlds meet <strong>human behavior</strong></h1>
+    </div>
+    <div class="slot" id="slot">
+      <div class="css-orb" id="cssOrb" aria-hidden="true">
+        <i class="css-ring r1"></i><i class="css-ring r2"></i><i class="css-ring r3"></i>
+        <i class="css-glass"></i><svg class="css-head" viewBox="0 0 100 100" aria-hidden="true"><path class="h" d="M59.3 90.9L59.3 78.5Q59.9 73.6 64.3 72.3Q69.5 70.8 70.5 67.1Q71 64.9 72.2 63.5Q72.8 62.3 71.6 61.3Q72.6 60.4 73.4 59.1Q73.8 57.9 72.6 56.7Q76.8 55.5 77.4 53.8Q77.8 52.2 75.4 50.1Q72.7 47.2 71.7 44.7Q71.3 42.3 72.6 39.3Q72.8 29.5 64 23Q55 16.8 44.7 18.1Q27.7 20.6 23.2 37.3Q20.7 50 26.3 59.4Q31.4 66.7 35.1 70.8Q37.6 75.4 37.3 90.9Z"/><path class="s" d="M60 44.5Q40 41 22 41.5"/><rect class="v" x="59.6" y="34.8" width="22.3" height="16.1" rx="4.5"/><path class="o" d="M81.6 37.5L81.6 48.2"/></svg><i class="css-rim"></i>
+      </div>
+    </div>
+    <div class="stage-foot">
+      <p class="hint" id="hint">Hover an icon to preview a project · Click to open it</p>
+      <button class="motion" id="motionBtn" type="button"><svg viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="1" width="2.4" height="8" rx=".6"/><rect x="6.1" y="1" width="2.4" height="8" rx=".6"/></svg><span>Pause motion</span></button>
+    </div>
+  </main>
+
+  <nav class="index" aria-labelledby="indexTitle">
+    <div class="index-head">
+      <h2 class="index-title" id="indexTitle">Research projects</h2>
+      <a class="index-all" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research">All research <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="index-cols">
+      <section class="area" data-area="road" aria-labelledby="area-road">
+        <h3 class="area-name" id="area-road">Road Users and Micromobility Safety</h3>
+        <ul>
+          <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/vr-bicycle-and-pedestrian-simulators-orclsim" data-i="0" data-icon="bike" data-area="road" data-title="VR Bicycle and Pedestrian Simulators (ORCLSim)" aria-describedby="pd0">Bicycle and Pedestrian Simulators</a></li>
+          <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/e-scooter-riders-street-and-vr" data-i="1" data-icon="scooter" data-area="road" data-title="E-Scooter Riders on the Street and in VR" aria-describedby="pd1">E-Scooter Riders</a></li>
+          <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/adolescent-micromobility-safety" data-i="2" data-icon="helmet" data-area="road" data-title="Adolescent Micromobility Safety" aria-describedby="pd2">Adolescent Micromobility Safety</a></li>
+          <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/pedestrian-attention-and-crossing-decisions" data-i="3" data-icon="walk" data-area="road" data-title="Pedestrian Attention and Crossing Decisions" aria-describedby="pd3">Pedestrian Attention</a></li>
+          <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/seeing-city-eye-tracking-downtown-street" data-i="4" data-icon="eye" data-area="road" data-title="Seeing the City: Eye Tracking on a Downtown Street" aria-describedby="pd4">Seeing the City</a></li>
+          <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/vr-design-review-and-public-involvement" data-i="5" data-icon="roundabout" data-area="road" data-title="VR for Design Review and Public Involvement" aria-describedby="pd5">VR for Design Review</a></li>
+        </ul>
+      </section>
+      <section class="area" data-area="train" aria-labelledby="area-train">
+        <h3 class="area-name" id="area-train">AI-Driven Immersive Training</h3>
+        <ul>
+          <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/vr-training-acutely-deteriorating-patient" data-i="6" data-icon="heart" data-area="train" data-title="VR Training for the Acutely Deteriorating Patient" aria-describedby="pd6">VR Clinical Training</a></li>
+          <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/immersive-cyber-range-critical-infrastructure" data-i="7" data-icon="shield" data-area="train" data-title="Immersive Cyber Range for Critical Infrastructure" aria-describedby="pd7">Immersive Cyber Range</a></li>
+          <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/xr-training-traffic-signal-technicians" data-i="8" data-icon="signal" data-area="train" data-title="XR Training for Traffic Signal Technicians" aria-describedby="pd8">Signal Technician Training</a></li>
+        </ul>
+      </section>
+      <section class="area" data-area="sense" aria-labelledby="area-sense">
+        <h3 class="area-name" id="area-sense">Human State Sensing</h3>
+        <ul>
+          <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/harmony-driver-state-naturalistic-driving" data-i="9" data-icon="wheel" data-area="sense" data-title="HARMONY: Driver State in Naturalistic Driving" aria-describedby="pd9">HARMONY Driving Study</a></li>
+        </ul>
+      </section>
+    </div>
+    <div class="sr-only">
+      <p id="pd0">How cyclists and pedestrians respond to street designs, measured in VR with eye tracking and physiological sensing.</p>
+      <p id="pd1">How e-scooter riders scan the road and respond to traffic, studied with instrumented e-scooters and a motion-platform simulator.</p>
+      <p id="pd2">Sensing, AI and VR training to make bicycle, e-bike and e-scooter riding safer for teens.</p>
+      <p id="pd3">Where pedestrians look and how safe they feel at crossings, by day and at night, on Charlottesville streets and in VR.</p>
+      <p id="pd4">Mobile eye tracking and heart rate as people walked a downtown street in Staunton, Virginia, open and closed to cars.</p>
+      <p id="pd5">VR simulations that let VDOT staff and the public ride and walk through a proposed roundabout before it is built.</p>
+      <p id="pd6">An AI-driven VR simulation for advanced cardiac life support training, built with UVA Emergency Medicine.</p>
+      <p id="pd7">VR training for defending the industrial control systems behind critical infrastructure.</p>
+      <p id="pd8">An Apple Vision Pro trainer that helps transportation technicians learn the traffic signal cabinet, built with the Virginia Department of Transportation.</p>
+      <p id="pd9">A naturalistic driving study that linked drivers' stress and emotion to road conditions, using wearables, cameras and phones.</p>
+    </div>
+  </nav>
+
+  <footer class="foot">
+    <span>Omni-Reality and Cognition Lab · School of Engineering and Applied Science · University of Virginia</span>
+    <span class="foot-links"><a href="https://www.youtube.com/@UVA-ORCL">ORCL on YouTube</a><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/contact">Contact</a></span>
+  </footer>
+
+  <div class="card" id="card" aria-hidden="true">
+    <div class="card-inner">
+      <div class="card-top"><span class="card-id"><span class="card-ico" id="cardIco" aria-hidden="true"></span><span class="chip" id="cardArea"></span></span><span class="card-num" id="cardNum"></span></div>
+      <p class="card-title" id="cardTitle"></p>
+      <p class="card-text" id="cardText"></p>
+      <a class="card-link" id="cardLink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research" tabindex="-1">Open project <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+  <svg class="leader" id="leader" aria-hidden="true" focusable="false"><line id="leadLine" x1="0" y1="0" x2="0" y2="0"/><g id="leadMark"><circle class="lm-ring" id="lmRing" r="15"/></g><circle class="lm-dot" id="lmDot" r="2.2"/></svg>
+</div>
+<noscript><style>.hint{visibility:hidden}</style></noscript>
+
+<script>
+(() => {
+  'use strict';
+  const app = document.getElementById('app');
+  const $ = (s) => document.querySelector(s);
+  const card = $('#card'), cardArea = $('#cardArea'), cardNum = $('#cardNum'), cardTitle = $('#cardTitle'), cardText = $('#cardText'), cardLink = $('#cardLink');
+  const leader = $('#leader'), leadLine = $('#leadLine'), leadMark = $('#leadMark'), lmRing = $('#lmRing'), lmDot = $('#lmDot'), cardIco = $('#cardIco');
+  const slot = $('#slot'), cssOrb = $('#cssOrb'), hint = $('#hint'), motionBtn = $('#motionBtn'), header = $('.top'), intro = $('.intro'), stageFoot = $('.stage-foot');
+  const AREA = {
+    road: { name: 'Road Users and Micromobility Safety', chip: 'Road users & micromobility', color: '#E76F51' },
+    train: { name: 'AI-Driven Immersive Training', chip: 'AI-driven immersive training', color: '#2A7F7F' },
+    sense: { name: 'Human State Sensing', chip: 'Human state sensing', color: '#E9C9A5' },
+  };
+  // Line icons on a 24-unit grid, shared by the project list, the card and the portals in the 3D scene
+  const ICONS = {
+    bike: { d: 'M2 16a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0M15 16a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0M5.5 16L9 9.5H15.5L18.5 16M5.5 16H11.5L15.5 9.5M11.5 16L9 9.5M9 9.5L8.8 7.6M7.3 7.6H10.3M15.5 9.5L14.8 7M13.6 7H16.4' },
+    scooter: { d: 'M2.5 18a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0M16.5 18a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0M4.4 15.2H18.4M19 18L16.4 4.8M14.4 4.8H18.6' },
+    helmet: { d: 'M2.4 13.6C3.6 9 7.6 6 12.6 6C17.2 6 20.6 8.6 21.2 12.4L22.8 13.6L18.8 14.4L5.4 15.4C4 15.4 2.4 14.8 2.4 13.6ZM7.4 9.8C9.4 8.6 11.6 8.2 13.8 8.4M9.2 12.4C11.8 11.4 14.6 11.2 17.6 11.6' },
+    walk: { d: 'M11.2 4a1.8 1.8 0 1 0 3.6 0a1.8 1.8 0 1 0-3.6 0M12.6 6.9L11.2 13M12.3 8.4L9 11.3M12.4 8.6L15.4 11M11.2 13L8.6 20.4M11.2 13L13.6 16.4L14.4 20.4' },
+    eye: { d: 'M2 12C4.6 7.6 8.1 5.6 12 5.6S19.4 7.6 22 12C19.4 16.4 15.9 18.4 12 18.4S4.6 16.4 2 12ZM8.8 12a3.2 3.2 0 1 0 6.4 0a3.2 3.2 0 1 0-6.4 0', dots: [[12, 12, 1.15]] },
+    roundabout: { d: 'M6.6 11a5.4 5.4 0 1 0 10.8 0a5.4 5.4 0 1 0-10.8 0M10.2 11a1.8 1.8 0 1 0 3.6 0a1.8 1.8 0 1 0-3.6 0M12 16.4V22M6.6 11H2.4M4.6 8.8L2.4 11L4.6 13.2' },
+    heart: { d: 'M12 20.4C12 20.4 3.6 15.2 3.6 9.4C3.6 6.7 5.6 4.6 8.2 4.6C9.8 4.6 11.2 5.4 12 6.7C12.8 5.4 14.2 4.6 15.8 4.6C18.4 4.6 20.4 6.7 20.4 9.4C20.4 15.2 12 20.4 12 20.4ZM2.8 12.4H7.6L9.2 9.4L11.4 15.4L13.4 7.8L15 12.4H21.2' },
+    shield: { d: 'M12 2.8L19.6 5.7V11.3C19.6 16 16.4 19.6 12 21.2C7.6 19.6 4.4 16 4.4 11.3V5.7ZM9.1 11.3H14.9V16.2H9.1ZM10.4 11.3V9.7C10.4 8.8 11.1 8.1 12 8.1S13.6 8.8 13.6 9.7V11.3', dots: [[12, 13.7, 0.85]] },
+    signal: { d: 'M10 2.6H14C14.8 2.6 15.4 3.2 15.4 4V15.8C15.4 16.6 14.8 17.2 14 17.2H10C9.2 17.2 8.6 16.6 8.6 15.8V4C8.6 3.2 9.2 2.6 10 2.6ZM12 17.2V21.4M9.4 21.4H14.6M8.6 5L6.6 4.4M8.6 8.9L6.6 8.3M8.6 12.8L6.6 12.2M15.4 5L17.4 4.4M15.4 8.9L17.4 8.3M15.4 12.8L17.4 12.2', dots: [[12, 6, 1.35, '#E76F51'], [12, 9.9, 1.35, '#E9C9A5'], [12, 13.8, 1.35, '#2A7F7F']] },
+    wheel: { d: 'M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0M9.8 12.6a2.2 2.2 0 1 0 4.4 0a2.2 2.2 0 1 0-4.4 0M3.4 11.4L9.8 12.4M14.2 12.4L20.6 11.4M12 14.8V20.8' },
+  };
+  const svgIcon = (k, cls) => {
+    const ic = ICONS[k];
+    if (!ic) return '';
+    const dots = (ic.dots || []).map((c) => '<circle cx="' + c[0] + '" cy="' + c[1] + '" r="' + c[2] + '"/>').join('');
+    return '<svg class="' + cls + '" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="' + ic.d + '"/>' + dots + '</svg>';
+  };
+  const links = Array.from(document.querySelectorAll('.index a[data-i]'));
+  const projects = links.map((a) => {
+    const d = document.getElementById(a.getAttribute('aria-describedby'));
+    return { i: Number(a.dataset.i), area: a.dataset.area, icon: a.dataset.icon, title: a.dataset.title, text: d ? d.textContent.trim() : '', url: a.href, el: a };
+  }).sort((p, q) => p.i - q.i);
+  projects.forEach((p) => p.el.insertAdjacentHTML('afterbegin', svgIcon(p.icon, 'pi')));
+  const N = projects.length;
+  const pad = (n) => String(n).padStart(2, '0');
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+
+  const embed = /(^|[#&])embed(&|$)/.test(location.hash.slice(1)) || location.hash === '#embed';
+  if (embed) {
+    app.classList.add('is-embed');
+    document.querySelectorAll('a[href^="http"]').forEach((a) => { a.target = '_top'; });
+  }
+  const fine = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  let scene = null;
+  let motionOn = !reduce.matches;
+  let active = -1, source = null, hideTimer = 0, cardHover = false;
+  let cardW = 330, cardH = 170, snap = true;
+  const pos = { x: 0, y: 0 };
+  let tourOn = false, tourTimer = 0, idleTimer = 0, tourIdx = -1, userTouched = false;
+  const TOUR_MS = 4800, IDLE_MS = 9000;
+
+  const ICON_PAUSE = '<svg viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="1" width="2.4" height="8" rx=".6"/><rect x="6.1" y="1" width="2.4" height="8" rx=".6"/></svg>';
+  const ICON_PLAY = '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2.2 1.2v7.6L8.6 5z"/></svg>';
+
+  function setHint() {
+    if (app.classList.contains('is-fallback')) hint.textContent = 'Point to a project name below to preview it';
+    else if (fine.matches) hint.textContent = 'Hover an icon to preview a project · Click to open it';
+    else hint.textContent = 'Tap an icon to preview · Tap the card to open';
+  }
+
+  function fill(i) {
+    const p = projects[i], a = AREA[p.area];
+    card.style.setProperty('--c', a.color);
+    leader.style.setProperty('--c', a.color);
+    cardArea.textContent = a.chip;
+    cardIco.innerHTML = svgIcon(p.icon, 'ci');
+    cardNum.textContent = pad(i + 1) + ' / ' + pad(N);
+    cardTitle.textContent = p.title;
+    cardText.textContent = p.text;
+    cardLink.href = p.url;
+    if (embed) cardLink.target = '_top';
+    cardW = card.offsetWidth;
+    cardH = card.offsetHeight;
+  }
+
+  function show(i, src) {
+    if (i < 0 || i >= N) return;
+    clearTimeout(hideTimer);
+    const was = card.classList.contains('is-on');
+    if (i !== active) {
+      fill(i);
+      links.forEach((l) => l.classList.toggle('is-active', Number(l.dataset.i) === i));
+      if (was) { card.classList.remove('swap'); void card.offsetWidth; card.classList.add('swap'); }
+    }
+    active = i; source = src; tourIdx = i;
+    if (scene) {
+      scene.setActive(i);
+      if (src !== 'hover' && src !== 'tap') scene.present(i, !motionOn);
+    }
+    if (!was) {
+      // Place the card before it can take pointer events, so it never sits under a resting cursor
+      snap = true; place(0);
+      card.classList.add('is-on'); leader.classList.add('is-on');
+    } else if (!scene) { snap = true; place(0); }
+  }
+
+  function hide() {
+    clearTimeout(hideTimer);
+    if (active < 0) return;
+    active = -1; source = null;
+    card.classList.remove('is-on', 'swap');
+    leader.classList.remove('is-on');
+    links.forEach((l) => l.classList.remove('is-active'));
+    if (scene) scene.setActive(-1);
+  }
+
+  function hideSoon(ms) {
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => { if (!cardHover) hide(); }, ms);
+  }
+
+  function place(dt) {
+    if (active < 0) return;
+    const vw = document.documentElement.clientWidth, vh = window.innerHeight, m = 12;
+    // ax/ay: where the point of light is now; fx/fy: where it is heading (a ring turns to present it)
+    let ax, ay, ar, fx, fy, o;
+    if (scene) {
+      const s = scene.anchor(active), f = scene.anchorFinal(active);
+      if (!s) return;
+      ax = s.x; ay = s.y; ar = s.r; fx = f.x; fy = f.y;
+      o = scene.orb();
+    } else {
+      const r = cssOrb.getBoundingClientRect();
+      o = { x: r.left + r.width / 2, y: r.top + r.height / 2, r: r.width / 2 };
+      ax = fx = o.x + o.r * 0.92; ay = fy = o.y - o.r * 0.38; ar = 3;
+    }
+    // Keep the card between the headline and the row with the pause button when there is room
+    let top = (header && !embed ? header.getBoundingClientRect().bottom : 0) + 8;
+    const introBottom = intro.getBoundingClientRect().bottom + 6;
+    let bottom = vh - m;
+    const footTop = stageFoot.getBoundingClientRect().top - 6;
+    if (footTop - introBottom > cardH + 40) { top = Math.max(top, introBottom); bottom = Math.min(bottom, footTop); }
+    let x, y;
+    if (vw < 720) {
+      const sr = slot.getBoundingClientRect();
+      x = (vw - cardW) / 2;
+      y = Math.min(sr.bottom - cardH - 4, vh - cardH - m);
+    } else {
+      // Try, in order: beside the point of light on the outer side, the same slid along the screen edge,
+      // below or above it, and last the inner side; take the first that fits and keeps clear of the orb
+      const gap = 30 + ar;
+      const outward = fx >= o.x, below = fy >= o.y;
+      const sideX = (right) => (right ? fx + gap : fx - gap - cardW);
+      const sideY = clamp(fy - cardH * 0.45, top, Math.max(top, bottom - cardH));
+      const vx = clamp(fx - cardW / 2, m, Math.max(m, vw - cardW - m));
+      const cands = [
+        [sideX(outward), sideY],
+        [clamp(sideX(outward), m, Math.max(m, vw - cardW - m)), sideY],
+        [vx, below ? fy + gap : fy - gap - cardH],
+        [vx, below ? fy - gap - cardH : fy + gap],
+        [sideX(!outward), sideY],
+      ];
+      const inView = (xx, yy) => xx >= m && xx + cardW <= vw - m && yy >= top && yy + cardH <= bottom;
+      const clearOfNode = (xx, yy) => !(fx > xx - ar - 6 && fx < xx + cardW + ar + 6 && fy > yy - ar - 6 && fy < yy + cardH + ar + 6);
+      const clearOfOrb = (xx, yy) => Math.hypot(o.x - clamp(o.x, xx, xx + cardW), o.y - clamp(o.y, yy, yy + cardH)) > o.r * 0.8;
+      let pick = null, second = null;
+      for (const [xx, yy] of cands) {
+        if (!inView(xx, yy) || !clearOfNode(xx, yy)) continue;
+        if (clearOfOrb(xx, yy)) { pick = [xx, yy]; break; }
+        if (!second) second = [xx, yy];
+      }
+      const chosen = pick || second || [vx, below ? fy + gap : fy - gap - cardH];
+      x = chosen[0]; y = chosen[1];
+    }
+    x = clamp(x, m, Math.max(m, vw - cardW - m));
+    y = clamp(y, top, Math.max(top, bottom - cardH));
+    if (snap || !dt) { pos.x = x; pos.y = y; snap = false; }
+    else { const k = 1 - Math.exp(-dt * 16); pos.x += (x - pos.x) * k; pos.y += (y - pos.y) * k; }
+    card.style.transform = 'translate3d(' + pos.x.toFixed(1) + 'px,' + pos.y.toFixed(1) + 'px,0)';
+    const ex = clamp(ax, pos.x, pos.x + cardW), ey = clamp(ay, pos.y, pos.y + cardH);
+    const dx = ex - ax, dy = ey - ay, d = Math.hypot(dx, dy);
+    // The ring hugs the portal; the line starts at its edge, where the dot sits
+    const rr = ar + 4;
+    lmRing.setAttribute('r', rr.toFixed(1));
+    if (d > rr + 10) {
+      const sx = ax + dx / d * rr, sy = ay + dy / d * rr;
+      leadLine.setAttribute('x1', sx.toFixed(1));
+      leadLine.setAttribute('y1', sy.toFixed(1));
+      leadLine.setAttribute('x2', ex.toFixed(1));
+      leadLine.setAttribute('y2', ey.toFixed(1));
+      lmDot.setAttribute('cx', sx.toFixed(1));
+      lmDot.setAttribute('cy', sy.toFixed(1));
+      leadLine.style.opacity = '1';
+      lmDot.style.opacity = '1';
+    } else { leadLine.style.opacity = '0'; lmDot.style.opacity = '0'; }
+    leadMark.setAttribute('transform', 'translate(' + ax.toFixed(1) + ' ' + ay.toFixed(1) + ')');
+  }
+
+  function stopTour() { tourOn = false; clearTimeout(tourTimer); }
+  function tourStep() {
+    if (!tourOn) return;
+    show((tourIdx + 1) % N, 'tour');
+    tourTimer = setTimeout(tourStep, TOUR_MS);
+  }
+  function startTour(delay) {
+    stopTour();
+    if (!motionOn || !scene) return;
+    tourTimer = setTimeout(() => { tourOn = true; tourStep(); }, delay);
+  }
+  function onIdle() {
+    if (!motionOn || !scene || cardHover || scene.hovering()) return;
+    const ae = document.activeElement;
+    if (ae && ae.closest && ae.closest('.index')) return;
+    if (active >= 0 && source !== 'tour') hide();
+    startTour(0);
+  }
+  function poke() {
+    userTouched = true;
+    if (tourOn) { stopTour(); if (source === 'tour') hideSoon(2600); }
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(onIdle, IDLE_MS);
+  }
+
+  function setMotion(on, byUser) {
+    motionOn = on;
+    app.classList.toggle('motion-off', !on);
+    motionBtn.innerHTML = (on ? ICON_PAUSE : ICON_PLAY) + '<span>' + (on ? 'Pause motion' : 'Play motion') + '</span>';
+    if (scene) scene.setMotion(on);
+    if (!on) stopTour();
+    else if (byUser) { clearTimeout(idleTimer); idleTimer = setTimeout(onIdle, 1500); }
+  }
+
+  function open(i) {
+    const p = projects[i];
+    if (!p) return;
+    p.el.click();
+  }
+
+  // Events
+  motionBtn.addEventListener('click', () => setMotion(!motionOn, true));
+  const onReduce = (e) => setMotion(!e.matches, false);
+  if (reduce.addEventListener) reduce.addEventListener('change', onReduce); else if (reduce.addListener) reduce.addListener(onReduce);
+  if (fine.addEventListener) fine.addEventListener('change', setHint);
+
+  // Chrome sends synthetic pointer moves at the resting position when the layout changes;
+  // only a real change of position counts as the visitor taking over from the tour.
+  let lastPX = null, lastPY = null, lastMove = -1e9;
+  window.addEventListener('pointermove', (e) => {
+    if (lastPX === null) { lastPX = e.clientX; lastPY = e.clientY; return; }
+    if (Math.abs(e.clientX - lastPX) + Math.abs(e.clientY - lastPY) < 3) return;
+    lastPX = e.clientX; lastPY = e.clientY; lastMove = performance.now();
+    poke();
+  }, { passive: true });
+  window.addEventListener('pointerdown', poke, { passive: true });
+  window.addEventListener('wheel', poke, { passive: true });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' || e.key === 'Esc') {
+      hide(); stopTour();
+      clearTimeout(idleTimer); idleTimer = setTimeout(onIdle, IDLE_MS * 2);
+    } else poke();
+  });
+
+  // A card that slides under a resting cursor is not the visitor reaching for it
+  card.addEventListener('pointerenter', (e) => {
+    if (e.pointerType === 'mouse' && performance.now() - lastMove > 600) return;
+    cardHover = true; clearTimeout(hideTimer); stopTour(); if (source === 'tour') source = 'card';
+  });
+  card.addEventListener('pointerleave', () => { if (!cardHover) return; cardHover = false; if (source !== 'focus') hideSoon(380); });
+  card.addEventListener('click', (e) => { if (e.target.closest('a')) return; if (active >= 0) open(active); });
+
+  links.forEach((a) => {
+    const i = Number(a.dataset.i);
+    a.addEventListener('focus', () => { poke(); show(i, 'focus'); });
+    a.addEventListener('blur', () => { if (active === i && source === 'focus') hideSoon(250); });
+    a.addEventListener('pointerenter', (e) => { if (e.pointerType !== 'touch') { poke(); show(i, 'list'); } });
+    a.addEventListener('pointerleave', (e) => { if (e.pointerType !== 'touch' && active === i && source === 'list') hideSoon(500); });
+  });
+
+  cssOrb.addEventListener('click', () => { if (!scene) api.next(); });
+  const relayout = () => { if (!scene && active >= 0) { snap = true; place(0); } };
+  window.addEventListener('resize', relayout);
+  window.addEventListener('scroll', relayout, { passive: true });
+
+  const fallbackTimer = setTimeout(() => api.fail('timed out'), 12000);
+  const api = window.ORCL = {
+    projects, areas: AREA, icons: ICONS, embed,
+    attach(s) {
+      scene = s;
+      clearTimeout(fallbackTimer);
+      app.classList.remove('is-loading', 'is-fallback');
+      app.classList.add('is-3d');
+      s.setMotion(motionOn);
+      setHint();
+      setTimeout(() => {
+        if (active >= 0) { s.setActive(active); s.present(active, true); snap = true; return; }
+        if (userTouched) return;
+        if (motionOn) startTour(0); else show(0, 'intro');
+      }, 1300);
+    },
+    fail(why) {
+      if (scene) return;
+      clearTimeout(fallbackTimer);
+      app.classList.remove('is-loading');
+      app.classList.add('is-fallback');
+      setHint();
+      if (window.console) console.info('[ORCL] Showing the static version: ' + why + '.');
+    },
+    ready() { clearTimeout(fallbackTimer); },
+    frame(dt) { place(dt); },
+    hover(i) {
+      if (i >= 0) { poke(); show(i, 'hover'); }
+      else if (source === 'hover') hideSoon(340);
+    },
+    tap(i, onOrb) {
+      poke();
+      if (i >= 0) show(i, 'tap');
+      else if (onOrb) api.next();
+      else hide();
+    },
+    next() {
+      poke();
+      const base = active >= 0 ? active : tourIdx;
+      show((base + 1) % N, 'orb');
+    },
+    open,
+    get active() { return active; },
+    cardHovered: () => cardHover,
+  };
+  setMotion(motionOn, false);
+  setHint();
+})();
+</script>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+} }
+</script>
+
+<script type="module">
+const O = window.ORCL;
+const canvas = document.getElementById('scene');
+const slot = document.getElementById('slot');
+
+function hasWebGL2() {
+  try {
+    const c = document.createElement('canvas');
+    const gl = c.getContext('webgl2');
+    if (!gl) return false;
+    const ext = gl.getExtension('WEBGL_lose_context');
+    if (ext) ext.loseContext();
+    return true;
+  } catch (e) { return false; }
+}
+
+async function loadThree() {
+  const addons = ['postprocessing/EffectComposer.js', 'postprocessing/RenderPass.js', 'postprocessing/UnrealBloomPass.js', 'postprocessing/OutputPass.js'];
+  try {
+    return await Promise.all([import('three'), ...addons.map((p) => import('three/addons/' + p))]);
+  } catch (err) {
+    const cdn = 'https://cdn.jsdelivr.net/npm/three@0.169.0/';
+    return Promise.all([import(cdn + '+esm'), ...addons.map((p) => import(cdn + 'examples/jsm/' + p + '/+esm'))]);
+  }
+}
+
+if (O && !O.started) {
+  O.started = true;
+  if (window.ORCL_FORCE_FALLBACK || !hasWebGL2()) O.fail('WebGL 2 is not available');
+  else {
+    try {
+      const [THREE, ec, rp, ub, op] = await loadThree();
+      build(THREE, ec.EffectComposer, rp.RenderPass, ub.UnrealBloomPass, op.OutputPass);
+    } catch (err) {
+      console.warn('[ORCL]', err);
+      O.fail('the 3D library did not load');
+    }
+  }
+}
+
+function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
+  const projects = O.projects;
+  const AREAS = ['road', 'train', 'sense'];
+  const COL = { road: new THREE.Color('#E76F51'), train: new THREE.Color('#2A7F7F'), sense: new THREE.Color('#E9C9A5') };
+  const WHITE = new THREE.Color('#F5F3EE');
+  // Deep Space, the page background: with no tone mapping the palette colors come out exactly as specified
+  const BG = new THREE.Color('#17212B');
+  const hdr = (c, k) => c.clone().multiplyScalar(k);
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const ease = (cur, target, rate, dt) => cur + (target - cur) * (1 - Math.exp(-rate * dt));
+  const TEST = window.ORCL_TEST || {};
+
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
+  } catch (err) {
+    O.fail('WebGL could not start');
+    return;
+  }
+  renderer.setClearColor(BG, 1);
+  renderer.toneMapping = THREE.NoToneMapping;
+  renderer.toneMappingExposure = 1.0;
+
+  const scene = new THREE.Scene();
+  scene.background = BG.clone();
+  const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 80);
+
+  // Studio environment in the lab palette, so the glass reflects it
+  (function makeEnv() {
+    const env = new THREE.Scene();
+    env.add(new THREE.Mesh(new THREE.SphereGeometry(30, 32, 16), new THREE.MeshBasicMaterial({ color: 0x17212b, side: THREE.BackSide })));
+    // Soft, rounded light panels: hard-edged ones show up as squares in the glass
+    const panel = (w, h, hex, k, x, y, z) => {
+      const geo = new THREE.ShapeGeometry((() => { const r = Math.min(w, h) / 2, sh = new THREE.Shape(), x0 = -w / 2, y0 = -h / 2;
+        sh.moveTo(x0 + r, y0); sh.lineTo(x0 + w - r, y0); sh.absarc(x0 + w - r, y0 + r, r, -Math.PI / 2, 0, false); sh.lineTo(x0 + w, y0 + h - r);
+        sh.absarc(x0 + w - r, y0 + h - r, r, 0, Math.PI / 2, false); sh.lineTo(x0 + r, y0 + h); sh.absarc(x0 + r, y0 + h - r, r, Math.PI / 2, Math.PI, false);
+        sh.lineTo(x0, y0 + r); sh.absarc(x0 + r, y0 + r, r, Math.PI, Math.PI * 1.5, false); return sh; })(), 16);
+      const m = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color: new THREE.Color(hex).multiplyScalar(k), side: THREE.DoubleSide }));
+      m.position.set(x, y, z);
+      m.lookAt(0, 0, 0);
+      env.add(m);
+    };
+    panel(16, 3.2, '#F5F3EE', 1.7, 0, 10, 2);
+    panel(2.4, 12, '#2A7F7F', 1.2, -10, 0.5, 2);
+    panel(2.4, 12, '#E76F51', 1.0, 10, -0.5, 1);
+    panel(8, 2.4, '#E9C9A5', 0.6, 0, -9, -3);
+    panel(3, 3, '#F5F3EE', 1.3, 6, 5, 10);
+    panel(12, 8, '#34495E', 0.8, 0, 0, -14);
+    const pm = new THREE.PMREMGenerator(renderer);
+    scene.environment = pm.fromScene(env, 0.035).texture;
+    pm.dispose();
+  })();
+
+  // Backdrop: a Slate Blue halo and faint concentric circles, refracted by the glass
+  (function makeBackdrop() {
+    const c = document.createElement('canvas');
+    c.width = c.height = 1024;
+    const g = c.getContext('2d');
+    g.fillStyle = '#17212B';
+    g.fillRect(0, 0, 1024, 1024);
+    const grd = g.createRadialGradient(512, 512, 0, 512, 512, 512);
+    // Darker straight behind the orb (the glass magnifies what is behind it), brightest just around it
+    grd.addColorStop(0, 'rgba(52,73,94,0.1)');
+    grd.addColorStop(0.12, 'rgba(52,73,94,0.16)');
+    grd.addColorStop(0.21, 'rgba(52,73,94,0.42)');
+    grd.addColorStop(0.32, 'rgba(52,73,94,0.26)');
+    grd.addColorStop(0.5, 'rgba(52,73,94,0.1)');
+    grd.addColorStop(0.75, 'rgba(52,73,94,0.03)');
+    grd.addColorStop(1, 'rgba(52,73,94,0)');
+    g.fillStyle = grd;
+    g.fillRect(0, 0, 1024, 1024);
+    g.lineWidth = 1.4;
+    g.strokeStyle = 'rgba(245,243,238,0.035)';
+    [118, 172, 236, 306, 392, 470].forEach((r) => { g.beginPath(); g.arc(512, 512, r, 0, Math.PI * 2); g.stroke(); });
+    g.strokeStyle = 'rgba(245,243,238,0.06)';
+    for (let k = 0; k < 72; k++) {
+      const a = (k / 72) * Math.PI * 2, r2 = k % 6 === 0 ? 320 : 313;
+      g.beginPath(); g.moveTo(512 + Math.cos(a) * 306, 512 + Math.sin(a) * 306); g.lineTo(512 + Math.cos(a) * r2, 512 + Math.sin(a) * r2); g.stroke();
+    }
+    const img = g.getImageData(0, 0, 1024, 1024), d = img.data;
+    for (let p = 0; p < d.length; p += 4) { const n = (Math.random() - 0.5) * 3; d[p] += n; d[p + 1] += n; d[p + 2] += n; }
+    g.putImageData(img, 0, 0);
+    const tex = new THREE.CanvasTexture(c);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    const plane = new THREE.Mesh(new THREE.PlaneGeometry(18, 18), new THREE.MeshBasicMaterial({ map: tex }));
+    plane.position.z = -5;
+    scene.add(plane);
+  })();
+
+  function glowTexture() {
+    const c = document.createElement('canvas');
+    c.width = c.height = 128;
+    const g = c.getContext('2d');
+    const grd = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+    grd.addColorStop(0, 'rgba(255,255,255,1)');
+    grd.addColorStop(0.12, 'rgba(255,255,255,0.85)');
+    grd.addColorStop(0.32, 'rgba(255,255,255,0.22)');
+    grd.addColorStop(0.62, 'rgba(255,255,255,0.05)');
+    grd.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = grd;
+    g.fillRect(0, 0, 128, 128);
+    const t = new THREE.CanvasTexture(c);
+    t.colorSpace = THREE.SRGBColorSpace;
+    return t;
+  }
+  const glowTex = glowTexture();
+
+  // Portals: each project is a small round window into a virtual space of its own
+  const ICONS = O.icons || {};
+  const AREA_HEX = { road: '#E76F51', train: '#2A7F7F', sense: '#E9C9A5' };
+  const hexRgb = (hex) => { const v = parseInt(hex.slice(1), 16); return [(v >> 16) & 255, (v >> 8) & 255, v & 255]; };
+  const rgba = (c, a) => 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')';
+  const mixRgb = (a, b, t) => a.map((v, k) => Math.round(v + (b[k] - v) * t));
+  function seeded(seed) { let s = (seed * 7919 + 104729) % 233280; return () => { s = (s * 9301 + 49297) % 233280; return s / 233280; }; }
+
+  // A small round window into a virtual space: the sky takes the theme's color at the horizon,
+  // the floor tells the theme (a street, a training grid, a heartbeat horizon) and the icon stands in it
+  function drawPortal(g, p, phase) {
+    const S = 256, C = 128, R = 116, H = 160;
+    const col = hexRgb(AREA_HEX[p.area]), deep = [23, 33, 43], soft = [245, 243, 238];
+    g.setTransform(1, 0, 0, 1, 0, 0);
+    g.clearRect(0, 0, S, S);
+    g.save();
+    g.beginPath(); g.arc(C, C, R, 0, Math.PI * 2); g.clip();
+    const sky = g.createLinearGradient(0, C - R, 0, H);
+    sky.addColorStop(0, rgba(deep, 1));
+    sky.addColorStop(0.62, rgba(mixRgb(deep, col, 0.2), 1));
+    sky.addColorStop(1, rgba(mixRgb(deep, col, 0.6), 1));
+    g.fillStyle = sky; g.fillRect(0, 0, S, H);
+    const ground = g.createLinearGradient(0, H, 0, S);
+    ground.addColorStop(0, rgba(mixRgb(deep, col, 0.28), 1));
+    ground.addColorStop(0.3, rgba(deep, 1));
+    ground.addColorStop(1, rgba(deep, 1));
+    g.fillStyle = ground; g.fillRect(0, H, S, S - H);
+    const rnd = seeded(p.i + 3);
+    g.fillStyle = 'rgba(245,243,238,0.7)';
+    for (let k = 0; k < 14; k++) { const x = 22 + rnd() * 212, y = 22 + rnd() * (H - 48), r = 0.8 + rnd() * 1.5; g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fill(); }
+    const depth = (t) => H + (S - H) * t * t;
+    g.lineCap = 'round';
+    if (p.area === 'road') {
+      g.fillStyle = 'rgba(52,73,94,0.6)';
+      g.beginPath(); g.moveTo(C - 4, H); g.lineTo(C + 4, H); g.lineTo(C + 150, S); g.lineTo(C - 150, S); g.closePath(); g.fill();
+      g.strokeStyle = rgba(col, 0.9); g.lineWidth = 3;
+      g.beginPath(); g.moveTo(C - 4, H); g.lineTo(C - 150, S); g.moveTo(C + 4, H); g.lineTo(C + 150, S); g.stroke();
+      g.strokeStyle = 'rgba(245,243,238,0.8)';
+      for (let k = 0; k < 6; k++) {
+        const t0 = ((k + phase) % 6) / 6, t1 = Math.min(1, t0 + 0.075);
+        g.lineWidth = 1.5 + 6 * t0;
+        g.beginPath(); g.moveTo(C, depth(t0)); g.lineTo(C, depth(t1)); g.stroke();
+      }
+      g.strokeStyle = rgba(col, 0.3); g.lineWidth = 1.5;
+      for (let k = 1; k < 6; k++) {
+        const t = ((k + phase) % 6) / 6, y = depth(t), w = 4 + 146 * ((y - H) / (S - H));
+        g.beginPath(); g.moveTo(0, y); g.lineTo(C - w - 8, y); g.moveTo(C + w + 8, y); g.lineTo(S, y); g.stroke();
+      }
+    } else {
+      g.strokeStyle = rgba(col, p.area === 'sense' ? 0.34 : 0.55); g.lineWidth = 2;
+      for (let k = -8; k <= 8; k++) { g.beginPath(); g.moveTo(C + k * 7, H); g.lineTo(C + k * 64, S); g.stroke(); }
+      for (let k = 0; k < 7; k++) {
+        const t = ((k + phase) % 7) / 7;
+        g.globalAlpha = Math.min(1, t * 4);
+        g.beginPath(); g.moveTo(0, depth(t)); g.lineTo(S, depth(t)); g.stroke();
+      }
+      g.globalAlpha = 1;
+    }
+    g.strokeStyle = rgba(mixRgb(col, soft, 0.35), 0.95); g.lineWidth = 2.5;
+    g.beginPath();
+    if (p.area === 'sense') {
+      for (let x = 0; x <= S; x += 2) {
+        const u = (((x / S) * 1.6 + phase * 0.45) % 1 + 1) % 1;
+        const y = H - 30 * Math.exp(-Math.pow((u - 0.5) / 0.022, 2)) + 13 * Math.exp(-Math.pow((u - 0.555) / 0.022, 2)) - 6 * Math.exp(-Math.pow((u - 0.36) / 0.04, 2));
+        if (x === 0) g.moveTo(x, y); else g.lineTo(x, y);
+      }
+    } else { g.moveTo(0, H); g.lineTo(S, H); }
+    g.stroke();
+    const ic = ICONS[p.icon];
+    if (ic) {
+      const size = 136, k = size / 24;
+      g.translate(C - size / 2, H + 6 - 20 * k);
+      g.scale(k, k);
+      const path = new Path2D(ic.d);
+      g.lineCap = 'round'; g.lineJoin = 'round';
+      g.strokeStyle = 'rgba(23,33,43,0.85)'; g.lineWidth = 3.9; g.stroke(path);
+      for (const c of ic.dots || []) { g.beginPath(); g.arc(c[0], c[1], c[2] + 0.9, 0, Math.PI * 2); g.fillStyle = 'rgba(23,33,43,0.85)'; g.fill(); }
+      g.strokeStyle = '#F5F3EE'; g.lineWidth = 1.8; g.stroke(path);
+      for (const c of ic.dots || []) { g.beginPath(); g.arc(c[0], c[1], c[2], 0, Math.PI * 2); g.fillStyle = c[3] || '#F5F3EE'; g.fill(); }
+    }
+    g.restore();
+    g.lineWidth = 7; g.strokeStyle = 'rgba(245,243,238,0.95)';
+    g.beginPath(); g.arc(C, C, R - 1, 0, Math.PI * 2); g.stroke();
+    g.lineWidth = 3; g.strokeStyle = rgba(col, 1);
+    g.beginPath(); g.arc(C, C, R - 7.5, 0, Math.PI * 2); g.stroke();
+  }
+  function ringTexture(stops) {
+    const c = document.createElement('canvas');
+    c.width = c.height = 128;
+    const g = c.getContext('2d');
+    const grd = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+    for (const [o, a] of stops) grd.addColorStop(o, 'rgba(255,255,255,' + a + ')');
+    g.fillStyle = grd;
+    g.fillRect(0, 0, 128, 128);
+    const t = new THREE.CanvasTexture(c);
+    t.colorSpace = THREE.SRGBColorSpace;
+    return t;
+  }
+  // A thin ring that blooms at a portal's rim, and a soft glow around it with a hole for the portal
+  const rimGlowTex = ringTexture([[0, 0], [0.74, 0], [0.84, 1], [0.92, 0.25], [1, 0]]);
+  const haloTex = ringTexture([[0, 0], [0.4, 0], [0.46, 0.55], [0.6, 0.22], [0.8, 0.06], [1, 0]]);
+
+  const root = new THREE.Group();
+  scene.add(root);
+  // The head gets its own key and warm side light inside its shader (see headMat): real lights
+  // would also put hard pinpoint highlights on the glass, which bloom into squares
+
+  // The glass orb
+  const glass = new THREE.MeshPhysicalMaterial({
+    color: 0xffffff, metalness: 0, roughness: 0.02,
+    transmission: 1, thickness: 0.6, ior: 1.38,
+    clearcoat: 1, clearcoatRoughness: 0.05,
+    specularIntensity: 1, envMapIntensity: 0.95,
+  });
+  const orb = new THREE.Mesh(new THREE.SphereGeometry(1, 128, 96), glass);
+  root.add(orb);
+
+  const rimMat = new THREE.ShaderMaterial({
+    uniforms: { uTime: { value: 0 }, uI: { value: 0.2 }, uA: { value: new THREE.Color('#F5F3EE') } },
+    vertexShader: 'varying vec3 vN; varying vec3 vV; varying vec3 vP;\nvoid main(){ vec4 mv = modelViewMatrix * vec4(position, 1.0); vN = normalize(normalMatrix * normal); vV = normalize(-mv.xyz); vP = position; gl_Position = projectionMatrix * mv; }',
+    fragmentShader: 'uniform float uI; uniform vec3 uA;\nvarying vec3 vN; varying vec3 vV; varying vec3 vP;\nvoid main(){\n  float f = smoothstep(0.62, 0.97, 1.0 - abs(dot(normalize(vN), normalize(vV))));\n  gl_FragColor = vec4(uA * f * uI, 1.0);\n  #include <tonemapping_fragment>\n  #include <colorspace_fragment>\n}',
+    transparent: true, blending: THREE.AdditiveBlending, depthWrite: false,
+  });
+  const rim = new THREE.Mesh(new THREE.SphereGeometry(1.015, 96, 64), rimMat);
+  root.add(rim);
+
+  // Inside the glass: a person wearing a VR headset, after the lab's new logo ideas
+  const inner = new THREE.Group();
+  root.add(inner);
+  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), sc = new THREE.Vector3();
+
+  // The head is lofted from a side profile (facing +x): a rounder back and a narrower front,
+  // so the nose, lips and chin read as features rather than ridges
+  function headGeometry() {
+    const s = new THREE.Shape();
+    s.moveTo(0.15, -0.66);
+    s.lineTo(0.15, -0.46);
+    s.quadraticCurveTo(0.16, -0.38, 0.23, -0.36);
+    s.quadraticCurveTo(0.315, -0.335, 0.33, -0.275);
+    s.quadraticCurveTo(0.338, -0.24, 0.358, -0.218);
+    s.quadraticCurveTo(0.368, -0.198, 0.348, -0.183);
+    s.quadraticCurveTo(0.364, -0.168, 0.378, -0.147);
+    s.quadraticCurveTo(0.384, -0.128, 0.364, -0.108);
+    s.quadraticCurveTo(0.432, -0.088, 0.442, -0.062);
+    s.quadraticCurveTo(0.448, -0.036, 0.41, -0.002);
+    s.quadraticCurveTo(0.366, 0.045, 0.35, 0.085);
+    s.quadraticCurveTo(0.344, 0.125, 0.364, 0.172);
+    s.quadraticCurveTo(0.368, 0.33, 0.225, 0.435);
+    s.quadraticCurveTo(0.08, 0.535, -0.085, 0.515);
+    s.quadraticCurveTo(-0.36, 0.475, -0.432, 0.205);
+    s.quadraticCurveTo(-0.472, 0.0, -0.382, -0.152);
+    s.quadraticCurveTo(-0.3, -0.27, -0.24, -0.335);
+    s.quadraticCurveTo(-0.2, -0.41, -0.205, -0.66);
+    s.lineTo(0.15, -0.66);
+    const poly = s.getSpacedPoints(700);
+    let yTop = -Infinity, xTop = 0;
+    for (const p of poly) if (p.y > yTop) { yTop = p.y; xTop = p.x; }
+    const yBot = -0.658, ROWS = 110, COLS = 72;
+    const span = (y) => {
+      let lo = Infinity, hi = -Infinity;
+      for (let k = 0; k < poly.length - 1; k++) {
+        const a = poly[k], b = poly[k + 1];
+        if ((a.y - y) * (b.y - y) <= 0 && a.y !== b.y) {
+          const x = a.x + ((y - a.y) * (b.x - a.x)) / (b.y - a.y);
+          if (x < lo) lo = x;
+          if (x > hi) hi = x;
+        }
+      }
+      return [lo, hi];
+    };
+    const halfWidth = (y) => {
+      if (y >= 0.1) return 0.31 * Math.sqrt(Math.max(0, 1 - Math.pow(Math.min(1, (y - 0.1) / (yTop - 0.1)), 2.4)));
+      if (y >= -0.3) return 0.31 - 0.07 * ((0.1 - y) / 0.4);
+      if (y >= -0.42) return 0.24 - 0.07 * ((-0.3 - y) / 0.12);
+      return 0.17;
+    };
+    const pw = (v, e) => Math.sign(v) * Math.pow(Math.abs(v), e);
+    const pos = [];
+    for (let i = 0; i <= ROWS; i++) {
+      const y = yBot + (yTop - 0.004 - yBot) * (i / ROWS);
+      const [xb, xf] = span(y);
+      const cx = (xb + xf) / 2, a = (xf - xb) / 2, hw = halfWidth(y);
+      for (let j = 0; j < COLS; j++) {
+        const th = (j / COLS) * Math.PI * 2, c = Math.cos(th), sn = Math.sin(th);
+        const e = c >= 0 ? 2 / 1.55 : 2 / 2.3;
+        pos.push(cx + a * pw(c, e), y, hw * pw(sn, e));
+      }
+    }
+    const top = pos.length / 3;
+    pos.push(xTop, yTop, 0);
+    const bot = top + 1;
+    const [xb0, xf0] = span(yBot);
+    pos.push((xb0 + xf0) / 2, yBot, 0);
+    const idx = [];
+    for (let i = 0; i < ROWS; i++) for (let j = 0; j < COLS; j++) {
+      const a = i * COLS + j, b = i * COLS + ((j + 1) % COLS), c = (i + 1) * COLS + j, d = (i + 1) * COLS + ((j + 1) % COLS);
+      idx.push(a, c, b, b, c, d);
+    }
+    for (let j = 0; j < COLS; j++) {
+      idx.push(ROWS * COLS + j, top, ROWS * COLS + ((j + 1) % COLS));
+      idx.push(bot, j, (j + 1) % COLS);
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    g.setIndex(idx);
+    g.computeVertexNormals();
+    return g;
+  }
+  const roundRect = (w, h, r) => {
+    const sh = new THREE.Shape(), x = -w / 2, y = -h / 2;
+    sh.moveTo(x + r, y); sh.lineTo(x + w - r, y); sh.quadraticCurveTo(x + w, y, x + w, y + r);
+    sh.lineTo(x + w, y + h - r); sh.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    sh.lineTo(x + r, y + h); sh.quadraticCurveTo(x, y + h, x, y + h - r);
+    sh.lineTo(x, y + r); sh.quadraticCurveTo(x, y, x + r, y);
+    return sh;
+  };
+  // A simple Rotunda (dome, pediment, columns, steps) for the side of the headset
+  function rotundaGeometry() {
+    const S = [];
+    const rect = (x0, y0, x1, y1) => { const r = new THREE.Shape(); r.moveTo(x0, y0); r.lineTo(x1, y0); r.lineTo(x1, y1); r.lineTo(x0, y1); r.lineTo(x0, y0); return r; };
+    S.push(rect(-0.62, -0.5, 0.62, -0.43));
+    S.push(rect(-0.55, -0.43, 0.55, -0.38));
+    for (let k = 0; k < 6; k++) { const x = -0.44 + k * 0.176; S.push(rect(x - 0.034, -0.38, x + 0.034, 0.05)); }
+    S.push(rect(-0.56, 0.05, 0.56, 0.12));
+    const ped = new THREE.Shape(); ped.moveTo(-0.6, 0.12); ped.lineTo(0.6, 0.12); ped.lineTo(0, 0.32); ped.lineTo(-0.6, 0.12); S.push(ped);
+    const dome = new THREE.Shape(); dome.moveTo(-0.4, 0.22); dome.absarc(0, 0.22, 0.4, Math.PI, 0, true); dome.lineTo(-0.4, 0.22); S.push(dome);
+    S.push(rect(-0.05, 0.6, 0.05, 0.67));
+    const g = new THREE.ShapeGeometry(S, 16);
+    g.scale(0.14, 0.14, 1);
+    return g;
+  }
+
+  const person = new THREE.Group();
+  inner.add(person);
+  const headMat = new THREE.MeshPhysicalMaterial({ color: '#34495E', emissive: new THREE.Color('#34495E').multiplyScalar(0.35), roughness: 0.5, metalness: 0, clearcoat: 0.3, clearcoatRoughness: 0.4, envMapIntensity: 0.45 });
+  // A soft edge light, teal at the face and coral over the crown, so the silhouette reads against the dark glass.
+  // It is part of the head's own (opaque) shader: transparent extras inside the glass would not show through it.
+  const rimUniforms = {
+    uRimA: { value: new THREE.Color('#2A7F7F') }, uRimB: { value: new THREE.Color('#E76F51') }, uRim: { value: 0.9 },
+    uKeyDir: { value: new THREE.Vector3() }, uKeyCol: { value: new THREE.Color('#34495E').multiplyScalar(1.5) },
+    uWarmDir: { value: new THREE.Vector3() }, uWarmCol: { value: new THREE.Color('#E76F51').multiplyScalar(0.3) },
+  };
+  const KEY_DIR = new THREE.Vector3(-3, 4, 5).normalize(), WARM_DIR = new THREE.Vector3(3.5, 1.2, -1.5).normalize();
+  headMat.onBeforeCompile = (shader) => {
+    Object.assign(shader.uniforms, rimUniforms);
+    shader.vertexShader = shader.vertexShader
+      .replace('#include <common>', '#include <common>\nvarying vec3 vObjPos;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvObjPos = position;');
+    shader.fragmentShader = shader.fragmentShader
+      .replace('#include <common>', '#include <common>\nvarying vec3 vObjPos;\nuniform vec3 uRimA; uniform vec3 uRimB; uniform float uRim;\nuniform vec3 uKeyDir; uniform vec3 uKeyCol; uniform vec3 uWarmDir; uniform vec3 uWarmCol;')
+      .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\n{ float fr = pow(1.0 - clamp(abs(dot(normal, normalize(vViewPosition))), 0.0, 1.0), 2.4);\n  vec3 rc = mix(uRimA, uRimB, smoothstep(-0.2, 0.4, vObjPos.y - 0.45 * vObjPos.x));\n  totalEmissiveRadiance += rc * fr * uRim;\n  totalEmissiveRadiance += uKeyCol * max(dot(normal, uKeyDir), 0.0) + uWarmCol * pow(max(dot(normal, uWarmDir), 0.0), 2.0); }');
+  };
+  person.add(new THREE.Mesh(headGeometry(), headMat));
+
+  const headset = new THREE.Group();
+  headset.position.set(0.335, 0.115, 0);
+  person.add(headset);
+  const shellGeo = new THREE.ExtrudeGeometry(roundRect(0.3, 0.2, 0.07), { depth: 0.58, bevelEnabled: true, bevelThickness: 0.035, bevelSize: 0.03, bevelSegments: 5, curveSegments: 14 });
+  shellGeo.translate(0, 0, -0.29);
+  headset.add(new THREE.Mesh(shellGeo, new THREE.MeshPhysicalMaterial({ color: '#F5F3EE', emissive: new THREE.Color('#F5F3EE').multiplyScalar(0.12), roughness: 0.3, clearcoat: 1, clearcoatRoughness: 0.12 })));
+  const visorRimGeo = new THREE.ShapeGeometry(roundRect(0.6, 0.235, 0.075), 12);
+  visorRimGeo.rotateY(Math.PI / 2);
+  const visorRim = new THREE.Mesh(visorRimGeo, new THREE.MeshBasicMaterial({ color: new THREE.Color('#E76F51') }));
+  visorRim.position.x = 0.181;
+  headset.add(visorRim);
+  const visorGeo = new THREE.ShapeGeometry(roundRect(0.56, 0.2, 0.06), 12);
+  visorGeo.rotateY(Math.PI / 2);
+  const visor = new THREE.Mesh(visorGeo, new THREE.MeshPhysicalMaterial({ color: '#17212B', roughness: 0.15, metalness: 0.3, clearcoat: 1, clearcoatRoughness: 0.08 }));
+  visor.position.x = 0.184;
+  headset.add(visor);
+
+  // A small network of lights on the visor, as in the logo
+  const STARS = [[-0.21, 0.04], [-0.15, -0.045], [-0.08, 0.058], [-0.01, -0.012], [0.05, 0.062], [0.1, -0.055], [0.16, 0.028], [0.215, -0.03], [-0.035, -0.066], [0.085, 0.012], [-0.185, -0.004]];
+  const starPos = STARS.map(([z, y]) => new THREE.Vector3(0.189, y, z));
+  const starMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(1.7, 1.7, 1.7) });
+  const stars = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 10, 8), starMat, STARS.length);
+  const starHues = [new THREE.Color('#E9C9A5'), new THREE.Color('#F5F3EE')];
+  starPos.forEach((v, k) => { m4.compose(v, q.identity(), sc.setScalar(0.011)); stars.setMatrixAt(k, m4); stars.setColorAt(k, starHues[k % starHues.length]); });
+  headset.add(stars);
+  const pairs = [];
+  STARS.forEach((pt, i) => {
+    STARS.map((o, j) => [j, Math.hypot(o[0] - pt[0], o[1] - pt[1])]).filter(([j]) => j !== i).sort((u, v) => u[1] - v[1]).slice(0, 2)
+      .forEach(([j]) => { const key = Math.min(i, j) + '-' + Math.max(i, j); if (!pairs.includes(key)) pairs.push(key); });
+  });
+  const lp = [];
+  pairs.forEach((key) => { const [i, j] = key.split('-').map(Number); lp.push(0.187, STARS[i][1], STARS[i][0], 0.187, STARS[j][1], STARS[j][0]); });
+  const linkGeo = new THREE.BufferGeometry();
+  linkGeo.setAttribute('position', new THREE.Float32BufferAttribute(lp, 3));
+  const linkMat = new THREE.LineBasicMaterial({ color: new THREE.Color('#E9C9A5') });
+  headset.add(new THREE.LineSegments(linkGeo, linkMat));
+
+  // The emblem on each side of the headset. The Rotunda is a UVA limited-use mark, so until University
+  // Communications approves it the page carries the lab's own name; set EMBLEM to 'rotunda' to bring it back.
+  const EMBLEM = 'orcl';
+  function orclDecal() {
+    const c = document.createElement('canvas');
+    c.width = 512; c.height = 160;
+    const g = c.getContext('2d');
+    const tex = new THREE.CanvasTexture(c);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.anisotropy = 4;
+    const paint = () => {
+      g.clearRect(0, 0, c.width, c.height);
+      g.fillStyle = '#E76F51';
+      g.font = '700 124px "Libre Franklin", "Helvetica Neue", Arial, sans-serif';
+      g.textAlign = 'center';
+      g.textBaseline = 'middle';
+      if ('letterSpacing' in g) g.letterSpacing = '8px';
+      g.fillText('ORCL', c.width / 2 + 4, c.height / 2 + 6);
+      tex.needsUpdate = true;
+    };
+    paint();
+    if (document.fonts && document.fonts.load) document.fonts.load('700 124px "Libre Franklin"').then(() => { paint(); dirty(); }).catch(() => {});
+    return tex;
+  }
+  let emblemGeo, emblemMat;
+  if (EMBLEM === 'rotunda') {
+    emblemGeo = rotundaGeometry();
+    emblemMat = new THREE.MeshBasicMaterial({ color: new THREE.Color('#E76F51') });
+  } else {
+    emblemGeo = new THREE.PlaneGeometry(0.3, 0.094);
+    // Opaque with a cut-out edge: transparent extras inside the glass would not show through it
+    emblemMat = new THREE.MeshBasicMaterial({ map: orclDecal(), alphaTest: 0.5 });
+    emblemMat.alphaToCoverage = true;
+  }
+  for (const side of [1, -1]) {
+    const m = new THREE.Mesh(emblemGeo, emblemMat);
+    m.position.set(0, -0.005, side * 0.327);
+    if (side < 0) m.rotation.y = Math.PI;
+    headset.add(m);
+  }
+
+  const strapPts = [];
+  for (let k = 0; k < 48; k++) { const a = (k / 48) * Math.PI * 2; strapPts.push(new THREE.Vector3(-0.05 + Math.cos(a) * 0.43, 0, Math.sin(a) * 0.33)); }
+  const strap = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(strapPts, true), 160, 0.02, 8, true), new THREE.MeshPhysicalMaterial({ color: '#17212B', roughness: 0.35, clearcoat: 0.6 }));
+  strap.position.y = 0.125;
+  strap.rotation.z = -0.12;
+  person.add(strap);
+
+  person.scale.setScalar(0.94);
+  person.position.set(-0.03, -0.01, 0);
+  person.rotation.y = -0.62;
+
+  // Two swooshes around the head, as in the logo
+  const ribbons = new THREE.Group();
+  inner.add(ribbons);
+  const ribbon = (rx, rz, y, tilt, a0, len, color, k) => {
+    const pts = [];
+    for (let i = 0; i <= 64; i++) { const a = a0 + (len * i) / 64; pts.push(new THREE.Vector3(Math.cos(a) * rx, 0, Math.sin(a) * rz)); }
+    const m = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 96, 0.011, 6, false), new THREE.MeshBasicMaterial({ color: hdr(new THREE.Color(color), k) }));
+    m.position.y = y;
+    m.rotation.x = tilt;
+    return m;
+  };
+  ribbons.add(ribbon(0.62, 0.5, -0.4, 0.35, -0.6, 3.6, '#E76F51', 1.0));
+  ribbons.add(ribbon(0.66, 0.46, 0.2, -0.5, 2.2, 3.4, '#2A7F7F', 1.25));
+  const starTint = new THREE.Color(1, 1, 1), tintTarget = new THREE.Color();
+
+  // Orbits: one ring per research area, with a point of light per project
+  const ringsGroup = new THREE.Group();
+  root.add(ringsGroup);
+  const DEF = {
+    sense: { R: 1.42, tilt: 62, roll: -32, speed: 0.08, phase: 0.9 },
+    train: { R: 1.78, tilt: 44, roll: 24, speed: -0.055, phase: 2.4 },
+    road: { R: 2.18, tilt: 30, roll: -8, speed: 0.04, phase: 0.35 },
+  };
+  const ringGeo = (R, tube, arc) => {
+    const g = new THREE.TorusGeometry(R, tube, 6, Math.max(24, Math.round((260 * arc) / (Math.PI * 2))), arc);
+    g.rotateX(Math.PI / 2);
+    return g;
+  };
+  const rings = {};
+  for (const a of AREAS) {
+    const d = DEF[a];
+    const tilt = new THREE.Group();
+    tilt.rotation.set(THREE.MathUtils.degToRad(d.tilt), 0, THREE.MathUtils.degToRad(d.roll), 'ZXY');
+    ringsGroup.add(tilt);
+    const spinner = new THREE.Group();
+    tilt.add(spinner);
+    const baseMat = new THREE.MeshBasicMaterial({ color: hdr(COL[a], 0.4) });
+    spinner.add(new THREE.Mesh(ringGeo(d.R, 0.0045, Math.PI * 2), baseMat));
+    const arcMat = new THREE.MeshBasicMaterial({ color: hdr(COL[a], 0.95) });
+    for (let k = 0; k < 3; k++) {
+      const m = new THREE.Mesh(ringGeo(d.R, 0.0075, 0.3 + 0.12 * k), arcMat);
+      m.rotation.y = d.phase + k * 2.1 + 0.6;
+      spinner.add(m);
+    }
+    rings[a] = { ...d, spinner, baseMat, arcMat, spin: 0, v: 0, target: null, glow: 0, dim: 0 };
+  }
+  const counts = { road: 0, train: 0, sense: 0 }, totals = { road: 0, train: 0, sense: 0 };
+  projects.forEach((p) => { totals[p.area]++; });
+  let portalSize = 0.17, ppuOrb = 190;
+  const nodes = projects.map((p) => {
+    const ring = rings[p.area];
+    const k = counts[p.area]++;
+    const ang = ring.phase + (k / totals[p.area]) * Math.PI * 2;
+    const mesh = new THREE.Object3D();
+    mesh.position.set(Math.cos(ang) * ring.R, 0, Math.sin(ang) * ring.R);
+    ring.spinner.add(mesh);
+    const cv = document.createElement('canvas');
+    cv.width = cv.height = 256;
+    const g = cv.getContext('2d');
+    drawPortal(g, p, 0);
+    const tex = new THREE.CanvasTexture(cv);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.anisotropy = 4;
+    // Opaque with a cut-out edge, so a portal passing behind the orb is still seen through the glass
+    const mat = new THREE.SpriteMaterial({ map: tex, color: new THREE.Color(0.85, 0.85, 0.85), transparent: false, alphaTest: 0.5 });
+    mat.alphaToCoverage = true;
+    const portal = new THREE.Sprite(mat);
+    mesh.add(portal);
+    const rimGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: rimGlowTex, color: hdr(COL[p.area], 0.4), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false }));
+    mesh.add(rimGlow);
+    const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: haloTex, color: COL[p.area], transparent: true, opacity: 0.04, blending: THREE.AdditiveBlending, depthWrite: false }));
+    mesh.add(halo);
+    return { i: p.i, area: p.area, p, mesh, portal, mat, rimGlow, halo, g, tex, phase: 0, tick: 0, h: 0, back: 0, scr: { x: -9999, y: -9999, r: 4, ppu: 100, behind: false } };
+  });
+
+  // Faint drifting motes
+  const DUST = 150, dpos = new Float32Array(DUST * 3);
+  for (let k = 0; k < DUST; k++) {
+    const r = 1.25 + Math.random() * 1.9, u = Math.random() * 2 - 1, th = Math.random() * Math.PI * 2, s = Math.sqrt(1 - u * u);
+    dpos[k * 3] = r * s * Math.cos(th); dpos[k * 3 + 1] = r * u * 0.55; dpos[k * 3 + 2] = r * s * Math.sin(th);
+  }
+  const dustGeo = new THREE.BufferGeometry();
+  dustGeo.setAttribute('position', new THREE.BufferAttribute(dpos, 3));
+  const dust = new THREE.Points(dustGeo, new THREE.PointsMaterial({ size: 0.05, map: glowTex, color: new THREE.Color('#F5F3EE'), transparent: true, opacity: 0.28, depthWrite: false, blending: THREE.AdditiveBlending }));
+  root.add(dust);
+
+  // Post-processing: bloom for the glowing parts
+  const composer = new EffectComposer(renderer, new THREE.WebGLRenderTarget(2, 2, { type: THREE.HalfFloatType, samples: 4 }));
+  composer.addPass(new RenderPass(scene, camera));
+  const bloom = new UnrealBloomPass(new THREE.Vector2(2, 2), 0.3, 0, 0.9);
+  // Weight the fine blur levels; the coarsest ones only add a faint haze (they look boxy on bright points)
+  bloom.compositeMaterial.uniforms.bloomFactors.value = [1.0, 0.75, 0.45, 0.16, 0.05];
+  composer.addPass(bloom);
+  composer.addPass(new OutputPass());
+
+  // Layout
+  let vw = 1, vh = 1;
+  let dprCap = Math.min(window.devicePixelRatio || 1, 1.75);
+  let useBloom = !TEST.noBloom;
+  function resize() {
+    vw = Math.max(1, canvas.clientWidth);
+    vh = Math.max(1, canvas.clientHeight);
+    renderer.setPixelRatio(dprCap);
+    renderer.setSize(vw, vh, false);
+    composer.setPixelRatio(dprCap);
+    composer.setSize(vw, vh);
+    camera.aspect = vw / vh;
+    frameCamera();
+  }
+  function frameCamera() {
+    const r = slot.getBoundingClientRect();
+    // On phones the project card docks at the bottom of the slot, so frame the orb in the space above it
+    const top = r.top, bottom = vw < 720 ? Math.max(r.top + 240, r.bottom - 210) : r.bottom;
+    const sw = Math.max(r.width, 200), sh = Math.max(bottom - top, 200);
+    const narrow = sw < sh * 1.15;
+    ringsGroup.scale.setScalar(narrow ? 0.9 : 1);
+    const W = narrow ? 1.98 : 2.55, H = narrow ? 1.5 : 1.55;
+    const t = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+    const d = clamp(Math.max((H * vh) / (sh * t), (W * vh) / (sw * t)), 6.4, 19);
+    // Portals about 34 px across on a laptop and 30 px on a phone, at the orb's distance
+    ppuOrb = vh / (2 * d * t);
+    portalSize = clamp((vw < 720 ? 30 : 34) / (ppuOrb * ringsGroup.scale.x), 0.12, 0.32);
+    camera.position.set(0, 0, d);
+    camera.lookAt(0, 0, 0);
+    const cx = r.left + r.width / 2;
+    let cy = (top + bottom) / 2;
+    if (vw < 720) cy = Math.min(cy, top + H * (vh / (2 * d * t)) + 10);
+    camera.setViewOffset(vw, vh, -(cx - vw / 2), -(cy - vh / 2), vw, vh);
+    camera.updateProjectionMatrix();
+    camera.updateMatrixWorld();
+    dirty();
+  }
+
+  // Screen-space positions of the orb and the points of light
+  const tmpV = new THREE.Vector3(), tmpW = new THREE.Vector3();
+  const orbScr = { x: 0, y: 0, r: 0, depth: 1 };
+  function project() {
+    const th = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+    orb.getWorldPosition(tmpW);
+    tmpV.copy(tmpW).applyMatrix4(camera.matrixWorldInverse);
+    orbScr.depth = -tmpV.z;
+    tmpV.copy(tmpW).project(camera);
+    orbScr.x = ((tmpV.x + 1) / 2) * vw;
+    orbScr.y = ((1 - tmpV.y) / 2) * vh;
+    orbScr.r = (vh / (2 * orbScr.depth * th)) * orb.scale.x;
+    for (const n of nodes) {
+      n.mesh.getWorldPosition(tmpW);
+      tmpV.copy(tmpW).applyMatrix4(camera.matrixWorldInverse);
+      const depth = -tmpV.z;
+      tmpV.copy(tmpW).project(camera);
+      const s = n.scr;
+      s.x = ((tmpV.x + 1) / 2) * vw;
+      s.y = ((1 - tmpV.y) / 2) * vh;
+      s.ppu = vh / (2 * depth * th);
+      s.r = 0.5 * 0.93 * n.portal.scale.x * ringsGroup.scale.x * s.ppu;
+      s.behind = depth > orbScr.depth;
+    }
+  }
+
+  // Pointer
+  const ptr = { x: -9999, y: -9999, over: false, type: 'mouse' };
+  let hovered = -1, orbHover = false, orbH = 0, parX = 0, parY = 0;
+  window.addEventListener('pointermove', (e) => {
+    ptr.x = e.clientX; ptr.y = e.clientY; ptr.type = e.pointerType; ptr.over = e.target === canvas;
+    if (!motion) dirty();
+  }, { passive: true });
+  document.documentElement.addEventListener('pointerleave', () => { ptr.over = false; });
+  window.addEventListener('blur', () => { ptr.over = false; });
+
+  function pick(x, y, reachScale) {
+    let best = -1, bestScore = 0;
+    for (const n of nodes) {
+      const s = n.scr;
+      const d = Math.hypot(x - s.x, y - s.y);
+      const reach = Math.max(22, s.r * 1.3, 0.17 * s.ppu * ringsGroup.scale.x) * reachScale;
+      let score = d - reach;
+      if (s.behind && Math.hypot(s.x - orbScr.x, s.y - orbScr.y) < orbScr.r) score += 16;
+      if (score < bestScore) { bestScore = score; best = n.i; }
+    }
+    return best;
+  }
+  const inOrb = (x, y) => Math.hypot(x - orbScr.x, y - orbScr.y) < orbScr.r * 0.98;
+
+  function updateHover() {
+    if (!attached) return;
+    const live = ptr.over && ptr.type !== 'touch';
+    const k = live ? pick(ptr.x, ptr.y, 1) : -1;
+    const o = live && k < 0 && inOrb(ptr.x, ptr.y);
+    if (k !== hovered) { hovered = k; O.hover(k); dirty(); }
+    if (o !== orbHover) { orbHover = o; dirty(); }
+    const cur = k >= 0 || o ? 'pointer' : '';
+    if (canvas.style.cursor !== cur) canvas.style.cursor = cur;
+  }
+
+  let down = null;
+  canvas.addEventListener('pointerdown', (e) => { down = { x: e.clientX, y: e.clientY, t: e.timeStamp }; });
+  canvas.addEventListener('pointercancel', () => { down = null; });
+  canvas.addEventListener('pointerup', (e) => {
+    if (!down) return;
+    const moved = Math.hypot(e.clientX - down.x, e.clientY - down.y), held = e.timeStamp - down.t;
+    down = null;
+    if (moved > 12 || held > 700) return;
+    const touch = e.pointerType === 'touch';
+    const k = pick(e.clientX, e.clientY, touch ? 1.7 : 1);
+    const o = k < 0 && inOrb(e.clientX, e.clientY);
+    if (touch) O.tap(k, o);
+    else if (k >= 0) O.open(k);
+    else if (o) O.next();
+  });
+
+  // State driven by the page
+  let activeIdx = -1, motion = true, clock = 0, renderUntil = 0, pending = 0;
+  // Keep drawing for a moment after a change, and for at least a few frames even if they are slow
+  function dirty() { renderUntil = performance.now() + 1600; pending = 3; }
+
+  const wp = new THREE.Vector3();
+  function present(i, instant) {
+    const n = nodes[i];
+    if (!n) return;
+    const r = rings[n.area];
+    scene.updateMatrixWorld();
+    const cur = r.target !== null ? r.target : r.spin;
+    const R = r.R * ringsGroup.scale.x;
+    let best = cur, bestScore = -Infinity;
+    for (let k = 0; k <= 72; k++) {
+      const s = cur - Math.PI + (k / 72) * Math.PI * 2;
+      r.spinner.rotation.y = s;
+      r.spinner.updateMatrixWorld(true);
+      n.mesh.getWorldPosition(wp);
+      let score = wp.z / R + 0.85 * Math.min(Math.abs(wp.x) / R, 0.62) - 0.8 * Math.max(0, -wp.y - 1.15) - 0.8 * Math.max(0, wp.y - 1.05) - 0.16 * Math.abs(s - cur);
+      if (vw >= 720) {
+        // leave room for the card beside the point of light
+        wp.project(camera);
+        const sx = ((wp.x + 1) / 2) * vw;
+        const gapPx = 34 + 0.5 * 0.93 * portalSize * 1.55 * ringsGroup.scale.x * ppuOrb;
+        const room = sx >= orbScr.x ? vw - 12 - (sx + gapPx + 330) : sx - gapPx - 330 - 12;
+        if (room < 0) score -= Math.min(1.2, -room / 120);
+      }
+      if (score > bestScore) { bestScore = score; best = s; }
+    }
+    // Where the point of light will end up, so its card can go straight there
+    r.spinner.rotation.y = best;
+    r.spinner.updateMatrixWorld(true);
+    n.mesh.getWorldPosition(wp);
+    wp.project(camera);
+    n.final = { x: ((wp.x + 1) / 2) * vw, y: ((1 - wp.y) / 2) * vh };
+    n.finalFrame = frames;
+    r.spinner.rotation.y = r.spin;
+    r.spinner.updateMatrixWorld(true);
+    if (instant) { r.spin = best; r.target = null; r.spinner.rotation.y = best; }
+    else r.target = best;
+    dirty();
+  }
+
+  function heartbeat(t) {
+    const T = 0.92, p = (t % T) / T;
+    return Math.exp(-Math.pow((p - 0.1) / 0.045, 2)) + 0.55 * Math.exp(-Math.pow((p - 0.3) / 0.055, 2));
+  }
+
+  function step(dt) {
+    const slow = hovered >= 0 || orbHover || O.cardHovered() ? 0.18 : 1;
+    const activeArea = activeIdx >= 0 ? projects[activeIdx].area : null;
+    for (const a of AREAS) {
+      const r = rings[a];
+      const locked = activeArea === a;
+      r.v = motion ? ease(r.v, locked ? 0 : r.speed * slow, 2.5, dt) : 0;
+      if (r.target !== null) {
+        const diff = r.target - r.spin;
+        r.spin += diff * (1 - Math.exp(-3.2 * dt));
+        if (Math.abs(diff) < 0.001) { r.spin = r.target; r.target = null; }
+        dirty();
+      } else r.spin += r.v * dt;
+      r.spinner.rotation.y = r.spin;
+      r.glow = ease(r.glow, locked ? 1 : 0, 6, dt);
+      r.dim = ease(r.dim, activeArea && !locked ? 1 : 0, 4, dt);
+      const lvl = 1 - 0.3 * r.dim;
+      r.baseMat.color.copy(COL[a]).multiplyScalar((0.4 + 0.35 * r.glow) * lvl);
+      r.arcMat.color.copy(COL[a]).multiplyScalar((0.95 + 0.5 * r.glow) * lvl);
+    }
+    if (motion) {
+      dust.rotation.y += 0.012 * dt;
+      ribbons.rotation.y += 0.09 * dt;
+    }
+    rimUniforms.uKeyDir.value.copy(KEY_DIR).transformDirection(camera.matrixWorldInverse);
+    rimUniforms.uWarmDir.value.copy(WARM_DIR).transformDirection(camera.matrixWorldInverse);
+    const sway = motion ? Math.sin(clock * 0.28) : 0;
+    person.rotation.y = -0.6 + 0.32 * sway;
+    person.rotation.z = motion ? 0.03 * Math.sin(clock * 0.21) : 0;
+    person.position.y = -0.01 + (motion ? 0.012 * Math.sin(clock * 0.8) : 0);
+    // The visor network takes on the color of the active research area; a heartbeat for the sensing study
+    const activeArea2 = activeIdx >= 0 ? projects[activeIdx].area : null;
+    const hb = motion ? heartbeat(clock) : 0.25;
+    tintTarget.copy(activeArea2 ? COL[activeArea2] : WHITE);
+    starTint.lerp(tintTarget, 1 - Math.exp(-4 * dt));
+    const pulse = activeArea2 === 'sense' ? 0.8 * hb : 0;
+    starMat.color.copy(starTint).lerp(WHITE, 0.3).multiplyScalar(1.6 + 1.0 * pulse + (activeArea2 ? 0.4 : 0));
+    linkMat.color.copy(starTint).lerp(WHITE, 0.15).multiplyScalar(0.95 + 0.5 * pulse);
+    if (motion) {
+      for (let k = 0; k < starPos.length; k++) {
+        m4.compose(starPos[k], q.identity(), sc.setScalar(0.011 * (0.78 + 0.3 * Math.sin(clock * (1.3 + k * 0.17) + k))));
+        stars.setMatrixAt(k, m4);
+      }
+      stars.instanceMatrix.needsUpdate = true;
+    }
+    const beat = motion ? heartbeat(clock) : 0;
+    for (const n of nodes) {
+      n.h = ease(n.h, n.i === activeIdx ? 1 : n.i === hovered ? 0.6 : 0, 9, dt);
+      // The portal of the project on show opens up
+      const ps = portalSize * (1 + 0.55 * n.h);
+      n.portal.scale.setScalar(ps);
+      n.rimGlow.scale.setScalar(ps * 1.06);
+      n.halo.scale.setScalar(ps * 2.3);
+      // Dim the portals seen through the glass, so they don't outshine the head
+      n.back = ease(n.back, n.scr.behind && Math.hypot(n.scr.x - orbScr.x, n.scr.y - orbScr.y) < orbScr.r * 1.05 ? 1 : 0, 5, dt);
+      n.mat.color.setScalar(0.85 - 0.3 * n.back);
+      const pulse = n.area === 'sense' ? 0.9 * beat : 0;
+      n.rimGlow.material.color.copy(COL[n.area]).multiplyScalar((0.4 + 0.45 * n.h + 0.4 * pulse) * (1 - 0.85 * n.back));
+      n.halo.material.opacity = (0.04 + 0.14 * n.h + 0.1 * pulse) * (1 - 0.7 * n.back);
+      // Inside the open portal the space moves past, as if you were travelling through it
+      if (n.i === activeIdx && motion) {
+        n.phase += dt * 0.55;
+        n.tick += dt;
+        if (n.tick >= 1 / 30) { n.tick = 0; drawPortal(n.g, n.p, n.phase); n.tex.needsUpdate = true; }
+      }
+    }
+    // Gentle parallax that follows the pointer, held still while a point of light or its card is under it
+    if (!(hovered >= 0 || O.cardHovered())) {
+      parX = motion && ptr.over ? clamp((ptr.x - orbScr.x) / (vw * 0.5), -1, 1) : 0;
+      parY = motion && ptr.over ? clamp((ptr.y - orbScr.y) / (vh * 0.5), -1, 1) : 0;
+    }
+    root.rotation.y = ease(root.rotation.y, parX * 0.1, 2.2, dt);
+    root.rotation.x = ease(root.rotation.x, parY * 0.06, 2.2, dt);
+    orbH = ease(orbH, orbHover ? 1 : 0, 6, dt);
+    rimMat.uniforms.uI.value = 0.2 + 0.3 * orbH;
+    rimMat.uniforms.uTime.value = clock;
+    orb.scale.setScalar(1 + 0.025 * orbH);
+    rim.scale.copy(orb.scale);
+  }
+
+  function draw() {
+    if (useBloom) composer.render();
+    else renderer.render(scene, camera);
+  }
+
+  // Lower the resolution, then drop bloom, if frames are slow
+  let qFrames = 0, qLast = 0, qLevel = 0, qSamples = [];
+  function adapt(now) {
+    if (TEST.noAdapt || !motion || document.hidden) { qFrames = 0; qSamples = []; return; }
+    qFrames++;
+    if (qFrames < 40) { qLast = now; return; }
+    qSamples.push(now - qLast);
+    qLast = now;
+    if (qSamples.length >= 50) {
+      qSamples.sort((a, b) => a - b);
+      const med = qSamples[25];
+      qSamples = []; qFrames = 0;
+      if (med > 24 && qLevel < 2) {
+        qLevel++;
+        if (qLevel === 1) dprCap = Math.min(dprCap, 1.25);
+        else { dprCap = 1; useBloom = false; }
+        resize();
+      }
+    }
+  }
+
+  let raf = 0, running = false, last = performance.now(), frames = 0, attached = false;
+  function loop(now) {
+    if (!running) return;
+    raf = requestAnimationFrame(loop);
+    const dt = Math.min(0.05, Math.max(0.001, (now - last) / 1000));
+    last = now;
+    if (motion) clock += dt;
+    step(dt);
+    scene.updateMatrixWorld();
+    project();
+    updateHover();
+    O.frame(dt);
+    if (motion || now < renderUntil || pending > 0 || frames < 3) { draw(); if (pending > 0) pending--; }
+    frames++;
+    if (!attached && frames >= 2) { attached = true; O.attach(api); }
+    adapt(now);
+  }
+  let onScreen = true;
+  // Some hosts load the page while it still reports itself hidden and never send visibilitychange,
+  // so don't wait for visibility: requestAnimationFrame simply doesn't fire until the page is shown.
+  function startLoop() {
+    if (running || !onScreen) return;
+    running = true;
+    last = performance.now();
+    raf = requestAnimationFrame(loop);
+  }
+  function stopLoop() { running = false; cancelAnimationFrame(raf); }
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) { dirty(); startLoop(); } });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      onScreen = entries.some((e) => e.isIntersecting);
+      if (onScreen) { dirty(); startLoop(); } else stopLoop();
+    }).observe(slot);
+  }
+  canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); stopLoop(); }, false);
+  canvas.addEventListener('webglcontextrestored', () => { dirty(); startLoop(); }, false);
+  window.addEventListener('resize', resize);
+  window.addEventListener('scroll', frameCamera, { passive: true });
+  if ('ResizeObserver' in window) new ResizeObserver(() => frameCamera()).observe(slot);
+
+  const api = {
+    setActive(i) { activeIdx = i; dirty(); },
+    present,
+    anchor(i) { const n = nodes[i]; return n ? { x: n.scr.x, y: n.scr.y, r: Math.max(6, n.scr.r) } : null; },
+    anchorFinal(i) { const n = nodes[i]; if (!n) return null; return n.final && (rings[n.area].target !== null || n.finalFrame === frames) ? n.final : { x: n.scr.x, y: n.scr.y }; },
+    orb() { return { x: orbScr.x, y: orbScr.y, r: orbScr.r }; },
+    setMotion(on) {
+      motion = on;
+      if (!on) {
+        // Pausing stops everything at once, including a ring that is turning to present a project
+        for (const a of AREAS) {
+          const r = rings[a];
+          r.v = 0;
+          if (r.target !== null) { r.spin = r.target; r.target = null; r.spinner.rotation.y = r.spin; }
+        }
+      }
+      dirty();
+    },
+    hovering() { return hovered >= 0; },
+  };
+  O.scene = api;
+  if (O.ready) O.ready();
+
+  resize();
+  dirty();
+  startLoop();
+}
+</script>
+</body>
+</html>
