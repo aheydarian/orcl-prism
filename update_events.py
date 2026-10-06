@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Refresh events.json from the "Upcoming Events" list on the lab's UVA Engineering home page.
 
-Run twice a day by .github/workflows/update-events.yml. The page (index.html) loads events.json
-and hides events that have ended. If the page cannot be fetched the script fails (and the old
-file stays); if the events block is missing, the old file is kept and a warning is logged.
+Run once a day by .github/workflows/update-events.yml. The page (index.html) loads events.json
+and hides events that have ended. If the UVA site refuses the request (it sits behind Cloudflare,
+which blocks automated requests unless UVA allows them), or the events block is missing, the old
+file is kept and a warning is logged. Other fetch errors fail the run.
 
 Local test:  python update_events.py --html saved-page.html --out /tmp/events.json
 """
@@ -12,6 +13,7 @@ import json
 import re
 import sys
 import time
+import urllib.error
 import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -105,17 +107,30 @@ def parse_events(html, base=SOURCE):
     return out
 
 
+class Refused(Exception):
+    """The site answered, but refused this client (for example a Cloudflare block or challenge)."""
+
+
 def fetch(url, tries=3):
     for i in range(tries):
+        req = urllib.request.Request(url, headers={'User-Agent': UA, 'Accept': 'text/html'})
         try:
-            req = urllib.request.Request(url, headers={'User-Agent': UA, 'Accept': 'text/html'})
             with urllib.request.urlopen(req, timeout=30) as r:
                 return r.read().decode('utf-8', 'replace')
+        except urllib.error.HTTPError as e:
+            if e.code in (401, 403, 429):
+                body = e.read(6000).decode('utf-8', 'replace')
+                m = re.search(r'<title[^>]*>(.*?)</title>', body, re.S | re.I)
+                title = re.sub(r'\s+', ' ', m.group(1)).strip()[:80] if m else 'none'
+                info = ', '.join(f'{k}: {e.headers.get(k)}' for k in ('server', 'cf-mitigated', 'cf-ray') if e.headers.get(k))
+                raise Refused(f'HTTP {e.code}; {info or "no server headers"}; page title: {title}')
+            err = e
         except Exception as e:  # network hiccup: wait and retry
-            print(f'fetch attempt {i + 1} failed: {e}', file=sys.stderr)
-            if i == tries - 1:
-                raise
-            time.sleep(20 * (i + 1))
+            err = e
+        print(f'fetch attempt {i + 1} failed: {err}', file=sys.stderr)
+        if i == tries - 1:
+            raise err
+        time.sleep(20 * (i + 1))
 
 
 def main():
@@ -124,7 +139,12 @@ def main():
     ap.add_argument('--out', default=str(OUT))
     a = ap.parse_args()
 
-    html = Path(a.html).read_text(encoding='utf-8') if a.html else fetch(SOURCE)
+    try:
+        html = Path(a.html).read_text(encoding='utf-8') if a.html else fetch(SOURCE)
+    except Refused as r:
+        print(f'::warning::The UVA site refused the request ({r}). events.json was left as it is. '
+              'UVA web services can allow this updater (user agent ORCL-events-updater) on the lab page.')
+        return 0
     out = Path(a.out)
     old = json.loads(out.read_text(encoding='utf-8')) if out.exists() else {}
     parsed = parse_events(html)

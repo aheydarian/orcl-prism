@@ -46,11 +46,10 @@ Notes: `position:relative` keeps the page's thin vertical grid rule from drawing
 
 ## Upcoming Events on the full page
 
-The events list is copied from the "Upcoming Events" block on the lab's UVA page, so events are still added and edited in Drupal as usual.
+The events list mirrors the "Upcoming Events" block on the lab's UVA page, so events are still added and edited in Drupal as usual.
 
-- `update_events.py` reads that block and writes `events.json`.
-- `.github/workflows/update-events.yml` runs it twice a day, at 3:37 am and 3:37 pm Pacific (6:37 am and 6:37 pm Eastern) during daylight time, and commits `events.json` when the list changes. GitHub Pages then republishes the site.
-- To refresh right away, open the Actions tab, choose "Update events" and press "Run workflow".
-- The page loads `events.json` each time it opens and hides events that have ended, even between refreshes.
-- If the lab page cannot be read, the run fails, the last good list stays up, and GitHub notifies the repository owner.
+- `update_events.py` reads that block and writes `events.json`. `.github/workflows/update-events.yml` runs it once a day, at 4:37 am Pacific (7:37 am Eastern) during daylight time, and commits `events.json` when the list changes. GitHub Pages then republishes the site. To run it right away, open the Actions tab, choose "Update events" and press "Run workflow".
+- The page loads `events.json` each time it opens and hides events that have ended, even between refreshes. With no upcoming events it says so.
+- Status, Oct 6, 2026: engineering.virginia.edu sits behind Cloudflare, which answers the workflow with 403 Forbidden. The run then logs a warning and keeps the current list. It will start updating, with no changes here, once UVA web services allow requests with the user agent `ORCL-events-updater` to `/labs-groups/omni-reality-cognition-lab`. Until then, update `events.json` by hand: edit it on GitHub, or save the lab page from a browser and run `python update_events.py --html saved-page.html`.
+- Any other fetch error fails the run, keeps the last good list, and GitHub notifies the repository owner.
 - GitHub pauses scheduled workflows in a public repository after 60 days without activity. If the repository has had no commit for 50 days, the workflow makes an empty commit to keep itself running.
