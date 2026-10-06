@@ -1,11 +1,11 @@
 name: Update events
 
 # Refreshes events.json from the "Upcoming Events" list on the lab's UVA Engineering page.
-# Twice a day at 10:37 and 22:37 UTC (3:37 am and 3:37 pm PDT; 6:37 am and 6:37 pm EDT),
+# Once a day at 11:37 UTC (4:37 am PDT / 7:37 am EDT; an hour earlier in winter),
 # by hand from the Actions tab (Run workflow), and when this file or update_events.py changes.
 on:
   schedule:
-    - cron: '37 10,22 * * *'
+    - cron: '37 11 * * *'
   workflow_dispatch:
   push:
     branches: [main]
