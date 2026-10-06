@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ORCL Prism</title>
-<meta name="description" content="Opening page for the Omni-Reality and Cognition Lab at the University of Virginia: a glass prism with a 3D head in a VR headset, circled by small portals into the lab's research projects.">
+<meta name="description" content="Opening page for the Omni-Reality &amp; Cognition Lab at the University of Virginia: a glass orb with a 3D head in a VR headset that looks from screen to screen, circled by small portals into the lab's research projects.">
 <meta name="theme-color" content="#17212B">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Franklin:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Francois+One&family=Libre+Franklin:wght@400;500;600;700&display=swap">
 <style>
 :root{
   /* Lab palette: Deep Space, Slate Blue, Immersive Teal, Warm Coral, Sand, Soft White */
@@ -20,18 +20,21 @@
   --white:#F5F3EE;
   --ink:var(--space);
   --text:var(--white);
-  --text-2:rgba(245,243,238,.8);
-  --muted:rgba(245,243,238,.6);
+  --text-2:rgba(245,243,238,.84);
+  --muted:rgba(245,243,238,.64);
   --line:rgba(245,243,238,.12);
   --line-2:rgba(245,243,238,.3);
-  --font-display:"Libre Franklin","Franklin Gothic Medium","Helvetica Neue",Arial,sans-serif;
-  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  --gutter:clamp(16px,3vw,40px);
+  /* UVA Engineering type: Franklin Gothic for text and its condensed cut for display headings.
+     On a virginia.edu page that loads the UVA font kit these are the real faces; anywhere else they fall back
+     to Libre Franklin (a Franklin Gothic revival) and Francois One (a condensed gothic of the same family) */
+  --font-text:"franklin-gothic-urw","Libre Franklin","Franklin Gothic Book",Arial,sans-serif;
+  --font-cond:"franklin-gothic-urw-cond","Francois One","Franklin Gothic Demi Cond","Arial Narrow",sans-serif;
+  --gutter:clamp(16px,3.4vw,48px);
   color-scheme:dark;
 }
 *,*::before,*::after{box-sizing:border-box}
 html,body{margin:0;padding:0;background:var(--ink);color:var(--text)}
-body{font-family:var(--font-display);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
+body{font-family:var(--font-text);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--sand);outline-offset:3px}
 .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -41,32 +44,37 @@ a{color:inherit}
 #scene{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:-1;opacity:0;transition:opacity 1.2s ease;pointer-events:auto;touch-action:pan-y}
 .app.is-3d #scene{opacity:1}
 
-/* Header */
-.top{position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px var(--gutter) 6px}
-.brand{display:inline-flex;align-items:center;gap:12px;color:var(--text);text-decoration:none;border-radius:10px}
-.brand-mark{position:relative;width:24px;height:24px;border-radius:50%;flex:none;border:2px solid var(--sand)}
-.brand-mark::after{content:"";position:absolute;right:-4px;top:0;width:9px;height:9px;border-radius:50%;background:var(--coral);box-shadow:0 0 0 2px var(--space)}
-.brand-name{font-weight:700;font-size:15px;letter-spacing:.18em}
-.brand-sub{font-family:var(--font-mono);font-size:11px;line-height:1.35;color:var(--muted);padding-left:12px;border-left:1px solid var(--line)}
-.top-nav{display:flex;align-items:center;gap:2px;flex-wrap:wrap;justify-content:flex-end}
-.top-nav a{font-size:13.5px;color:var(--text-2);text-decoration:none;padding:8px 12px;border-radius:999px;transition:color .2s,background-color .2s,border-color .2s}
-.top-nav a:hover{color:var(--white);background:var(--slate)}
-.top-nav a.enter{margin-left:6px;color:var(--white);border:1px solid rgba(233,201,165,.55);padding:8px 15px}
-.top-nav a.enter:hover{color:var(--space);background:var(--sand);border-color:var(--sand)}
+/* Underlined hover, as on UVA Engineering pages, in Sand */
+.top-nav a:hover,.arrow-link:hover .lbl,.motion:hover .lbl,.foot a:hover,.index-all:hover .lbl{text-decoration-line:underline;text-decoration-color:var(--sand);text-decoration-thickness:2px;text-underline-offset:6px}
 
-/* Stage */
-.stage{position:relative;flex:1 0 auto;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 var(--gutter);min-height:480px}
-.intro{position:relative;z-index:2;padding-top:clamp(4px,1.4vh,16px)}
-.eyebrow{margin:0 0 8px;font-family:var(--font-mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--sand)}
-.headline{margin:0;font-weight:300;font-size:clamp(27px,3.1vw,46px);line-height:1.08;letter-spacing:-.018em;color:var(--white);text-wrap:balance}
-.headline strong{font-weight:600;color:var(--sand)}
-.slot{position:relative;flex:1 1 auto;width:100%;min-height:320px}
-.stage-foot{position:relative;z-index:3;width:100%;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;padding:0 0 10px}
-.hint{grid-column:2;margin:0;display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:12px;color:var(--muted)}
-.hint::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--teal);flex:none}
-.motion{grid-column:3;justify-self:end;display:inline-flex;align-items:center;gap:8px;font:500 11.5px/1 var(--font-mono);letter-spacing:.04em;color:var(--text-2);background:rgba(23,33,43,.72);border:1px solid var(--line-2);border-radius:999px;padding:9px 13px;cursor:pointer;transition:color .2s,border-color .2s,background-color .2s}
-.motion:hover{color:var(--white);background:var(--slate);border-color:var(--sand)}
-.motion svg{width:10px;height:10px;fill:currentColor;flex:none}
+/* Header: the lab's name and menu, laid out like the lab-site header on UVA Engineering pages */
+.top{position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 28px;padding:30px var(--gutter);background:var(--space);border-bottom:1px solid var(--line)}
+.lab-name{font-weight:700;font-size:30px;line-height:1.05;color:var(--white);text-decoration:none}
+.top-nav{display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;gap:2px 2px}
+.top-nav a{font-weight:500;font-size:17px;line-height:1.2;color:var(--white);text-decoration:none;padding:8px 9px}
+
+/* Stage: the heading on the left and the prism on the right, like the banner on UVA Engineering pages */
+.stage{position:relative;flex:1 0 auto;display:grid;grid-template-columns:minmax(320px,.8fr) minmax(0,1.2fr);grid-template-rows:minmax(0,1fr) auto;column-gap:clamp(16px,2.4vw,40px);padding:0 var(--gutter);min-height:560px}
+.intro{position:relative;z-index:2;grid-column:1;grid-row:1;align-self:center;padding:32px 0 24px}
+.headline{position:relative;margin:0;padding-left:24px;font-family:var(--font-cond);font-weight:700;font-synthesis:none;font-size:clamp(46px,4.8vw,76px);line-height:1;letter-spacing:0;color:var(--white);max-width:7.4em}
+.headline::before{content:"";position:absolute;left:0;top:.05em;bottom:.07em;width:5px;background:var(--coral)}
+.dock{position:relative;margin:26px 0 0}
+.lede{margin:0;font-size:17px;line-height:28px;color:var(--white);max-width:34em;transition:opacity .25s ease}
+.app.has-card .lede{opacity:0}
+.cta{display:flex;flex-wrap:wrap;gap:10px 28px;margin:24px 0 0}
+.arrow-link{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:16px;line-height:1.25;color:var(--white);text-decoration:none}
+.arrow{flex:none;display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:var(--coral);color:var(--space);transition:background-color .2s,transform .2s}
+.arrow svg{width:11px;height:11px;display:block}
+.arrow path{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.arrow-link:hover .arrow{background:var(--sand);transform:translateX(2px)}
+.slot{position:relative;grid-column:2;grid-row:1;min-height:320px}
+.stage-foot{position:relative;z-index:3;grid-column:1/-1;grid-row:2;display:flex;align-items:center;justify-content:space-between;gap:8px 20px;padding:0 0 14px}
+.hint{margin:0;display:inline-flex;align-items:center;gap:10px;font-size:15px;line-height:1.35;color:var(--muted)}
+.hint::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--teal);flex:none}
+.motion{display:inline-flex;align-items:center;gap:8px;font:700 15px/1.25 var(--font-text);color:var(--white);background:none;border:0;padding:6px 0;cursor:pointer}
+.motion .badge{flex:none;display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:var(--slate);color:var(--white);transition:background-color .2s,color .2s}
+.motion svg{width:9px;height:9px;fill:currentColor;display:block}
+.motion:hover .badge{background:var(--sand);color:var(--space)}
 
 /* Static orb: shown while the 3D scene loads, and as the fallback */
 .css-orb{--s:min(300px,34vh,58vw);position:absolute;left:50%;top:50%;width:var(--s);height:var(--s);transform:translate(-50%,-50%);transition:opacity 1s ease .15s,visibility 0s linear 0s;pointer-events:none}
@@ -87,24 +95,23 @@ a{color:inherit}
 .css-rim{inset:0;box-shadow:inset 0 0 0 1.5px rgba(245,243,238,.3)}
 
 /* Project card */
-.card{position:fixed;left:0;top:0;z-index:6;width:min(330px,calc(100vw - 24px));visibility:hidden;pointer-events:none;will-change:transform;transform:translate3d(-9999px,-9999px,0);--c:var(--teal)}
+.card{position:fixed;left:0;top:0;z-index:6;width:min(340px,calc(100vw - 24px));visibility:hidden;pointer-events:none;will-change:transform;transform:translate3d(-9999px,-9999px,0);--c:var(--teal)}
 .card.is-on{visibility:visible;pointer-events:auto;cursor:pointer}
-.card-inner{position:relative;padding:15px 18px 14px;border-radius:16px;text-align:left;background:rgba(52,73,94,.97);border:1px solid rgba(245,243,238,.1);box-shadow:0 16px 40px rgba(0,0,0,.35);overflow:hidden;opacity:0;transform:translateY(8px) scale(.98);transition:opacity .22s ease,transform .32s cubic-bezier(.2,.8,.2,1)}
+.card-inner{position:relative;padding:16px 20px 16px;border-radius:4px;text-align:left;background:var(--slate);border:1px solid rgba(245,243,238,.1);box-shadow:0 16px 40px rgba(0,0,0,.32);overflow:hidden;opacity:0;transform:translateY(8px) scale(.98);transition:opacity .22s ease,transform .32s cubic-bezier(.2,.8,.2,1)}
 .card.is-on .card-inner{opacity:1;transform:none}
 .card.swap .card-inner{animation:orcl-swap .34s ease}
 @keyframes orcl-swap{from{opacity:.2;transform:translateY(4px)}to{opacity:1;transform:none}}
-.card-top{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.card-top{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
 .card-id{display:inline-flex;align-items:center;gap:10px;min-width:0}
 .card-ico{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;color:var(--c);background:var(--space);box-shadow:inset 0 0 0 1.5px var(--c)}
 .card-ico svg{width:17px;height:17px;display:block}
 .card-ico path,.pi path{fill:none;stroke:currentColor;stroke-width:1.85;stroke-linecap:round;stroke-linejoin:round}
 .card-ico circle,.pi circle{fill:currentColor}
-.chip{display:inline-flex;align-items:center;font-family:var(--font-mono);font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--sand)}
-.card-num{font-family:var(--font-mono);font-size:10.5px;color:var(--muted);letter-spacing:.08em;white-space:nowrap}
-.card-title{position:relative;z-index:1;margin:0 0 6px;font-size:17px;font-weight:600;line-height:1.28;color:var(--white)}
-.card-text{position:relative;z-index:1;margin:0 0 12px;font-size:13.5px;line-height:1.5;color:var(--text-2)}
-.card-link{position:relative;z-index:1;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--sand);text-decoration:none}
-.card-link:hover{text-decoration:underline;text-underline-offset:3px}
+.chip{display:inline-flex;align-items:center;font-family:var(--font-cond);font-weight:700;font-synthesis:none;font-size:15px;line-height:1.1;letter-spacing:.02em;text-transform:uppercase;color:var(--sand)}
+.card-num{font-size:13px;font-weight:500;color:var(--muted);white-space:nowrap}
+.card-title{position:relative;z-index:1;margin:0 0 6px;font-size:19px;font-weight:700;line-height:1.25;color:var(--white)}
+.card-text{position:relative;z-index:1;margin:0 0 12px;font-size:15px;line-height:1.5;color:var(--text-2)}
+.card-link{position:relative;z-index:1;font-size:15px}
 
 /* Leader line from a point of light to its card */
 .leader{position:fixed;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;overflow:visible;opacity:0;transition:opacity .25s ease;--c:var(--teal)}
@@ -116,52 +123,59 @@ a{color:inherit}
 .app.motion-off .lm-ring{animation:none;opacity:.9}
 
 /* Project index */
-.index{position:relative;z-index:2;padding:6px var(--gutter) 8px;background:linear-gradient(180deg,rgba(23,33,43,0),rgba(23,33,43,.86) 30%,rgba(23,33,43,.96))}
-.index-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:0 0 10px;padding-top:12px;border-top:1px solid var(--line)}
-.index-title{margin:0;font-family:var(--font-mono);font-weight:500;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-.index-all{font-family:var(--font-mono);font-size:11.5px;color:var(--text-2);text-decoration:none}
-.index-all:hover{color:var(--white)}
-.index-cols{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1.05fr) minmax(0,.7fr);gap:10px 40px}
+.index{position:relative;z-index:2;padding:8px var(--gutter) 16px;background:linear-gradient(180deg,rgba(23,33,43,0),rgba(23,33,43,.9) 24%,rgba(23,33,43,.97))}
+.index-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:0 0 14px;padding-top:18px;border-top:1px solid var(--line)}
+.index-title{margin:0;font-weight:700;font-size:28px;line-height:1.15;color:var(--white)}
+.index-cols{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1.05fr) minmax(0,.7fr);gap:12px 40px}
 .area{--c:var(--teal)}
 .area[data-area=road]{--c:var(--coral)}
 .area[data-area=train]{--c:var(--teal)}
 .area[data-area=sense]{--c:var(--sand)}
-.area-name{display:flex;align-items:center;gap:9px;margin:0 0 6px;font-size:12.5px;font-weight:600;color:var(--text)}
-.area-name::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c);flex:none}
+.area-name{display:flex;align-items:center;gap:9px;margin:0 0 6px;font-size:17px;font-weight:700;line-height:1.3;color:var(--white)}
+.area-name::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c);flex:none}
 .area ul{list-style:none;margin:0 0 0 -9px;padding:0;display:flex;flex-wrap:wrap;gap:0 2px}
-.area a{display:inline-flex;align-items:center;gap:7px;padding:5px 9px;border-radius:999px;border:1px solid transparent;font-size:13.5px;line-height:1.35;color:var(--text-2);text-decoration:none;transition:color .2s,background-color .2s,border-color .2s}
-.pi{width:15px;height:15px;flex:none;display:block;color:var(--c)}
+.area a{display:inline-flex;align-items:center;gap:8px;padding:5px 9px;border-radius:4px;font-size:15.5px;font-weight:500;line-height:1.35;color:var(--text-2);text-decoration:none;transition:color .2s,background-color .2s}
+.pi{width:16px;height:16px;flex:none;display:block;color:var(--c)}
 .area a:hover,.area a.is-active{color:var(--white);background:var(--slate)}
 .area a:focus-visible{outline-color:var(--c)}
 
 /* Footer */
-.foot{position:relative;z-index:2;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 20px;padding:10px var(--gutter) 18px;font-family:var(--font-mono);font-size:11.5px;color:var(--muted);background:rgba(23,33,43,.96)}
-.foot-links{display:flex;gap:18px}
-.foot a{color:var(--text-2);text-decoration:none;border-bottom:1px solid var(--line-2)}
-.foot a:hover{color:var(--white)}
+.foot{position:relative;z-index:2;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 24px;padding:18px var(--gutter) 22px;font-size:15px;line-height:1.4;color:var(--text-2);background:var(--space);border-top:1px solid var(--line)}
+.foot-links{display:flex;gap:22px}
+.foot a{color:var(--white);font-weight:700;text-decoration:none}
 
 /* Embedded in the Drupal page: the UVA header and footer are already there */
 .app.is-embed .top,.app.is-embed .foot,.app.is-embed .index{display:none}
-.app.is-embed .intro{padding-top:14px}
 
-@media (max-width:900px){
-  .brand-sub{display:none}
+@media (max-width:1240px){
+  .top-nav a.more{display:none}
+}
+/* One column: the heading, then the prism, with the project card docked under it */
+@media (max-width:859px){
+  .stage{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto}
+  .intro{grid-row:1;align-self:start;padding:24px 0 4px}
+  .headline{font-size:clamp(36px,6.2vw,56px);max-width:none}
+  .dock{display:none}
+  .cta{margin-top:14px}
+  .slot{grid-column:1;grid-row:2}
+  .stage-foot{grid-row:3}
 }
 @media (max-width:720px){
-  .top{padding-top:12px}
-  .top-nav a:not(.enter){display:none}
+  .top{padding:16px var(--gutter)}
+  .lab-name{font-size:22px}
+  .top-nav{display:none}
   .stage{min-height:calc(100svh - 58px)}
-  .headline{font-size:clamp(25px,7.2vw,32px)}
-  .stage-foot{grid-template-columns:1fr;justify-items:center;gap:10px}
-  .hint{grid-column:1;text-align:center}
+  .headline{font-size:clamp(32px,9.6vw,44px);padding-left:18px}
+  .headline::before{width:4px}
+  .stage-foot{flex-direction:column;justify-content:center;gap:6px}
+  .hint{text-align:center}
   .hint::before{display:none}
-  .motion{grid-column:1;justify-self:center}
   .css-orb{top:calc(50% - 105px)}
   .index-cols{grid-template-columns:1fr;gap:16px}
   .foot{flex-direction:column;align-items:flex-start}
 }
 @media (forced-colors:active){
-  .headline{background:none;color:CanvasText}
+  .headline{color:CanvasText}
 }
 </style>
 </head>
@@ -170,23 +184,30 @@ a{color:inherit}
   <canvas id="scene" aria-hidden="true"></canvas>
 
   <header class="top">
-    <a class="brand" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab">
-      <span class="brand-mark" aria-hidden="true"></span>
-      <span class="brand-name">ORCL</span>
-      <span class="brand-sub">Omni-Reality and Cognition Lab<br>University of Virginia</span>
-    </a>
+    <a class="lab-name" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab">Omni-Reality &amp; Cognition Lab</a>
     <nav class="top-nav" aria-label="Lab website">
+      <a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/who-we-are">Who We Are</a>
       <a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research">Research</a>
-      <a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/who-we-are">People</a>
+      <a class="more" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/publications">Publications</a>
+      <a class="more" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/funding">Funding</a>
+      <a class="more" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/facilities">Facilities</a>
+      <a class="more" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/blogs">News</a>
+      <a class="more" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/teaching">Teaching</a>
+      <a class="more" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/outreach">Outreach</a>
       <a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/contact">Contact</a>
-      <a class="enter" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab">Lab website <span aria-hidden="true">→</span></a>
     </nav>
   </header>
 
   <main class="stage" id="stage">
     <div class="intro">
-      <p class="eyebrow">10 projects · 3 research themes</p>
-      <h1 class="headline">Where virtual worlds meet <strong>human behavior</strong></h1>
+      <h1 class="headline">Where Virtual Worlds Meet Human Behavior</h1>
+      <div class="dock" id="dock">
+        <p class="lede" id="lede">The Omni-Reality &amp; Cognition Lab builds virtual, augmented and mixed reality simulators, instruments them with eye tracking and physiological sensing, and uses them to design safer streets, healthier buildings and better training for high-stakes work.</p>
+      </div>
+      <p class="cta">
+        <a class="arrow-link" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research"><span class="lbl">Explore our research</span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+        <a class="arrow-link" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/who-we-are"><span class="lbl">Meet the team</span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+      </p>
     </div>
     <div class="slot" id="slot">
       <div class="css-orb" id="cssOrb" aria-hidden="true">
@@ -196,14 +217,14 @@ a{color:inherit}
     </div>
     <div class="stage-foot">
       <p class="hint" id="hint">Hover an icon to preview a project · Click to open it</p>
-      <button class="motion" id="motionBtn" type="button"><svg viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="1" width="2.4" height="8" rx=".6"/><rect x="6.1" y="1" width="2.4" height="8" rx=".6"/></svg><span>Pause motion</span></button>
+      <button class="motion" id="motionBtn" type="button"><span class="badge" aria-hidden="true"><svg viewBox="0 0 10 10"><rect x="1.5" y="1" width="2.4" height="8" rx=".6"/><rect x="6.1" y="1" width="2.4" height="8" rx=".6"/></svg></span><span class="lbl">Pause motion</span></button>
     </div>
   </main>
 
   <nav class="index" aria-labelledby="indexTitle">
     <div class="index-head">
-      <h2 class="index-title" id="indexTitle">Research projects</h2>
-      <a class="index-all" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research">All research <span aria-hidden="true">→</span></a>
+      <h2 class="index-title" id="indexTitle">Research Projects</h2>
+      <a class="index-all arrow-link" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research"><span class="lbl">All research</span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
     </div>
     <div class="index-cols">
       <section class="area" data-area="road" aria-labelledby="area-road">
@@ -247,7 +268,7 @@ a{color:inherit}
   </nav>
 
   <footer class="foot">
-    <span>Omni-Reality and Cognition Lab · School of Engineering and Applied Science · University of Virginia</span>
+    <span>Omni-Reality &amp; Cognition Lab · School of Engineering and Applied Science · University of Virginia</span>
     <span class="foot-links"><a href="https://www.youtube.com/@UVA-ORCL">ORCL on YouTube</a><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/contact">Contact</a></span>
   </footer>
 
@@ -256,7 +277,7 @@ a{color:inherit}
       <div class="card-top"><span class="card-id"><span class="card-ico" id="cardIco" aria-hidden="true"></span><span class="chip" id="cardArea"></span></span><span class="card-num" id="cardNum"></span></div>
       <p class="card-title" id="cardTitle"></p>
       <p class="card-text" id="cardText"></p>
-      <a class="card-link" id="cardLink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research" tabindex="-1">Open project <span aria-hidden="true">→</span></a>
+      <a class="card-link arrow-link" id="cardLink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research" tabindex="-1"><span class="lbl">Open project</span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
     </div>
   </div>
   <svg class="leader" id="leader" aria-hidden="true" focusable="false"><line id="leadLine" x1="0" y1="0" x2="0" y2="0"/><g id="leadMark"><circle class="lm-ring" id="lmRing" r="15"/></g><circle class="lm-dot" id="lmDot" r="2.2"/></svg>
@@ -270,7 +291,7 @@ a{color:inherit}
   const $ = (s) => document.querySelector(s);
   const card = $('#card'), cardArea = $('#cardArea'), cardNum = $('#cardNum'), cardTitle = $('#cardTitle'), cardText = $('#cardText'), cardLink = $('#cardLink');
   const leader = $('#leader'), leadLine = $('#leadLine'), leadMark = $('#leadMark'), lmRing = $('#lmRing'), lmDot = $('#lmDot'), cardIco = $('#cardIco');
-  const slot = $('#slot'), cssOrb = $('#cssOrb'), hint = $('#hint'), motionBtn = $('#motionBtn'), header = $('.top'), intro = $('.intro'), stageFoot = $('.stage-foot');
+  const slot = $('#slot'), cssOrb = $('#cssOrb'), hint = $('#hint'), motionBtn = $('#motionBtn'), header = $('.top'), intro = $('.intro'), stageFoot = $('.stage-foot'), dock = $('#dock'), lede = $('#lede');
   const AREA = {
     road: { name: 'Road Users and Micromobility Safety', chip: 'Road users & micromobility', color: '#E76F51' },
     train: { name: 'AI-Driven Immersive Training', chip: 'AI-driven immersive training', color: '#2A7F7F' },
@@ -311,6 +332,26 @@ a{color:inherit}
     document.querySelectorAll('a[href^="http"]').forEach((a) => { a.target = '_top'; });
   }
   const fine = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const wide = window.matchMedia('(min-width: 860px)');
+  let docked = false, dockW = 0;
+  function measureDock() {
+    docked = wide.matches && !!dock && dock.offsetParent !== null;
+    app.classList.toggle('is-docked', docked);
+    if (!docked) {
+      if (dockW) { dockW = 0; card.style.width = ''; }
+      if (active >= 0) { cardW = card.offsetWidth; cardH = card.offsetHeight; }
+      return;
+    }
+    // Room for the longest card, so the links below never move
+    const w = Math.round(dock.getBoundingClientRect().width);
+    card.style.width = w + 'px';
+    dockW = w;
+    let maxH = 0;
+    for (let i = 0; i < N; i++) { fill(i); maxH = Math.max(maxH, card.offsetHeight); }
+    if (active >= 0) fill(active);
+    dock.style.minHeight = Math.ceil(Math.max(maxH, lede ? lede.scrollHeight : 0)) + 'px';
+    snap = true;
+  }
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   let scene = null;
@@ -321,8 +362,8 @@ a{color:inherit}
   let tourOn = false, tourTimer = 0, idleTimer = 0, tourIdx = -1, userTouched = false;
   const TOUR_MS = 4800, IDLE_MS = 9000;
 
-  const ICON_PAUSE = '<svg viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="1" width="2.4" height="8" rx=".6"/><rect x="6.1" y="1" width="2.4" height="8" rx=".6"/></svg>';
-  const ICON_PLAY = '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2.2 1.2v7.6L8.6 5z"/></svg>';
+  const ICON_PAUSE = '<svg viewBox="0 0 10 10"><rect x="1.5" y="1" width="2.4" height="8" rx=".6"/><rect x="6.1" y="1" width="2.4" height="8" rx=".6"/></svg>';
+  const ICON_PLAY = '<svg viewBox="0 0 10 10"><path d="M2.2 1.2v7.6L8.6 5z"/></svg>';
 
   function setHint() {
     if (app.classList.contains('is-fallback')) hint.textContent = 'Point to a project name below to preview it';
@@ -362,7 +403,7 @@ a{color:inherit}
     if (!was) {
       // Place the card before it can take pointer events, so it never sits under a resting cursor
       snap = true; place(0);
-      card.classList.add('is-on'); leader.classList.add('is-on');
+      card.classList.add('is-on'); leader.classList.add('is-on'); app.classList.add('has-card');
     } else if (!scene) { snap = true; place(0); }
   }
 
@@ -372,6 +413,7 @@ a{color:inherit}
     active = -1; source = null;
     card.classList.remove('is-on', 'swap');
     leader.classList.remove('is-on');
+    app.classList.remove('has-card');
     links.forEach((l) => l.classList.remove('is-active'));
     if (scene) scene.setActive(-1);
   }
@@ -396,14 +438,24 @@ a{color:inherit}
       o = { x: r.left + r.width / 2, y: r.top + r.height / 2, r: r.width / 2 };
       ax = fx = o.x + o.r * 0.92; ay = fy = o.y - o.r * 0.38; ar = 3;
     }
+    let x, y;
+    if (docked) {
+      const dr = dock.getBoundingClientRect();
+      x = Math.round(dr.left); y = Math.round(dr.top);
+      if (snap || !dt) { pos.x = x; pos.y = y; snap = false; }
+      else { const k = 1 - Math.exp(-dt * 16); pos.x += (x - pos.x) * k; pos.y += (y - pos.y) * k; }
+      card.style.transform = 'translate3d(' + pos.x.toFixed(1) + 'px,' + pos.y.toFixed(1) + 'px,0)';
+      if (scene) lead(ax, ay, ar, o);
+      else { leadLine.style.opacity = '0'; lmDot.style.opacity = '0'; leadMark.setAttribute('transform', 'translate(-99 -99)'); }
+      return;
+    }
     // Keep the card between the headline and the row with the pause button when there is room
     let top = (header && !embed ? header.getBoundingClientRect().bottom : 0) + 8;
     const introBottom = intro.getBoundingClientRect().bottom + 6;
     let bottom = vh - m;
     const footTop = stageFoot.getBoundingClientRect().top - 6;
     if (footTop - introBottom > cardH + 40) { top = Math.max(top, introBottom); bottom = Math.min(bottom, footTop); }
-    let x, y;
-    if (vw < 720) {
+    if (vw < 860) {
       const sr = slot.getBoundingClientRect();
       x = (vw - cardW) / 2;
       y = Math.min(sr.bottom - cardH - 4, vh - cardH - m);
@@ -439,12 +491,22 @@ a{color:inherit}
     if (snap || !dt) { pos.x = x; pos.y = y; snap = false; }
     else { const k = 1 - Math.exp(-dt * 16); pos.x += (x - pos.x) * k; pos.y += (y - pos.y) * k; }
     card.style.transform = 'translate3d(' + pos.x.toFixed(1) + 'px,' + pos.y.toFixed(1) + 'px,0)';
+    lead(ax, ay, ar, o);
+  }
+
+  // The ring hugs the portal; the line starts at its edge, where the dot sits. No line across the orb.
+  function lead(ax, ay, ar, o) {
     const ex = clamp(ax, pos.x, pos.x + cardW), ey = clamp(ay, pos.y, pos.y + cardH);
     const dx = ex - ax, dy = ey - ay, d = Math.hypot(dx, dy);
-    // The ring hugs the portal; the line starts at its edge, where the dot sits
     const rr = ar + 4;
     lmRing.setAttribute('r', rr.toFixed(1));
-    if (d > rr + 10) {
+    // With the card docked on the left, draw the line only from points of light on the left half of the orb
+    let clear = !(docked && o && ax > o.x - o.r * 0.15);
+    if (clear && o && d > 1) {
+      const t = clamp(((o.x - ax) * dx + (o.y - ay) * dy) / (d * d), 0, 1);
+      clear = Math.hypot(ax + dx * t - o.x, ay + dy * t - o.y) > o.r * 0.97;
+    }
+    if (d > rr + 10 && clear) {
       const sx = ax + dx / d * rr, sy = ay + dy / d * rr;
       leadLine.setAttribute('x1', sx.toFixed(1));
       leadLine.setAttribute('y1', sy.toFixed(1));
@@ -486,7 +548,7 @@ a{color:inherit}
   function setMotion(on, byUser) {
     motionOn = on;
     app.classList.toggle('motion-off', !on);
-    motionBtn.innerHTML = (on ? ICON_PAUSE : ICON_PLAY) + '<span>' + (on ? 'Pause motion' : 'Play motion') + '</span>';
+    motionBtn.innerHTML = '<span class="badge" aria-hidden="true">' + (on ? ICON_PAUSE : ICON_PLAY) + '</span><span class="lbl">' + (on ? 'Pause motion' : 'Play motion') + '</span>';
     if (scene) scene.setMotion(on);
     if (!on) stopTour();
     else if (byUser) { clearTimeout(idleTimer); idleTimer = setTimeout(onIdle, 1500); }
@@ -541,11 +603,17 @@ a{color:inherit}
   cssOrb.addEventListener('click', () => { if (!scene) api.next(); });
   const relayout = () => { if (!scene && active >= 0) { snap = true; place(0); } };
   window.addEventListener('resize', relayout);
+  let dockTimer = 0;
+  const remeasure = () => { clearTimeout(dockTimer); dockTimer = setTimeout(measureDock, 120); };
+  window.addEventListener('resize', remeasure);
+  if (wide.addEventListener) wide.addEventListener('change', remeasure);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureDock);
   window.addEventListener('scroll', relayout, { passive: true });
 
   const fallbackTimer = setTimeout(() => api.fail('timed out'), 12000);
   const api = window.ORCL = {
     projects, areas: AREA, icons: ICONS, embed,
+    isDocked: () => docked,
     attach(s) {
       scene = s;
       clearTimeout(fallbackTimer);
@@ -557,7 +625,7 @@ a{color:inherit}
         if (active >= 0) { s.setActive(active); s.present(active, true); snap = true; return; }
         if (userTouched) return;
         if (motionOn) startTour(0); else show(0, 'intro');
-      }, 1300);
+      }, docked ? 3200 : 1300);
     },
     fail(why) {
       if (scene) return;
@@ -590,6 +658,7 @@ a{color:inherit}
   };
   setMotion(motionOn, false);
   setHint();
+  measureDock();
 })();
 </script>
 
@@ -855,11 +924,35 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
   // would also put hard pinpoint highlights on the glass, which bloom into squares
 
   // The glass orb
+  // Clear glass that only adds its reflections on top of what is inside. A refracting (transmission) glass
+  // re-renders the scene behind it at a lower sharpness, which made the head look out of focus
+  const glassEnv = (function () {
+    const env = new THREE.Scene();
+    env.add(new THREE.Mesh(new THREE.SphereGeometry(30, 32, 16), new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.BackSide })));
+    // Pill-shaped strips: rounded ends, so no square corners show in the glass
+    const strip = (w, h, hex, k, x, y, z) => {
+      const r = Math.min(w, h) / 2, sh = new THREE.Shape(), x0 = -w / 2, y0 = -h / 2;
+      sh.moveTo(x0 + r, y0); sh.lineTo(x0 + w - r, y0); sh.absarc(x0 + w - r, y0 + r, r, -Math.PI / 2, 0, false); sh.lineTo(x0 + w, y0 + h - r);
+      sh.absarc(x0 + w - r, y0 + h - r, r, 0, Math.PI / 2, false); sh.lineTo(x0 + r, y0 + h); sh.absarc(x0 + r, y0 + h - r, r, Math.PI / 2, Math.PI, false);
+      sh.lineTo(x0, y0 + r); sh.absarc(x0 + r, y0 + r, r, Math.PI, Math.PI * 1.5, false);
+      const m = new THREE.Mesh(new THREE.ShapeGeometry(sh, 12), new THREE.MeshBasicMaterial({ color: new THREE.Color(hex).multiplyScalar(k), side: THREE.DoubleSide }));
+      m.position.set(x, y, z);
+      m.lookAt(0, 0, 0);
+      env.add(m);
+    };
+    strip(16, 0.55, '#F5F3EE', 1.6, 0, 10, -3.5);
+    strip(0.55, 12, '#F5F3EE', 1.25, -10, 0.6, -2.5);
+    strip(0.45, 8, '#E9C9A5', 0.9, 10, -1.2, -2);
+    strip(1.6, 1.0, '#F5F3EE', 1.5, 5.4, 5.6, 8);
+    const pm = new THREE.PMREMGenerator(renderer);
+    const t = pm.fromScene(env, 0).texture;
+    pm.dispose();
+    return t;
+  })();
   const glass = new THREE.MeshPhysicalMaterial({
-    color: 0xffffff, metalness: 0, roughness: 0.02,
-    transmission: 1, thickness: 0.6, ior: 1.38,
-    clearcoat: 1, clearcoatRoughness: 0.05,
-    specularIntensity: 1, envMapIntensity: 0.95,
+    color: 0x000000, metalness: 0, roughness: 0.02,
+    envMap: glassEnv, envMapIntensity: 1.0, specularIntensity: 1,
+    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
   });
   const orb = new THREE.Mesh(new THREE.SphereGeometry(1, 128, 96), glass);
   root.add(orb);
@@ -1088,7 +1181,193 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
 
   person.scale.setScalar(0.94);
   person.position.set(-0.03, -0.01, 0);
-  person.rotation.y = -0.62;
+  person.rotation.order = 'YZX';
+
+  // Screens around the head: what the person in the headset is looking at. The head turns from one to the next,
+  // and the screen in its line of sight lights up, with a gaze ray and a fixation dot, as in eye tracking.
+  // Each screen belongs to a research theme; while a project is on show the head looks at that project's screen.
+  const screens = new THREE.Group();
+  inner.add(screens);
+  const SCR_W = 0.28, SCR_H = 0.19, SCR_CW = 256, SCR_CH = 174, SCR_DIM = 0.52;
+  const SCREENS = [
+    { kind: 'city', area: 'road', pos: [0.58, 0.45, 0.22] },
+    { kind: 'road', area: 'road', pos: [0.76, 0.0, 0.16] },
+    { kind: 'gauges', area: 'road', pos: [0.58, -0.47, 0.24] },
+    { kind: 'control', area: 'train', pos: [-0.6, -0.45, 0.3] },
+    { kind: 'monitor', area: 'train', pos: [-0.76, 0.0, 0.22] },
+    { kind: 'signals', area: 'sense', pos: [-0.6, 0.43, 0.32] },
+  ];
+  const SCREEN_FOR_ICON = { walk: 0, eye: 0, roundabout: 0, bike: 1, helmet: 1, scooter: 2, shield: 3, signal: 3, heart: 4, wheel: 5 };
+  const SOFT = [245, 243, 238], DEEP = [23, 33, 43], SLATE = [52, 73, 94];
+  // Line drawings on a small canvas: a city, the road ahead, gauges, a control panel, a patient monitor, biosignals
+  function drawScreen(g, sc, lit, ph) {
+    const W = SCR_CW, H = SCR_CH, col = hexRgb(AREA_HEX[sc.area]);
+    const ink = (a) => rgba(SOFT, Math.min(1, (0.5 + 0.5 * lit) * a));
+    const acc = rgba(mixRgb(SLATE, col, 0.45 + 0.55 * lit), 1);
+    const rr = (x, y, w, h, r) => { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); };
+    g.setTransform(1, 0, 0, 1, 0, 0);
+    g.clearRect(0, 0, W, H);
+    rr(3, 3, W - 6, H - 6, 18);
+    g.fillStyle = rgba(mixRgb(DEEP, SLATE, 0.3 + 0.45 * lit), 1);
+    g.fill();
+    g.save();
+    rr(3, 3, W - 6, H - 6, 18);
+    g.clip();
+    g.lineCap = 'round'; g.lineJoin = 'round';
+    if (sc.kind === 'city') {
+      const base = 150;
+      const B = [
+        [[18, 0], [18, 70], [46, 70], [46, 0]],
+        [[52, 0], [52, 98], [60, 98], [60, 120], [68, 120], [68, 142], [70, 142], [70, 120], [78, 120], [78, 98], [86, 98], [86, 0]],
+        [[92, 0], [92, 56], [114, 56], [114, 0]],
+        [[120, 0], [120, 106], [137, 126], [154, 106], [154, 0]],
+        [[160, 0], [160, 80], [166, 80], [166, 96], [184, 96], [184, 80], [190, 80], [190, 0]],
+        [[196, 0], [196, 92], [222, 92], [222, 0]],
+        [[228, 0], [228, 48], [244, 48], [244, 0]],
+      ];
+      g.strokeStyle = ink(1); g.lineWidth = 5;
+      for (const poly of B) { g.beginPath(); poly.forEach(([x, h], k) => (k ? g.lineTo(x, base - h) : g.moveTo(x, base - h))); g.stroke(); }
+      g.beginPath(); g.moveTo(8, base); g.lineTo(W - 8, base); g.stroke();
+      const bodies = [[18, 46, 70], [52, 86, 98], [92, 114, 56], [120, 154, 106], [160, 190, 80], [196, 222, 92], [228, 244, 48]];
+      let k = 0;
+      for (const [x0, x1, h] of bodies) {
+        for (let wy = base - h + 12; wy < base - 10; wy += 16) {
+          for (let wx = x0 + 7; wx < x1 - 8; wx += 10) {
+            k++;
+            const on = lit > 0.05 && Math.sin(k * 12.9898 + Math.floor(ph * 2 + k * 0.37) * 78.233) > 0.15;
+            g.fillStyle = on ? acc : rgba(SOFT, 0.14 + 0.1 * lit);
+            g.fillRect(wx, wy, 4, 6);
+          }
+        }
+      }
+    } else if (sc.kind === 'road') {
+      const hz = 62, C = W / 2, depth = (t) => hz + (H - 10 - hz) * t * t;
+      g.strokeStyle = ink(0.8); g.lineWidth = 5;
+      g.beginPath(); g.moveTo(14, hz); g.lineTo(W - 14, hz); g.stroke();
+      g.strokeStyle = acc; g.lineWidth = 7;
+      g.beginPath(); g.moveTo(C - 8, hz); g.lineTo(28, H - 10); g.moveTo(C + 8, hz); g.lineTo(W - 28, H - 10); g.stroke();
+      g.strokeStyle = ink(1);
+      for (let k = 0; k < 5; k++) {
+        const t0 = ((k + ph) % 5) / 5, t1 = Math.min(1, t0 + 0.09);
+        g.lineWidth = 3 + 7 * t0;
+        g.beginPath(); g.moveTo(C, depth(t0)); g.lineTo(C, depth(t1)); g.stroke();
+      }
+    } else if (sc.kind === 'gauges') {
+      const gauge = (cx, cy, r, v) => {
+        g.strokeStyle = ink(0.9); g.lineWidth = 6;
+        g.beginPath(); g.arc(cx, cy, r, Math.PI * 0.85, Math.PI * 2.15); g.stroke();
+        g.lineWidth = 4;
+        for (let k = 0; k <= 6; k++) {
+          const a = Math.PI * (0.85 + (1.3 * k) / 6);
+          g.beginPath(); g.moveTo(cx + Math.cos(a) * (r - 4), cy + Math.sin(a) * (r - 4)); g.lineTo(cx + Math.cos(a) * (r - 14), cy + Math.sin(a) * (r - 14)); g.stroke();
+        }
+        const a = Math.PI * (0.85 + 1.3 * v);
+        g.strokeStyle = acc; g.lineWidth = 7;
+        g.beginPath(); g.moveTo(cx, cy); g.lineTo(cx + Math.cos(a) * (r - 10), cy + Math.sin(a) * (r - 10)); g.stroke();
+        g.fillStyle = acc; g.beginPath(); g.arc(cx, cy, 7, 0, Math.PI * 2); g.fill();
+      };
+      gauge(86, 110, 56, 0.55 + 0.3 * Math.sin(ph * 1.3) * lit);
+      gauge(186, 114, 42, 0.4 + 0.25 * Math.sin(ph * 0.9 + 1.2) * lit);
+    } else if (sc.kind === 'control') {
+      for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++) {
+        const x = 26 + c * 42, y = 24 + r * 38, k = r * 5 + c;
+        const on = Math.sin(k * 7.13 + Math.floor(ph * 1.5) * ((k % 3) + 1)) > (lit > 0.05 ? 0.2 : 0.75);
+        g.lineWidth = 5;
+        if (on) { g.fillStyle = acc; g.fillRect(x, y, 26, 22); }
+        else { g.strokeStyle = ink(0.75); g.strokeRect(x, y, 26, 22); }
+      }
+      g.strokeStyle = ink(0.9); g.lineWidth = 6;
+      g.beginPath(); g.moveTo(26, 146); g.lineTo(W - 26, 146); g.stroke();
+      g.fillStyle = acc; g.beginPath(); g.arc(70 + 110 * (0.5 + 0.5 * Math.sin(ph * 0.8)), 146, 9, 0, Math.PI * 2); g.fill();
+    } else if (sc.kind === 'monitor') {
+      const ecg = (u) => {
+        const p = ((u % 1) + 1) % 1;
+        return -34 * Math.exp(-Math.pow((p - 0.5) / 0.018, 2)) + 14 * Math.exp(-Math.pow((p - 0.54) / 0.02, 2)) - 7 * Math.exp(-Math.pow((p - 0.3) / 0.04, 2)) - 9 * Math.exp(-Math.pow((p - 0.75) / 0.05, 2));
+      };
+      g.strokeStyle = acc; g.lineWidth = 6;
+      g.beginPath();
+      for (let x = 14; x <= 190; x += 2) { const y = 70 + ecg(x / 90 + ph * 0.5); if (x === 14) g.moveTo(x, y); else g.lineTo(x, y); }
+      g.stroke();
+      g.strokeStyle = ink(0.8); g.lineWidth = 5;
+      g.beginPath();
+      for (let x = 14; x <= 190; x += 2) { const y = 130 + 10 * Math.sin(x / 15 + ph * 2); if (x === 14) g.moveTo(x, y); else g.lineTo(x, y); }
+      g.stroke();
+      g.fillStyle = ink(0.9);
+      [[206, 40, 34], [206, 86, 26], [206, 128, 30]].forEach(([x, y, w], k) => { g.fillRect(x, y, w * (0.7 + 0.3 * (lit > 0.05 ? Math.abs(Math.sin(ph + k)) : 0.5)), 12); });
+    } else {
+      g.strokeStyle = acc; g.lineWidth = 6;
+      g.beginPath();
+      for (let x = 14; x <= W - 14; x += 2) {
+        const u = x / 46 + ph * 0.7;
+        const y = 66 - 28 * Math.pow(Math.max(0, Math.sin(u * 2.2)), 18) * (0.8 + 0.2 * Math.sin(u * 0.7)) + 4 * Math.sin(u * 5.3);
+        if (x === 14) g.moveTo(x, y); else g.lineTo(x, y);
+      }
+      g.stroke();
+      g.strokeStyle = ink(0.85); g.lineWidth = 5;
+      g.beginPath();
+      for (let x = 14; x <= W - 14; x += 2) { const y = 128 + 16 * Math.sin(x / 26 + ph * 1.1); if (x === 14) g.moveTo(x, y); else g.lineTo(x, y); }
+      g.stroke();
+    }
+    g.restore();
+    rr(6, 6, W - 12, H - 12, 15);
+    g.lineWidth = 7;
+    g.strokeStyle = lit > 0.05 ? rgba(mixRgb(SLATE, col, 0.3 + 0.7 * lit), 1) : rgba(mixRgb(SLATE, SOFT, 0.12), 1);
+    g.stroke();
+  }
+  const eye0 = new THREE.Vector3(-0.03, -0.01 + 0.115 * 0.94, 0);
+  const screenGeo = new THREE.PlaneGeometry(SCR_W, SCR_H);
+  const haloGeo = new THREE.PlaneGeometry(SCR_W * 1.7, SCR_H * 2.0);
+  const screenList = SCREENS.map((sc, i) => {
+    const cv = document.createElement('canvas');
+    cv.width = SCR_CW; cv.height = SCR_CH;
+    const g = cv.getContext('2d');
+    drawScreen(g, sc, 0, 0);
+    const tex = new THREE.CanvasTexture(cv);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.anisotropy = 4;
+    // Opaque with a cut-out edge for the rounded corners
+    const mat = new THREE.MeshBasicMaterial({ map: tex, alphaTest: 0.5 });
+    mat.alphaToCoverage = true;
+    const mesh = new THREE.Mesh(screenGeo, mat);
+    const p = new THREE.Vector3(...sc.pos);
+    mesh.position.copy(p);
+    // Face mostly toward the viewer, turned a little toward the head
+    const toHead = eye0.clone().sub(p).normalize();
+    const n = new THREE.Vector3(0, 0, 0.75).addScaledVector(toHead, 0.25).normalize();
+    mesh.lookAt(p.clone().add(n));
+    screens.add(mesh);
+    const halo = new THREE.Mesh(haloGeo, new THREE.MeshBasicMaterial({ map: glowTex, color: new THREE.Color(AREA_HEX[sc.area]), transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false }));
+    halo.position.copy(p).addScaledVector(n, -0.012);
+    halo.quaternion.copy(mesh.quaternion);
+    screens.add(halo);
+    const d = p.clone().sub(eye0);
+    return {
+      ...sc, i, mesh, mat, g, tex, halo, n,
+      right: new THREE.Vector3(1, 0, 0).applyQuaternion(mesh.quaternion),
+      up: new THREE.Vector3(0, 1, 0).applyQuaternion(mesh.quaternion),
+      yaw: Math.atan2(-d.z, d.x),
+      pitch: clamp(Math.atan2(d.y, Math.hypot(d.x, d.z)), -0.42, 0.42),
+      lit: 0, phase: i * 0.7, tick: 0, shown: 0,
+    };
+  });
+  const gazeLineGeo = new THREE.BufferGeometry();
+  gazeLineGeo.setAttribute('position', new THREE.Float32BufferAttribute([0, 0, 0, 0, 0, 0], 3));
+  const gazeLineMat = new THREE.LineBasicMaterial({ color: new THREE.Color(0, 0, 0), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false });
+  const gazeLine = new THREE.Line(gazeLineGeo, gazeLineMat);
+  gazeLine.frustumCulled = false;
+  inner.add(gazeLine);
+  const gazeDot = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: new THREE.Color(0, 0, 0), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false }));
+  gazeDot.scale.setScalar(0.075);
+  inner.add(gazeDot);
+  const SAND = new THREE.Color('#E9C9A5');
+  const gaze = { target: 0, timer: 2.5, yaw: screenList[0].yaw, pitch: screenList[0].pitch, jx: 0, jy: 0, jt: 0, fp: screenList[0].mesh.position.clone() };
+  const visorLocal = new THREE.Vector3(0.2, 0, 0), vTmp = new THREE.Vector3(), fixTmp = new THREE.Vector3();
+  function nextScreen(cur) {
+    let k = cur;
+    while (k === cur) k = Math.floor(Math.random() * screenList.length);
+    return k;
+  }
+  person.rotation.set(0, gaze.yaw, gaze.pitch);
 
   // Two swooshes around the head, as in the logo
   const ribbons = new THREE.Group();
@@ -1202,7 +1481,7 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
   function frameCamera() {
     const r = slot.getBoundingClientRect();
     // On phones the project card docks at the bottom of the slot, so frame the orb in the space above it
-    const top = r.top, bottom = vw < 720 ? Math.max(r.top + 240, r.bottom - 210) : r.bottom;
+    const top = r.top, bottom = vw < 860 ? Math.max(r.top + 240, r.bottom - 210) : r.bottom;
     const sw = Math.max(r.width, 200), sh = Math.max(bottom - top, 200);
     const narrow = sw < sh * 1.15;
     ringsGroup.scale.setScalar(narrow ? 0.9 : 1);
@@ -1216,7 +1495,7 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
     camera.lookAt(0, 0, 0);
     const cx = r.left + r.width / 2;
     let cy = (top + bottom) / 2;
-    if (vw < 720) cy = Math.min(cy, top + H * (vh / (2 * d * t)) + 10);
+    if (vw < 860) cy = Math.min(cy, top + H * (vh / (2 * d * t)) + 10);
     camera.setViewOffset(vw, vh, -(cx - vw / 2), -(cy - vh / 2), vw, vh);
     camera.updateProjectionMatrix();
     camera.updateMatrixWorld();
@@ -1320,7 +1599,12 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
       r.spinner.updateMatrixWorld(true);
       n.mesh.getWorldPosition(wp);
       let score = wp.z / R + 0.85 * Math.min(Math.abs(wp.x) / R, 0.62) - 0.8 * Math.max(0, -wp.y - 1.15) - 0.8 * Math.max(0, wp.y - 1.05) - 0.16 * Math.abs(s - cur);
-      if (vw >= 720) {
+      if (O.isDocked && O.isDocked()) {
+        // the card sits in the heading column on the left: bring the point of light round to that side of the orb
+        wp.project(camera);
+        const sx = ((wp.x + 1) / 2) * vw;
+        score += 1.1 * clamp((orbScr.x - sx) / (orbScr.r * 2), 0, 0.75);
+      } else if (vw >= 860) {
         // leave room for the card beside the point of light
         wp.project(camera);
         const sx = ((wp.x + 1) / 2) * vw;
@@ -1375,10 +1659,51 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
     }
     rimUniforms.uKeyDir.value.copy(KEY_DIR).transformDirection(camera.matrixWorldInverse);
     rimUniforms.uWarmDir.value.copy(WARM_DIR).transformDirection(camera.matrixWorldInverse);
-    const sway = motion ? Math.sin(clock * 0.28) : 0;
-    person.rotation.y = -0.6 + 0.32 * sway;
-    person.rotation.z = motion ? 0.03 * Math.sin(clock * 0.21) : 0;
-    person.position.y = -0.01 + (motion ? 0.012 * Math.sin(clock * 0.8) : 0);
+    // The head looks at the screen for the project on show; with no project on show it looks around
+    const want = activeIdx >= 0 ? (SCREEN_FOR_ICON[projects[activeIdx].icon] ?? -1) : -1;
+    if (motion) {
+      gaze.timer -= dt;
+      if (want >= 0) { if (want !== gaze.target) { gaze.target = want; gaze.timer = 3; } }
+      else if (gaze.timer <= 0) { gaze.target = nextScreen(gaze.target); gaze.timer = 2 + Math.random() * 1.4; }
+      const tg = screenList[gaze.target];
+      gaze.yaw = ease(gaze.yaw, tg.yaw, 3.4, dt);
+      gaze.pitch = ease(gaze.pitch, tg.pitch, 3.4, dt);
+    } else if (want >= 0 && want !== gaze.target) {
+      gaze.target = want; gaze.yaw = screenList[want].yaw; gaze.pitch = screenList[want].pitch;
+    }
+    person.rotation.set(motion ? 0.02 * Math.sin(clock * 0.5) : 0, gaze.yaw, gaze.pitch);
+    person.position.y = -0.01 + (motion ? 0.01 * Math.sin(clock * 0.8) : 0);
+    person.updateMatrixWorld(true);
+    // A screen lights up as the head comes round to it, and the one in view plays; paused, only the one in view is lit
+    for (const sc of screenList) {
+      const err = Math.hypot(gaze.yaw - sc.yaw, gaze.pitch - sc.pitch);
+      const goal = sc.i === gaze.target ? 1 - THREE.MathUtils.smoothstep(err, 0.06, 0.3) : 0;
+      sc.lit = motion ? ease(sc.lit, goal, 6, dt) : (sc.i === gaze.target ? 1 : 0);
+      sc.mat.color.setScalar(SCR_DIM + (1 - SCR_DIM) * sc.lit);
+      sc.halo.material.opacity = 0.42 * sc.lit;
+      if (motion && sc.lit > 0.03) {
+        sc.phase += dt; sc.tick += dt;
+        if (sc.tick >= 1 / 20 || sc.shown === 0) { sc.tick = 0; drawScreen(sc.g, sc, sc.lit, sc.phase); sc.tex.needsUpdate = true; sc.shown = Math.max(0.04, sc.lit); }
+      } else {
+        const level = sc.lit > 0.5 ? 1 : 0;
+        if (sc.shown !== level) { drawScreen(sc.g, sc, level, sc.phase); sc.tex.needsUpdate = true; sc.shown = level; }
+      }
+    }
+    // Gaze ray from the visor to a fixation point on the screen in view, with small fixational jumps
+    const ts = screenList[gaze.target];
+    gaze.jt -= dt;
+    if (gaze.jt <= 0 && motion) { gaze.jt = 0.3 + Math.random() * 0.4; gaze.jx = (Math.random() - 0.5) * SCR_W * 0.5; gaze.jy = (Math.random() - 0.5) * SCR_H * 0.45; }
+    fixTmp.copy(ts.mesh.position).addScaledVector(ts.right, gaze.jx).addScaledVector(ts.up, gaze.jy).addScaledVector(ts.n, 0.014);
+    gaze.fp.lerp(fixTmp, motion ? 1 - Math.exp(-18 * dt) : 1);
+    gazeDot.position.copy(gaze.fp);
+    gazeDot.material.color.copy(SAND).multiplyScalar(1.15 * ts.lit);
+    headset.localToWorld(vTmp.copy(visorLocal));
+    inner.worldToLocal(vTmp);
+    const gp = gazeLineGeo.attributes.position;
+    gp.setXYZ(0, vTmp.x, vTmp.y, vTmp.z);
+    gp.setXYZ(1, gaze.fp.x, gaze.fp.y, gaze.fp.z);
+    gp.needsUpdate = true;
+    gazeLineMat.color.copy(SAND).multiplyScalar(0.5 * ts.lit);
     // The visor network takes on the color of the active research area; a heartbeat for the sensing study
     const activeArea2 = activeIdx >= 0 ? projects[activeIdx].area : null;
     const hb = motion ? heartbeat(clock) : 0.25;
@@ -1514,6 +1839,7 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
       dirty();
     },
     hovering() { return hovered >= 0; },
+    gaze() { return { target: gaze.target, lit: screenList.map((c) => Math.round(c.lit * 100) / 100) }; },
   };
   O.scene = api;
   if (O.ready) O.ready();
@@ -1523,5 +1849,6 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
   startLoop();
 }
 </script>
+
 </body>
 </html>
