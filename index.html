@@ -5,82 +5,72 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ORCL Prism</title>
 <meta name="description" content="Opening page for the Omni-Reality &amp; Cognition Lab at the University of Virginia: a glass orb with a 3D head in a VR headset that looks from screen to screen, circled by small portals into the lab's research projects.">
-<meta name="theme-color" content="#17212B">
+<meta name="theme-color" content="#141E3C">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Francois+One&family=Libre+Franklin:wght@400;500;600;700&display=swap">
 <style>
 :root{
-  /* Lab palette: Deep Space, Slate Blue, Immersive Teal, Warm Coral, Sand, Soft White */
+  /* UVA Engineering page colors */
+  --navy:#141E3C;
+  --orange:#E57200;
+  --white:#FFFFFF;
+  --gray:#666666;
+  /* Lab palette, used inside the animation */
   --space:#17212B;
   --slate:#34495E;
   --teal:#2A7F7F;
   --coral:#E76F51;
   --sand:#E9C9A5;
-  --white:#F5F3EE;
-  --ink:var(--space);
-  --text:var(--white);
-  --text-2:rgba(245,243,238,.84);
-  --muted:rgba(245,243,238,.64);
-  --line:rgba(245,243,238,.12);
-  --line-2:rgba(245,243,238,.3);
-  /* UVA Engineering type: Franklin Gothic for text and its condensed cut for display headings.
+  /* UVA Engineering type: Franklin Gothic for text, its condensed cut for display headings.
      On a virginia.edu page that loads the UVA font kit these are the real faces; anywhere else they fall back
-     to Libre Franklin (a Franklin Gothic revival) and Francois One (a condensed gothic of the same family) */
+     to Libre Franklin (a Franklin Gothic revival) and Francois One (a condensed gothic) */
   --font-text:"franklin-gothic-urw","Libre Franklin","Franklin Gothic Book",Arial,sans-serif;
   --font-cond:"franklin-gothic-urw-cond","Francois One","Franklin Gothic Demi Cond","Arial Narrow",sans-serif;
-  --gutter:clamp(16px,3.4vw,48px);
-  color-scheme:dark;
+  --pad:clamp(20px,4.2vw,61px);
 }
 *,*::before,*::after{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--ink);color:var(--text)}
+html,body{margin:0;padding:0;background:var(--white);color:var(--navy)}
 body{font-family:var(--font-text);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
 a{color:inherit}
-:focus-visible{outline:2px solid var(--sand);outline-offset:3px}
+:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
 .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.wrap{width:min(1318px,calc(100% - 2 * var(--pad)));margin:0 auto}
 
-.app{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;isolation:isolate;pointer-events:none}
-.app a,.app button,.top,.index,.foot{pointer-events:auto}
-#scene{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:-1;opacity:0;transition:opacity 1.2s ease;pointer-events:auto;touch-action:pan-y}
-.app.is-3d #scene{opacity:1}
+/* Underlined hover in UVA orange */
+.top-nav a:hover,.arrow-link:hover .lbl,.area a:hover,.foot a:hover{text-decoration-line:underline;text-decoration-color:var(--orange);text-decoration-thickness:2px;text-underline-offset:6px}
 
-/* Underlined hover, as on UVA Engineering pages, in Sand */
-.top-nav a:hover,.arrow-link:hover .lbl,.motion:hover .lbl,.foot a:hover,.index-all:hover .lbl{text-decoration-line:underline;text-decoration-color:var(--sand);text-decoration-thickness:2px;text-underline-offset:6px}
+/* Lab header band, as on the UVA Engineering lab sites */
+.top{background:var(--navy);color:var(--white);border-bottom:1px solid rgba(255,255,255,.14)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 28px;min-height:129px;padding:24px 0}
+.lab-name{font-weight:700;font-size:32px;line-height:1;color:var(--white);text-decoration:none}
+.top-nav{display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;gap:2px}
+.top-nav a{font-weight:500;font-size:18px;line-height:1.2;color:var(--white);text-decoration:none;padding:8px 8px}
 
-/* Header: the lab's name and menu, laid out like the lab-site header on UVA Engineering pages */
-.top{position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 28px;padding:30px var(--gutter);background:var(--space);border-bottom:1px solid var(--line)}
-.lab-name{font-weight:700;font-size:30px;line-height:1.05;color:var(--white);text-decoration:none}
-.top-nav{display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;gap:2px 2px}
-.top-nav a{font-weight:500;font-size:17px;line-height:1.2;color:var(--white);text-decoration:none;padding:8px 9px}
-
-/* Stage: the heading on the left and the prism on the right, like the banner on UVA Engineering pages */
-.stage{position:relative;flex:1 0 auto;display:grid;grid-template-columns:minmax(320px,.8fr) minmax(0,1.2fr);grid-template-rows:minmax(0,1fr) auto;column-gap:clamp(16px,2.4vw,40px);padding:0 var(--gutter);min-height:560px}
-.intro{position:relative;z-index:2;grid-column:1;grid-row:1;align-self:center;padding:32px 0 24px}
-.headline{position:relative;margin:0;padding-left:24px;font-family:var(--font-cond);font-weight:700;font-synthesis:none;font-size:clamp(46px,4.8vw,76px);line-height:1;letter-spacing:0;color:var(--white);max-width:7.4em}
-.headline::before{content:"";position:absolute;left:0;top:.05em;bottom:.07em;width:5px;background:var(--coral)}
-.dock{position:relative;margin:26px 0 0}
-.lede{margin:0;font-size:17px;line-height:28px;color:var(--white);max-width:34em;transition:opacity .25s ease}
-.app.has-card .lede{opacity:0}
-.cta{display:flex;flex-wrap:wrap;gap:10px 28px;margin:24px 0 0}
-.arrow-link{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:16px;line-height:1.25;color:var(--white);text-decoration:none}
-.arrow{flex:none;display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:var(--coral);color:var(--space);transition:background-color .2s,transform .2s}
+/* Banner: the UVA Engineering page banner, with the animation where the photo goes */
+.banner{position:relative;isolation:isolate;overflow:hidden;background:var(--navy) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 607' preserveAspectRatio='xMidYMid slice'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.06' stroke-width='1.3'%3E%3Ccircle cx='835' cy='770' r='230'/%3E%3Ccircle cx='835' cy='770' r='263'/%3E%3Ccircle cx='835' cy='770' r='296'/%3E%3Ccircle cx='835' cy='770' r='329'/%3E%3Ccircle cx='835' cy='770' r='362'/%3E%3Ccircle cx='835' cy='770' r='395'/%3E%3Ccircle cx='835' cy='770' r='428'/%3E%3Ccircle cx='835' cy='770' r='461'/%3E%3Ccircle cx='835' cy='770' r='494'/%3E%3Ccircle cx='835' cy='770' r='527'/%3E%3Ccircle cx='835' cy='770' r='560'/%3E%3Ccircle cx='835' cy='770' r='593'/%3E%3Ccircle cx='835' cy='770' r='626'/%3E%3Ccircle cx='835' cy='770' r='659'/%3E%3Ccircle cx='835' cy='770' r='692'/%3E%3Ccircle cx='835' cy='770' r='725'/%3E%3Ccircle cx='835' cy='770' r='758'/%3E%3Ccircle cx='835' cy='770' r='791'/%3E%3Ccircle cx='835' cy='770' r='824'/%3E%3Ccircle cx='835' cy='770' r='857'/%3E%3Ccircle cx='835' cy='770' r='890'/%3E%3Ccircle cx='835' cy='770' r='923'/%3E%3Ccircle cx='835' cy='770' r='956'/%3E%3Ccircle cx='835' cy='770' r='989'/%3E%3Ccircle cx='835' cy='770' r='1022'/%3E%3Ccircle cx='835' cy='770' r='1055'/%3E%3Ccircle cx='835' cy='770' r='1088'/%3E%3Ccircle cx='835' cy='770' r='1121'/%3E%3Ccircle cx='835' cy='770' r='1154'/%3E%3Ccircle cx='835' cy='770' r='1187'/%3E%3Ccircle cx='835' cy='770' r='1220'/%3E%3Ccircle cx='835' cy='770' r='1253'/%3E%3Ccircle cx='835' cy='770' r='1286'/%3E%3Ccircle cx='835' cy='770' r='1319'/%3E%3Ccircle cx='835' cy='770' r='1352'/%3E%3Ccircle cx='835' cy='770' r='1385'/%3E%3Ccircle cx='835' cy='770' r='1418'/%3E%3Ccircle cx='835' cy='770' r='1451'/%3E%3Ccircle cx='835' cy='770' r='1484'/%3E%3Ccircle cx='835' cy='770' r='1517'/%3E%3Ccircle cx='835' cy='770' r='1550'/%3E%3C/g%3E%3C/svg%3E") center/cover no-repeat;color:var(--white);padding:50px 0}
+.banner-inner{display:flex;align-items:center}
+.intro{flex:0 0 49.16%;min-width:0;padding-right:40px}
+.headline{position:relative;margin:0;padding-left:24px;max-width:570px;font-family:var(--font-cond);font-weight:700;font-synthesis:none;font-size:clamp(46px,5.56vw,80px);line-height:1;letter-spacing:0;color:var(--white)}
+.headline::before{content:"";position:absolute;left:0;top:.1em;bottom:.1em;width:5px;background:var(--orange)}
+.lede{margin:17px 0;font-size:17px;line-height:28px;color:var(--white)}
+.cta{display:flex;flex-wrap:wrap;gap:8px 24px;margin:0}
+.arrow-link{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:16px;line-height:1.2;color:var(--white);text-decoration:none}
+.arrow{flex:none;display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:var(--orange);color:var(--navy)}
 .arrow svg{width:11px;height:11px;display:block}
 .arrow path{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.arrow-link:hover .arrow{background:var(--sand);transform:translateX(2px)}
-.slot{position:relative;grid-column:2;grid-row:1;min-height:320px}
-.stage-foot{position:relative;z-index:3;grid-column:1/-1;grid-row:2;display:flex;align-items:center;justify-content:space-between;gap:8px 20px;padding:0 0 14px}
-.hint{margin:0;display:inline-flex;align-items:center;gap:10px;font-size:15px;line-height:1.35;color:var(--muted)}
-.hint::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--teal);flex:none}
-.motion{display:inline-flex;align-items:center;gap:8px;font:700 15px/1.25 var(--font-text);color:var(--white);background:none;border:0;padding:6px 0;cursor:pointer}
-.motion .badge{flex:none;display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:var(--slate);color:var(--white);transition:background-color .2s,color .2s}
-.motion svg{width:9px;height:9px;fill:currentColor;display:block}
-.motion:hover .badge{background:var(--sand);color:var(--space)}
+
+/* The animation, framed like the banner photo */
+.media{position:relative;flex:0 0 50.84%;min-width:0;aspect-ratio:670/507;margin:0;border:1px solid var(--orange);background:var(--navy);overflow:hidden;container-type:size;--cap:110px}
+#scene{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity 1.2s ease;touch-action:pan-y}
+.app.is-3d #scene{opacity:1}
+.slot{position:absolute;left:0;right:0;top:0;bottom:var(--cap);pointer-events:none}
 
 /* Static orb: shown while the 3D scene loads, and as the fallback */
-.css-orb{--s:min(300px,34vh,58vw);position:absolute;left:50%;top:50%;width:var(--s);height:var(--s);transform:translate(-50%,-50%);transition:opacity 1s ease .15s,visibility 0s linear 0s;pointer-events:none}
+.css-orb{--s:min(220px,46%);position:absolute;left:50%;top:50%;width:var(--s);aspect-ratio:1;transform:translate(-50%,-50%);transition:opacity 1s ease .15s,visibility 0s linear 0s;pointer-events:none}
 .app.is-3d .css-orb{opacity:0;visibility:hidden;transition:opacity 1s ease,visibility 0s linear 1s}
 .app.is-fallback .css-orb{pointer-events:auto;cursor:pointer}
-.css-orb::before{content:"";position:absolute;inset:-80%;border-radius:50%;background:radial-gradient(closest-side,rgba(52,73,94,.55),rgba(52,73,94,.2) 45%,rgba(23,33,43,0) 100%);z-index:-2}
+.css-orb::before{content:"";position:absolute;inset:-80%;border-radius:50%;background:radial-gradient(closest-side,rgba(52,73,94,.55),rgba(52,73,94,.2) 45%,rgba(20,30,60,0) 100%);z-index:-2}
 .css-orb i{position:absolute;display:block;border-radius:50%}
 .css-ring{left:50%;top:50%;border:1px solid;transform:translate(-50%,-50%) rotate(var(--r));z-index:-1}
 .css-ring.r1{width:142%;height:125%;--r:-32deg;border-color:rgba(233,201,165,.4)}
@@ -94,85 +84,103 @@ a{color:inherit}
 .css-head .o{stroke:#E76F51;stroke-width:2.2;stroke-linecap:round}
 .css-rim{inset:0;box-shadow:inset 0 0 0 1.5px rgba(245,243,238,.3)}
 
-/* Project card */
-.card{position:fixed;left:0;top:0;z-index:6;width:min(340px,calc(100vw - 24px));visibility:hidden;pointer-events:none;will-change:transform;transform:translate3d(-9999px,-9999px,0);--c:var(--teal)}
-.card.is-on{visibility:visible;pointer-events:auto;cursor:pointer}
-.card-inner{position:relative;padding:16px 20px 16px;border-radius:4px;text-align:left;background:var(--slate);border:1px solid rgba(245,243,238,.1);box-shadow:0 16px 40px rgba(0,0,0,.32);overflow:hidden;opacity:0;transform:translateY(8px) scale(.98);transition:opacity .22s ease,transform .32s cubic-bezier(.2,.8,.2,1)}
-.card.is-on .card-inner{opacity:1;transform:none}
-.card.swap .card-inner{animation:orcl-swap .34s ease}
-@keyframes orcl-swap{from{opacity:.2;transform:translateY(4px)}to{opacity:1;transform:none}}
-.card-top{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
-.card-id{display:inline-flex;align-items:center;gap:10px;min-width:0}
-.card-ico{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;color:var(--c);background:var(--space);box-shadow:inset 0 0 0 1.5px var(--c)}
-.card-ico svg{width:17px;height:17px;display:block}
-.card-ico path,.pi path{fill:none;stroke:currentColor;stroke-width:1.85;stroke-linecap:round;stroke-linejoin:round}
-.card-ico circle,.pi circle{fill:currentColor}
-.chip{display:inline-flex;align-items:center;font-family:var(--font-cond);font-weight:700;font-synthesis:none;font-size:15px;line-height:1.1;letter-spacing:.02em;text-transform:uppercase;color:var(--sand)}
-.card-num{font-size:13px;font-weight:500;color:var(--muted);white-space:nowrap}
-.card-title{position:relative;z-index:1;margin:0 0 6px;font-size:19px;font-weight:700;line-height:1.25;color:var(--white)}
-.card-text{position:relative;z-index:1;margin:0 0 12px;font-size:15px;line-height:1.5;color:var(--text-2)}
-.card-link{position:relative;z-index:1;font-size:15px}
-
-/* Leader line from a point of light to its card */
-.leader{position:fixed;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;overflow:visible;opacity:0;transition:opacity .25s ease;--c:var(--teal)}
+/* Ring around the point of light on show */
+.leader{position:absolute;inset:0;z-index:2;width:100%;height:100%;pointer-events:none;overflow:visible;opacity:0;transition:opacity .25s ease;--c:var(--teal)}
 .leader.is-on{opacity:1}
-.leader line{stroke:var(--c);stroke-width:1;stroke-opacity:.8;stroke-dasharray:2 3}
 .lm-ring{fill:none;stroke:var(--c);stroke-width:1.2;transform-box:fill-box;transform-origin:center;animation:orcl-ping 1.8s ease-out infinite}
-.lm-dot{fill:var(--white)}
 @keyframes orcl-ping{0%{transform:scale(1);opacity:.95}100%{transform:scale(1.5);opacity:0}}
 .app.motion-off .lm-ring{animation:none;opacity:.9}
 
-/* Project index */
-.index{position:relative;z-index:2;padding:8px var(--gutter) 16px;background:linear-gradient(180deg,rgba(23,33,43,0),rgba(23,33,43,.9) 24%,rgba(23,33,43,.97))}
-.index-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:0 0 14px;padding-top:18px;border-top:1px solid var(--line)}
-.index-title{margin:0;font-weight:700;font-size:28px;line-height:1.15;color:var(--white)}
-.index-cols{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1.05fr) minmax(0,.7fr);gap:12px 40px}
+/* Caption at the foot of the animation, like the photo caption on the UVA banner */
+.hint{position:absolute;left:12px;bottom:12px;z-index:3;max-width:calc(100% - 24px);margin:0;padding:6px 10px;font-size:14px;line-height:1.35;color:var(--white);background:rgba(20,30,60,.82);pointer-events:none;transition:opacity .2s ease}
+.app.has-card .hint{opacity:0}
+.card{position:absolute;left:12px;bottom:12px;z-index:3;width:min(460px,calc(100% - 24px));padding:11px 14px 12px;background:rgba(20,30,60,.92);color:var(--white);visibility:hidden;opacity:0;transition:opacity .22s ease,visibility 0s linear .22s;--c:var(--teal)}
+.card.is-on{visibility:visible;opacity:1;cursor:pointer;transition:opacity .22s ease}
+.card.swap{animation:orcl-swap .34s ease}
+@keyframes orcl-swap{from{opacity:.25}to{opacity:1}}
+.card-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:5px}
+.card-id{display:inline-flex;align-items:center;gap:8px;min-width:0}
+.card-ico{flex:none;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;color:var(--c);background:var(--space);box-shadow:inset 0 0 0 1.5px var(--c)}
+.card-ico svg{width:14px;height:14px;display:block}
+.card-ico path,.pi path{fill:none;stroke:currentColor;stroke-width:1.85;stroke-linecap:round;stroke-linejoin:round}
+.card-ico circle,.pi circle{fill:currentColor}
+.chip{font-family:var(--font-cond);font-weight:700;font-synthesis:none;font-size:14px;line-height:1.1;letter-spacing:.02em;text-transform:uppercase;color:var(--sand)}
+.card-num{font-size:12.5px;font-weight:500;color:rgba(255,255,255,.7);white-space:nowrap}
+.card-title{margin:0 0 6px;font-size:17px;font-weight:700;line-height:1.25}
+/* The one-line description stays on the project page; the caption keeps to theme, title and link, like a photo caption */
+.card-text{display:none}
+.card-link{font-size:14.5px}
+
+/* Pause, top right of the animation */
+.motion{position:absolute;top:10px;right:10px;z-index:3;display:grid;place-items:center;width:30px;height:30px;padding:0;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(20,30,60,.72);color:var(--white);cursor:pointer;transition:background-color .2s,color .2s,border-color .2s}
+.motion svg{width:10px;height:10px;fill:currentColor;display:block}
+.motion:hover{background:var(--orange);border-color:var(--orange);color:var(--navy)}
+
+/* Research projects, a white section as on the UVA pages */
+.index{background:var(--white);color:var(--navy);padding:64px 0 72px}
+.index-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:12px 24px;margin:0 0 30px}
+.index-title{position:relative;margin:0;padding-left:20px;font-weight:700;font-size:44px;line-height:52px;color:var(--navy)}
+.index-title::before{content:"";position:absolute;left:0;top:7px;bottom:7px;width:5px;background:var(--orange)}
+.index .arrow-link{color:var(--navy)}
+.index-cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 48px}
 .area{--c:var(--teal)}
 .area[data-area=road]{--c:var(--coral)}
 .area[data-area=train]{--c:var(--teal)}
-.area[data-area=sense]{--c:var(--sand)}
-.area-name{display:flex;align-items:center;gap:9px;margin:0 0 6px;font-size:17px;font-weight:700;line-height:1.3;color:var(--white)}
-.area-name::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c);flex:none}
-.area ul{list-style:none;margin:0 0 0 -9px;padding:0;display:flex;flex-wrap:wrap;gap:0 2px}
-.area a{display:inline-flex;align-items:center;gap:8px;padding:5px 9px;border-radius:4px;font-size:15.5px;font-weight:500;line-height:1.35;color:var(--text-2);text-decoration:none;transition:color .2s,background-color .2s}
-.pi{width:16px;height:16px;flex:none;display:block;color:var(--c)}
-.area a:hover,.area a.is-active{color:var(--white);background:var(--slate)}
-.area a:focus-visible{outline-color:var(--c)}
+.area[data-area=sense]{--c:#B98A5E}
+.area-name{display:flex;align-items:center;gap:10px;margin:0 0 14px;font-size:22px;font-weight:700;line-height:1.25;color:var(--navy)}
+.area-name::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+.area ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.area a{display:inline-flex;align-items:center;gap:10px;font-size:17px;font-weight:500;line-height:1.35;color:var(--navy);text-decoration:none}
+.area a.is-active{text-decoration-line:underline;text-decoration-color:var(--orange);text-decoration-thickness:2px;text-underline-offset:6px}
+.pi{width:18px;height:18px;flex:none;display:block;color:var(--c)}
 
 /* Footer */
-.foot{position:relative;z-index:2;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 24px;padding:18px var(--gutter) 22px;font-size:15px;line-height:1.4;color:var(--text-2);background:var(--space);border-top:1px solid var(--line)}
-.foot-links{display:flex;gap:22px}
+.foot{background:var(--navy);color:var(--white);padding:28px 0 32px;font-size:16px;line-height:1.4}
+.foot .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px}
+.foot-links{display:flex;flex-wrap:wrap;gap:24px}
 .foot a{color:var(--white);font-weight:700;text-decoration:none}
 
-/* Embedded in the Drupal page: the UVA header and footer are already there */
-.app.is-embed .top,.app.is-embed .foot,.app.is-embed .index{display:none}
+/* In place of the whole banner (#embed) or of the banner photo (#media) on the lab's UVA page */
+.app.is-embed .top,.app.is-embed .foot,.app.is-media .top,.app.is-media .foot,.app.is-media .intro{display:none}
+.app.is-media .banner{padding:0;background:var(--navy)}
+.app.is-media .wrap{width:100%}
+.app.is-media .media{position:fixed;inset:0;aspect-ratio:auto;border:0}
+/* The project list stays reachable from the keyboard: it shows over the animation while it has focus */
+.app.is-embed .index,.app.is-media .index{position:absolute;left:-9999px;top:0;padding:0}
+.app.is-embed .index:focus-within,.app.is-media .index:focus-within{left:12px;top:12px;z-index:9;width:min(560px,calc(100vw - 72px));max-height:calc(100vh - 24px);overflow:auto;padding:16px 18px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.app.is-embed .index:focus-within .wrap,.app.is-media .index:focus-within .wrap{width:auto}
+.app.is-embed .index:focus-within .index-cols,.app.is-media .index:focus-within .index-cols{grid-template-columns:1fr;gap:14px}
+.app.is-embed .index:focus-within .index-title,.app.is-media .index:focus-within .index-title{font-size:22px;line-height:28px}
 
-@media (max-width:1240px){
+@media (max-width:1360px){
   .top-nav a.more{display:none}
 }
-/* One column: the heading, then the prism, with the project card docked under it */
-@media (max-width:859px){
-  .stage{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto}
-  .intro{grid-row:1;align-self:start;padding:24px 0 4px}
-  .headline{font-size:clamp(36px,6.2vw,56px);max-width:none}
-  .dock{display:none}
-  .cta{margin-top:14px}
-  .slot{grid-column:1;grid-row:2}
-  .stage-foot{grid-row:3}
+@media (max-width:900px){
+  .banner-inner{flex-direction:column;align-items:stretch;gap:28px}
+  .intro{flex:none;padding-right:0}
+  .media{flex:none;width:100%}
+  .index-cols{grid-template-columns:1fr}
 }
 @media (max-width:720px){
-  .top{padding:16px var(--gutter)}
+  .top .wrap{min-height:0;padding:16px 0}
   .lab-name{font-size:22px}
   .top-nav{display:none}
-  .stage{min-height:calc(100svh - 58px)}
-  .headline{font-size:clamp(32px,9.6vw,44px);padding-left:18px}
+  .banner{padding:32px 0 36px}
+  .headline{font-size:clamp(36px,10vw,48px);padding-left:18px}
   .headline::before{width:4px}
-  .stage-foot{flex-direction:column;justify-content:center;gap:6px}
-  .hint{text-align:center}
-  .hint::before{display:none}
-  .css-orb{top:calc(50% - 105px)}
-  .index-cols{grid-template-columns:1fr;gap:16px}
-  .foot{flex-direction:column;align-items:flex-start}
+  .index{padding:44px 0 52px}
+  .index-title{font-size:32px;line-height:40px}
+}
+/* Small animation box (a phone): a one-line caption, so the scene keeps the room */
+@container (max-height:339px){
+  .card{display:flex;align-items:center;gap:8px;width:auto;max-width:calc(100% - 20px);left:10px;bottom:10px;padding:6px 10px}
+  .card-top{margin:0}
+  .chip,.card-num{display:none}
+  .card-title{margin:0;min-width:0;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .card-link{flex:none}
+  .card-link .lbl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+  .hint{left:10px;bottom:10px;font-size:12.5px;padding:4px 8px}
+  .motion{width:26px;height:26px;top:8px;right:8px}
 }
 @media (forced-colors:active){
   .headline{color:CanvasText}
@@ -181,106 +189,110 @@ a{color:inherit}
 </head>
 <body>
 <div class="app is-loading" id="app">
-  <canvas id="scene" aria-hidden="true"></canvas>
-
   <header class="top">
-    <a class="lab-name" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab">Omni-Reality &amp; Cognition Lab</a>
-    <nav class="top-nav" aria-label="Lab website">
-      <a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/who-we-are">Who We Are</a>
-      <a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research">Research</a>
-      <a class="more" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/publications">Publications</a>
-      <a class="more" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/funding">Funding</a>
-      <a class="more" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/facilities">Facilities</a>
-      <a class="more" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/blogs">News</a>
-      <a class="more" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/teaching">Teaching</a>
-      <a class="more" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/outreach">Outreach</a>
-      <a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/contact">Contact</a>
-    </nav>
+    <div class="wrap">
+      <a class="lab-name" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab">Omni-Reality &amp; Cognition Lab</a>
+      <nav class="top-nav" aria-label="Lab website">
+        <a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/who-we-are">Who We Are</a>
+        <a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research">Research</a>
+        <a class="more" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/publications">Publications</a>
+        <a class="more" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/funding">Funding</a>
+        <a class="more" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/facilities">Facilities</a>
+        <a class="more" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/blogs">News</a>
+        <a class="more" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/teaching">Teaching</a>
+        <a class="more" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/outreach">Outreach</a>
+        <a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/contact">Contact</a>
+      </nav>
+    </div>
   </header>
 
-  <main class="stage" id="stage">
-    <div class="intro">
-      <h1 class="headline">Where Virtual Worlds Meet Human Behavior</h1>
-      <div class="dock" id="dock">
-        <p class="lede" id="lede">The Omni-Reality &amp; Cognition Lab builds virtual, augmented and mixed reality simulators, instruments them with eye tracking and physiological sensing, and uses them to design safer streets, healthier buildings and better training for high-stakes work.</p>
+  <main class="banner" id="stage">
+    <div class="wrap banner-inner">
+      <div class="intro">
+        <h1 class="headline">Where Virtual Worlds Meet Human Behavior</h1>
+        <p class="lede">The Omni-Reality &amp; Cognition Lab builds virtual, augmented and mixed reality simulators, instruments them with eye tracking and physiological sensing, and uses them to design safer streets, healthier buildings and better training for high-stakes work.</p>
+        <p class="cta">
+          <a class="arrow-link" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research"><span class="lbl">Explore our research</span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+          <a class="arrow-link" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/who-we-are"><span class="lbl">Meet the team</span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+        </p>
       </div>
-      <p class="cta">
-        <a class="arrow-link" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research"><span class="lbl">Explore our research</span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
-        <a class="arrow-link" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/who-we-are"><span class="lbl">Meet the team</span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
-      </p>
-    </div>
-    <div class="slot" id="slot">
+      <figure class="media" id="media">
+        <canvas id="scene" aria-hidden="true"></canvas>
+        <div class="slot" id="slot">
       <div class="css-orb" id="cssOrb" aria-hidden="true">
-        <i class="css-ring r1"></i><i class="css-ring r2"></i><i class="css-ring r3"></i>
-        <i class="css-glass"></i><svg class="css-head" viewBox="0 0 100 100" aria-hidden="true"><path class="h" d="M59.3 90.9L59.3 78.5Q59.9 73.6 64.3 72.3Q69.5 70.8 70.5 67.1Q71 64.9 72.2 63.5Q72.8 62.3 71.6 61.3Q72.6 60.4 73.4 59.1Q73.8 57.9 72.6 56.7Q76.8 55.5 77.4 53.8Q77.8 52.2 75.4 50.1Q72.7 47.2 71.7 44.7Q71.3 42.3 72.6 39.3Q72.8 29.5 64 23Q55 16.8 44.7 18.1Q27.7 20.6 23.2 37.3Q20.7 50 26.3 59.4Q31.4 66.7 35.1 70.8Q37.6 75.4 37.3 90.9Z"/><path class="s" d="M60 44.5Q40 41 22 41.5"/><rect class="v" x="59.6" y="34.8" width="22.3" height="16.1" rx="4.5"/><path class="o" d="M81.6 37.5L81.6 48.2"/></svg><i class="css-rim"></i>
+      <i class="css-ring r1"></i><i class="css-ring r2"></i><i class="css-ring r3"></i>
+      <i class="css-glass"></i><svg class="css-head" viewBox="0 0 100 100" aria-hidden="true"><path class="h" d="M59.3 90.9L59.3 78.5Q59.9 73.6 64.3 72.3Q69.5 70.8 70.5 67.1Q71 64.9 72.2 63.5Q72.8 62.3 71.6 61.3Q72.6 60.4 73.4 59.1Q73.8 57.9 72.6 56.7Q76.8 55.5 77.4 53.8Q77.8 52.2 75.4 50.1Q72.7 47.2 71.7 44.7Q71.3 42.3 72.6 39.3Q72.8 29.5 64 23Q55 16.8 44.7 18.1Q27.7 20.6 23.2 37.3Q20.7 50 26.3 59.4Q31.4 66.7 35.1 70.8Q37.6 75.4 37.3 90.9Z"/><path class="s" d="M60 44.5Q40 41 22 41.5"/><rect class="v" x="59.6" y="34.8" width="22.3" height="16.1" rx="4.5"/><path class="o" d="M81.6 37.5L81.6 48.2"/></svg><i class="css-rim"></i>
       </div>
-    </div>
-    <div class="stage-foot">
-      <p class="hint" id="hint">Hover an icon to preview a project · Click to open it</p>
-      <button class="motion" id="motionBtn" type="button"><span class="badge" aria-hidden="true"><svg viewBox="0 0 10 10"><rect x="1.5" y="1" width="2.4" height="8" rx=".6"/><rect x="6.1" y="1" width="2.4" height="8" rx=".6"/></svg></span><span class="lbl">Pause motion</span></button>
+        </div>
+        <svg class="leader" id="leader" aria-hidden="true" focusable="false"><g id="leadMark"><circle class="lm-ring" id="lmRing" r="15"/></g></svg>
+        <p class="hint" id="hint">Hover an icon to preview a project · Click to open it</p>
+        <div class="card" id="card" aria-hidden="true">
+          <div class="card-top"><span class="card-id"><span class="card-ico" id="cardIco" aria-hidden="true"></span><span class="chip" id="cardArea"></span></span><span class="card-num" id="cardNum"></span></div>
+          <p class="card-title" id="cardTitle"></p>
+          <p class="card-text" id="cardText"></p>
+          <a class="card-link arrow-link" id="cardLink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research" tabindex="-1"><span class="lbl">Open project</span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+        </div>
+        <button class="motion" id="motionBtn" type="button"></button>
+        <figcaption class="sr-only">An animation of a person in a VR headset who looks from screen to screen inside a glass orb, circled by the lab's ten research projects. The project list on this page leads to the same projects.</figcaption>
+      </figure>
     </div>
   </main>
 
   <nav class="index" aria-labelledby="indexTitle">
-    <div class="index-head">
-      <h2 class="index-title" id="indexTitle">Research Projects</h2>
-      <a class="index-all arrow-link" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research"><span class="lbl">All research</span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
-    </div>
-    <div class="index-cols">
-      <section class="area" data-area="road" aria-labelledby="area-road">
-        <h3 class="area-name" id="area-road">Road Users and Micromobility Safety</h3>
-        <ul>
-          <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/vr-bicycle-and-pedestrian-simulators-orclsim" data-i="0" data-icon="bike" data-area="road" data-title="VR Bicycle and Pedestrian Simulators (ORCLSim)" aria-describedby="pd0">Bicycle and Pedestrian Simulators</a></li>
-          <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/e-scooter-riders-street-and-vr" data-i="1" data-icon="scooter" data-area="road" data-title="E-Scooter Riders on the Street and in VR" aria-describedby="pd1">E-Scooter Riders</a></li>
-          <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/adolescent-micromobility-safety" data-i="2" data-icon="helmet" data-area="road" data-title="Adolescent Micromobility Safety" aria-describedby="pd2">Adolescent Micromobility Safety</a></li>
-          <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/pedestrian-attention-and-crossing-decisions" data-i="3" data-icon="walk" data-area="road" data-title="Pedestrian Attention and Crossing Decisions" aria-describedby="pd3">Pedestrian Attention</a></li>
-          <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/seeing-city-eye-tracking-downtown-street" data-i="4" data-icon="eye" data-area="road" data-title="Seeing the City: Eye Tracking on a Downtown Street" aria-describedby="pd4">Seeing the City</a></li>
-          <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/vr-design-review-and-public-involvement" data-i="5" data-icon="roundabout" data-area="road" data-title="VR for Design Review and Public Involvement" aria-describedby="pd5">VR for Design Review</a></li>
-        </ul>
-      </section>
-      <section class="area" data-area="train" aria-labelledby="area-train">
-        <h3 class="area-name" id="area-train">AI-Driven Immersive Training</h3>
-        <ul>
-          <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/vr-training-acutely-deteriorating-patient" data-i="6" data-icon="heart" data-area="train" data-title="VR Training for the Acutely Deteriorating Patient" aria-describedby="pd6">VR Clinical Training</a></li>
-          <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/immersive-cyber-range-critical-infrastructure" data-i="7" data-icon="shield" data-area="train" data-title="Immersive Cyber Range for Critical Infrastructure" aria-describedby="pd7">Immersive Cyber Range</a></li>
-          <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/xr-training-traffic-signal-technicians" data-i="8" data-icon="signal" data-area="train" data-title="XR Training for Traffic Signal Technicians" aria-describedby="pd8">Signal Technician Training</a></li>
-        </ul>
-      </section>
-      <section class="area" data-area="sense" aria-labelledby="area-sense">
-        <h3 class="area-name" id="area-sense">Human State Sensing</h3>
-        <ul>
-          <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/harmony-driver-state-naturalistic-driving" data-i="9" data-icon="wheel" data-area="sense" data-title="HARMONY: Driver State in Naturalistic Driving" aria-describedby="pd9">HARMONY Driving Study</a></li>
-        </ul>
-      </section>
-    </div>
-    <div class="sr-only">
-      <p id="pd0">How cyclists and pedestrians respond to street designs, measured in VR with eye tracking and physiological sensing.</p>
-      <p id="pd1">How e-scooter riders scan the road and respond to traffic, studied with instrumented e-scooters and a motion-platform simulator.</p>
-      <p id="pd2">Sensing, AI and VR training to make bicycle, e-bike and e-scooter riding safer for teens.</p>
-      <p id="pd3">Where pedestrians look and how safe they feel at crossings, by day and at night, on Charlottesville streets and in VR.</p>
-      <p id="pd4">Mobile eye tracking and heart rate as people walked a downtown street in Staunton, Virginia, open and closed to cars.</p>
-      <p id="pd5">VR simulations that let VDOT staff and the public ride and walk through a proposed roundabout before it is built.</p>
-      <p id="pd6">An AI-driven VR simulation for advanced cardiac life support training, built with UVA Emergency Medicine.</p>
-      <p id="pd7">VR training for defending the industrial control systems behind critical infrastructure.</p>
-      <p id="pd8">An Apple Vision Pro trainer that helps transportation technicians learn the traffic signal cabinet, built with the Virginia Department of Transportation.</p>
-      <p id="pd9">A naturalistic driving study that linked drivers' stress and emotion to road conditions, using wearables, cameras and phones.</p>
+    <div class="wrap">
+      <div class="index-head">
+        <h2 class="index-title" id="indexTitle">Research Projects</h2>
+        <a class="index-all arrow-link" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research"><span class="lbl">All research</span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+      </div>
+      <div class="index-cols">
+        <section class="area" data-area="road" aria-labelledby="area-road">
+          <h3 class="area-name" id="area-road">Road Users and Micromobility Safety</h3>
+          <ul>
+            <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/vr-bicycle-and-pedestrian-simulators-orclsim" data-i="0" data-icon="bike" data-area="road" data-title="VR Bicycle and Pedestrian Simulators (ORCLSim)" aria-describedby="pd0">Bicycle and Pedestrian Simulators</a></li>
+            <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/e-scooter-riders-street-and-vr" data-i="1" data-icon="scooter" data-area="road" data-title="E-Scooter Riders on the Street and in VR" aria-describedby="pd1">E-Scooter Riders</a></li>
+            <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/adolescent-micromobility-safety" data-i="2" data-icon="helmet" data-area="road" data-title="Adolescent Micromobility Safety" aria-describedby="pd2">Adolescent Micromobility Safety</a></li>
+            <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/pedestrian-attention-and-crossing-decisions" data-i="3" data-icon="walk" data-area="road" data-title="Pedestrian Attention and Crossing Decisions" aria-describedby="pd3">Pedestrian Attention</a></li>
+            <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/seeing-city-eye-tracking-downtown-street" data-i="4" data-icon="eye" data-area="road" data-title="Seeing the City: Eye Tracking on a Downtown Street" aria-describedby="pd4">Seeing the City</a></li>
+            <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/vr-design-review-and-public-involvement" data-i="5" data-icon="roundabout" data-area="road" data-title="VR for Design Review and Public Involvement" aria-describedby="pd5">VR for Design Review</a></li>
+          </ul>
+        </section>
+        <section class="area" data-area="train" aria-labelledby="area-train">
+          <h3 class="area-name" id="area-train">AI-Driven Immersive Training</h3>
+          <ul>
+            <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/vr-training-acutely-deteriorating-patient" data-i="6" data-icon="heart" data-area="train" data-title="VR Training for the Acutely Deteriorating Patient" aria-describedby="pd6">VR Clinical Training</a></li>
+            <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/immersive-cyber-range-critical-infrastructure" data-i="7" data-icon="shield" data-area="train" data-title="Immersive Cyber Range for Critical Infrastructure" aria-describedby="pd7">Immersive Cyber Range</a></li>
+            <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/xr-training-traffic-signal-technicians" data-i="8" data-icon="signal" data-area="train" data-title="XR Training for Traffic Signal Technicians" aria-describedby="pd8">Signal Technician Training</a></li>
+          </ul>
+        </section>
+        <section class="area" data-area="sense" aria-labelledby="area-sense">
+          <h3 class="area-name" id="area-sense">Human State Sensing</h3>
+          <ul>
+            <li><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/harmony-driver-state-naturalistic-driving" data-i="9" data-icon="wheel" data-area="sense" data-title="HARMONY: Driver State in Naturalistic Driving" aria-describedby="pd9">HARMONY Driving Study</a></li>
+          </ul>
+        </section>
+      </div>
+      <div class="sr-only">
+        <p id="pd0">How cyclists and pedestrians respond to street designs, measured in VR with eye tracking and physiological sensing.</p>
+        <p id="pd1">How e-scooter riders scan the road and respond to traffic, studied with instrumented e-scooters and a motion-platform simulator.</p>
+        <p id="pd2">Sensing, AI and VR training to make bicycle, e-bike and e-scooter riding safer for teens.</p>
+        <p id="pd3">Where pedestrians look and how safe they feel at crossings, by day and at night, on Charlottesville streets and in VR.</p>
+        <p id="pd4">Mobile eye tracking and heart rate as people walked a downtown street in Staunton, Virginia, open and closed to cars.</p>
+        <p id="pd5">VR simulations that let VDOT staff and the public ride and walk through a proposed roundabout before it is built.</p>
+        <p id="pd6">An AI-driven VR simulation for advanced cardiac life support training, built with UVA Emergency Medicine.</p>
+        <p id="pd7">VR training for defending the industrial control systems behind critical infrastructure.</p>
+        <p id="pd8">An Apple Vision Pro trainer that helps transportation technicians learn the traffic signal cabinet, built with the Virginia Department of Transportation.</p>
+        <p id="pd9">A naturalistic driving study that linked drivers' stress and emotion to road conditions, using wearables, cameras and phones.</p>
+      </div>
+
     </div>
   </nav>
 
   <footer class="foot">
-    <span>Omni-Reality &amp; Cognition Lab · School of Engineering and Applied Science · University of Virginia</span>
-    <span class="foot-links"><a href="https://www.youtube.com/@UVA-ORCL">ORCL on YouTube</a><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/contact">Contact</a></span>
-  </footer>
-
-  <div class="card" id="card" aria-hidden="true">
-    <div class="card-inner">
-      <div class="card-top"><span class="card-id"><span class="card-ico" id="cardIco" aria-hidden="true"></span><span class="chip" id="cardArea"></span></span><span class="card-num" id="cardNum"></span></div>
-      <p class="card-title" id="cardTitle"></p>
-      <p class="card-text" id="cardText"></p>
-      <a class="card-link arrow-link" id="cardLink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research" tabindex="-1"><span class="lbl">Open project</span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+    <div class="wrap">
+      <span>Omni-Reality &amp; Cognition Lab · School of Engineering and Applied Science · University of Virginia</span>
+      <span class="foot-links"><a href="https://www.youtube.com/@UVA-ORCL">ORCL on YouTube</a><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/contact">Contact</a></span>
     </div>
-  </div>
-  <svg class="leader" id="leader" aria-hidden="true" focusable="false"><line id="leadLine" x1="0" y1="0" x2="0" y2="0"/><g id="leadMark"><circle class="lm-ring" id="lmRing" r="15"/></g><circle class="lm-dot" id="lmDot" r="2.2"/></svg>
+  </footer>
 </div>
 <noscript><style>.hint{visibility:hidden}</style></noscript>
 
@@ -289,15 +301,15 @@ a{color:inherit}
   'use strict';
   const app = document.getElementById('app');
   const $ = (s) => document.querySelector(s);
-  const card = $('#card'), cardArea = $('#cardArea'), cardNum = $('#cardNum'), cardTitle = $('#cardTitle'), cardText = $('#cardText'), cardLink = $('#cardLink');
-  const leader = $('#leader'), leadLine = $('#leadLine'), leadMark = $('#leadMark'), lmRing = $('#lmRing'), lmDot = $('#lmDot'), cardIco = $('#cardIco');
-  const slot = $('#slot'), cssOrb = $('#cssOrb'), hint = $('#hint'), motionBtn = $('#motionBtn'), header = $('.top'), intro = $('.intro'), stageFoot = $('.stage-foot'), dock = $('#dock'), lede = $('#lede');
+  const media = $('#media'), card = $('#card'), cardArea = $('#cardArea'), cardNum = $('#cardNum'), cardTitle = $('#cardTitle'), cardText = $('#cardText'), cardLink = $('#cardLink'), cardIco = $('#cardIco');
+  const leader = $('#leader'), leadMark = $('#leadMark'), lmRing = $('#lmRing');
+  const cssOrb = $('#cssOrb'), hint = $('#hint'), motionBtn = $('#motionBtn');
   const AREA = {
     road: { name: 'Road Users and Micromobility Safety', chip: 'Road users & micromobility', color: '#E76F51' },
     train: { name: 'AI-Driven Immersive Training', chip: 'AI-driven immersive training', color: '#2A7F7F' },
     sense: { name: 'Human State Sensing', chip: 'Human state sensing', color: '#E9C9A5' },
   };
-  // Line icons on a 24-unit grid, shared by the project list, the card and the portals in the 3D scene
+  // Line icons on a 24-unit grid, shared by the project list, the caption and the portals in the 3D scene
   const ICONS = {
     bike: { d: 'M2 16a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0M15 16a3.5 3.5 0 1 0 7 0a3.5 3.5 0 1 0-7 0M5.5 16L9 9.5H15.5L18.5 16M5.5 16H11.5L15.5 9.5M11.5 16L9 9.5M9 9.5L8.8 7.6M7.3 7.6H10.3M15.5 9.5L14.8 7M13.6 7H16.4' },
     scooter: { d: 'M2.5 18a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0M16.5 18a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0M4.4 15.2H18.4M19 18L16.4 4.8M14.4 4.8H18.6' },
@@ -324,51 +336,30 @@ a{color:inherit}
   projects.forEach((p) => p.el.insertAdjacentHTML('afterbegin', svgIcon(p.icon, 'pi')));
   const N = projects.length;
   const pad = (n) => String(n).padStart(2, '0');
-  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 
-  const embed = /(^|[#&])embed(&|$)/.test(location.hash.slice(1)) || location.hash === '#embed';
-  if (embed) {
-    app.classList.add('is-embed');
-    document.querySelectorAll('a[href^="http"]').forEach((a) => { a.target = '_top'; });
-  }
+  // Where the page is shown: on its own; in place of the whole banner (#embed); or in place of the banner photo (#media)
+  const flags = location.hash.slice(1).split(/[&,]/);
+  const mediaOnly = flags.includes('media');
+  const embed = mediaOnly || flags.includes('embed');
+  if (mediaOnly) app.classList.add('is-media');
+  else if (embed) app.classList.add('is-embed');
+  if (embed) document.querySelectorAll('a[href^="http"]').forEach((a) => { a.target = '_top'; });
   const fine = window.matchMedia('(hover: hover) and (pointer: fine)');
-  const wide = window.matchMedia('(min-width: 860px)');
-  let docked = false, dockW = 0;
-  function measureDock() {
-    docked = wide.matches && !!dock && dock.offsetParent !== null;
-    app.classList.toggle('is-docked', docked);
-    if (!docked) {
-      if (dockW) { dockW = 0; card.style.width = ''; }
-      if (active >= 0) { cardW = card.offsetWidth; cardH = card.offsetHeight; }
-      return;
-    }
-    // Room for the longest card, so the links below never move
-    const w = Math.round(dock.getBoundingClientRect().width);
-    card.style.width = w + 'px';
-    dockW = w;
-    let maxH = 0;
-    for (let i = 0; i < N; i++) { fill(i); maxH = Math.max(maxH, card.offsetHeight); }
-    if (active >= 0) fill(active);
-    dock.style.minHeight = Math.ceil(Math.max(maxH, lede ? lede.scrollHeight : 0)) + 'px';
-    snap = true;
-  }
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   let scene = null;
   let motionOn = !reduce.matches;
   let active = -1, source = null, hideTimer = 0, cardHover = false;
-  let cardW = 330, cardH = 170, snap = true;
-  const pos = { x: 0, y: 0 };
   let tourOn = false, tourTimer = 0, idleTimer = 0, tourIdx = -1, userTouched = false;
   const TOUR_MS = 4800, IDLE_MS = 9000;
 
-  const ICON_PAUSE = '<svg viewBox="0 0 10 10"><rect x="1.5" y="1" width="2.4" height="8" rx=".6"/><rect x="6.1" y="1" width="2.4" height="8" rx=".6"/></svg>';
-  const ICON_PLAY = '<svg viewBox="0 0 10 10"><path d="M2.2 1.2v7.6L8.6 5z"/></svg>';
+  const ICON_PAUSE = '<svg viewBox="0 0 10 10" aria-hidden="true"><rect x="1.5" y="1" width="2.4" height="8" rx=".6"/><rect x="6.1" y="1" width="2.4" height="8" rx=".6"/></svg>';
+  const ICON_PLAY = '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2.6 1.2v7.6L8.8 5z"/></svg>';
 
   function setHint() {
-    if (app.classList.contains('is-fallback')) hint.textContent = 'Point to a project name below to preview it';
+    if (app.classList.contains('is-fallback')) hint.textContent = embed ? 'Click the orb to see the projects one by one' : 'Point to a project name below to preview it';
     else if (fine.matches) hint.textContent = 'Hover an icon to preview a project · Click to open it';
-    else hint.textContent = 'Tap an icon to preview · Tap the card to open';
+    else hint.textContent = 'Tap an icon to preview a project';
   }
 
   function fill(i) {
@@ -382,8 +373,14 @@ a{color:inherit}
     cardText.textContent = p.text;
     cardLink.href = p.url;
     if (embed) cardLink.target = '_top';
-    cardW = card.offsetWidth;
-    cardH = card.offsetHeight;
+  }
+
+  // The caption sits at the foot of the animation; keep room for the tallest one, so the scene is framed above it
+  function measureCaption() {
+    let maxH = 0;
+    for (let i = 0; i < N; i++) { fill(i); maxH = Math.max(maxH, card.offsetHeight); }
+    if (active >= 0) fill(active);
+    media.style.setProperty('--cap', Math.ceil(maxH + 12 + 22) + 'px');
   }
 
   function show(i, src) {
@@ -400,11 +397,9 @@ a{color:inherit}
       scene.setActive(i);
       if (src !== 'hover' && src !== 'tap') scene.present(i, !motionOn);
     }
-    if (!was) {
-      // Place the card before it can take pointer events, so it never sits under a resting cursor
-      snap = true; place(0);
-      card.classList.add('is-on'); leader.classList.add('is-on'); app.classList.add('has-card');
-    } else if (!scene) { snap = true; place(0); }
+    if (!was) { card.classList.add('is-on'); app.classList.add('has-card'); }
+    leader.classList.toggle('is-on', !!scene);
+    place();
   }
 
   function hide() {
@@ -423,101 +418,14 @@ a{color:inherit}
     hideTimer = setTimeout(() => { if (!cardHover) hide(); }, ms);
   }
 
-  function place(dt) {
-    if (active < 0) return;
-    const vw = document.documentElement.clientWidth, vh = window.innerHeight, m = 12;
-    // ax/ay: where the point of light is now; fx/fy: where it is heading (a ring turns to present it)
-    let ax, ay, ar, fx, fy, o;
-    if (scene) {
-      const s = scene.anchor(active), f = scene.anchorFinal(active);
-      if (!s) return;
-      ax = s.x; ay = s.y; ar = s.r; fx = f.x; fy = f.y;
-      o = scene.orb();
-    } else {
-      const r = cssOrb.getBoundingClientRect();
-      o = { x: r.left + r.width / 2, y: r.top + r.height / 2, r: r.width / 2 };
-      ax = fx = o.x + o.r * 0.92; ay = fy = o.y - o.r * 0.38; ar = 3;
-    }
-    let x, y;
-    if (docked) {
-      const dr = dock.getBoundingClientRect();
-      x = Math.round(dr.left); y = Math.round(dr.top);
-      if (snap || !dt) { pos.x = x; pos.y = y; snap = false; }
-      else { const k = 1 - Math.exp(-dt * 16); pos.x += (x - pos.x) * k; pos.y += (y - pos.y) * k; }
-      card.style.transform = 'translate3d(' + pos.x.toFixed(1) + 'px,' + pos.y.toFixed(1) + 'px,0)';
-      if (scene) lead(ax, ay, ar, o);
-      else { leadLine.style.opacity = '0'; lmDot.style.opacity = '0'; leadMark.setAttribute('transform', 'translate(-99 -99)'); }
-      return;
-    }
-    // Keep the card between the headline and the row with the pause button when there is room
-    let top = (header && !embed ? header.getBoundingClientRect().bottom : 0) + 8;
-    const introBottom = intro.getBoundingClientRect().bottom + 6;
-    let bottom = vh - m;
-    const footTop = stageFoot.getBoundingClientRect().top - 6;
-    if (footTop - introBottom > cardH + 40) { top = Math.max(top, introBottom); bottom = Math.min(bottom, footTop); }
-    if (vw < 860) {
-      const sr = slot.getBoundingClientRect();
-      x = (vw - cardW) / 2;
-      y = Math.min(sr.bottom - cardH - 4, vh - cardH - m);
-    } else {
-      // Try, in order: beside the point of light on the outer side, the same slid along the screen edge,
-      // below or above it, and last the inner side; take the first that fits and keeps clear of the orb
-      const gap = 30 + ar;
-      const outward = fx >= o.x, below = fy >= o.y;
-      const sideX = (right) => (right ? fx + gap : fx - gap - cardW);
-      const sideY = clamp(fy - cardH * 0.45, top, Math.max(top, bottom - cardH));
-      const vx = clamp(fx - cardW / 2, m, Math.max(m, vw - cardW - m));
-      const cands = [
-        [sideX(outward), sideY],
-        [clamp(sideX(outward), m, Math.max(m, vw - cardW - m)), sideY],
-        [vx, below ? fy + gap : fy - gap - cardH],
-        [vx, below ? fy - gap - cardH : fy + gap],
-        [sideX(!outward), sideY],
-      ];
-      const inView = (xx, yy) => xx >= m && xx + cardW <= vw - m && yy >= top && yy + cardH <= bottom;
-      const clearOfNode = (xx, yy) => !(fx > xx - ar - 6 && fx < xx + cardW + ar + 6 && fy > yy - ar - 6 && fy < yy + cardH + ar + 6);
-      const clearOfOrb = (xx, yy) => Math.hypot(o.x - clamp(o.x, xx, xx + cardW), o.y - clamp(o.y, yy, yy + cardH)) > o.r * 0.8;
-      let pick = null, second = null;
-      for (const [xx, yy] of cands) {
-        if (!inView(xx, yy) || !clearOfNode(xx, yy)) continue;
-        if (clearOfOrb(xx, yy)) { pick = [xx, yy]; break; }
-        if (!second) second = [xx, yy];
-      }
-      const chosen = pick || second || [vx, below ? fy + gap : fy - gap - cardH];
-      x = chosen[0]; y = chosen[1];
-    }
-    x = clamp(x, m, Math.max(m, vw - cardW - m));
-    y = clamp(y, top, Math.max(top, bottom - cardH));
-    if (snap || !dt) { pos.x = x; pos.y = y; snap = false; }
-    else { const k = 1 - Math.exp(-dt * 16); pos.x += (x - pos.x) * k; pos.y += (y - pos.y) * k; }
-    card.style.transform = 'translate3d(' + pos.x.toFixed(1) + 'px,' + pos.y.toFixed(1) + 'px,0)';
-    lead(ax, ay, ar, o);
-  }
-
-  // The ring hugs the portal; the line starts at its edge, where the dot sits. No line across the orb.
-  function lead(ax, ay, ar, o) {
-    const ex = clamp(ax, pos.x, pos.x + cardW), ey = clamp(ay, pos.y, pos.y + cardH);
-    const dx = ex - ax, dy = ey - ay, d = Math.hypot(dx, dy);
-    const rr = ar + 4;
-    lmRing.setAttribute('r', rr.toFixed(1));
-    // With the card docked on the left, draw the line only from points of light on the left half of the orb
-    let clear = !(docked && o && ax > o.x - o.r * 0.15);
-    if (clear && o && d > 1) {
-      const t = clamp(((o.x - ax) * dx + (o.y - ay) * dy) / (d * d), 0, 1);
-      clear = Math.hypot(ax + dx * t - o.x, ay + dy * t - o.y) > o.r * 0.97;
-    }
-    if (d > rr + 10 && clear) {
-      const sx = ax + dx / d * rr, sy = ay + dy / d * rr;
-      leadLine.setAttribute('x1', sx.toFixed(1));
-      leadLine.setAttribute('y1', sy.toFixed(1));
-      leadLine.setAttribute('x2', ex.toFixed(1));
-      leadLine.setAttribute('y2', ey.toFixed(1));
-      lmDot.setAttribute('cx', sx.toFixed(1));
-      lmDot.setAttribute('cy', sy.toFixed(1));
-      leadLine.style.opacity = '1';
-      lmDot.style.opacity = '1';
-    } else { leadLine.style.opacity = '0'; lmDot.style.opacity = '0'; }
-    leadMark.setAttribute('transform', 'translate(' + ax.toFixed(1) + ' ' + ay.toFixed(1) + ')');
+  // A ring around the point of light on show
+  function place() {
+    if (active < 0 || !scene) return;
+    const s = scene.anchor(active);
+    if (!s) return;
+    const mr = media.getBoundingClientRect();
+    lmRing.setAttribute('r', (s.r + 4).toFixed(1));
+    leadMark.setAttribute('transform', 'translate(' + (s.x - mr.left).toFixed(1) + ' ' + (s.y - mr.top).toFixed(1) + ')');
   }
 
   function stopTour() { tourOn = false; clearTimeout(tourTimer); }
@@ -548,7 +456,9 @@ a{color:inherit}
   function setMotion(on, byUser) {
     motionOn = on;
     app.classList.toggle('motion-off', !on);
-    motionBtn.innerHTML = '<span class="badge" aria-hidden="true">' + (on ? ICON_PAUSE : ICON_PLAY) + '</span><span class="lbl">' + (on ? 'Pause motion' : 'Play motion') + '</span>';
+    const label = on ? 'Pause motion' : 'Play motion';
+    motionBtn.innerHTML = (on ? ICON_PAUSE : ICON_PLAY) + '<span class="sr-only">' + label + '</span>';
+    motionBtn.title = label;
     if (scene) scene.setMotion(on);
     if (!on) stopTour();
     else if (byUser) { clearTimeout(idleTimer); idleTimer = setTimeout(onIdle, 1500); }
@@ -573,10 +483,9 @@ a{color:inherit}
     if (lastPX === null) { lastPX = e.clientX; lastPY = e.clientY; return; }
     if (Math.abs(e.clientX - lastPX) + Math.abs(e.clientY - lastPY) < 3) return;
     lastPX = e.clientX; lastPY = e.clientY; lastMove = performance.now();
-    poke();
+    if (e.target && e.target.closest && e.target.closest('#media')) poke();
   }, { passive: true });
-  window.addEventListener('pointerdown', poke, { passive: true });
-  window.addEventListener('wheel', poke, { passive: true });
+  media.addEventListener('pointerdown', poke, { passive: true });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' || e.key === 'Esc') {
       hide(); stopTour();
@@ -584,7 +493,7 @@ a{color:inherit}
     } else poke();
   });
 
-  // A card that slides under a resting cursor is not the visitor reaching for it
+  // A caption that changes under a resting cursor is not the visitor reaching for it
   card.addEventListener('pointerenter', (e) => {
     if (e.pointerType === 'mouse' && performance.now() - lastMove > 600) return;
     cardHover = true; clearTimeout(hideTimer); stopTour(); if (source === 'tour') source = 'card';
@@ -601,19 +510,14 @@ a{color:inherit}
   });
 
   cssOrb.addEventListener('click', () => { if (!scene) api.next(); });
-  const relayout = () => { if (!scene && active >= 0) { snap = true; place(0); } };
-  window.addEventListener('resize', relayout);
-  let dockTimer = 0;
-  const remeasure = () => { clearTimeout(dockTimer); dockTimer = setTimeout(measureDock, 120); };
+  let capTimer = 0;
+  const remeasure = () => { clearTimeout(capTimer); capTimer = setTimeout(measureCaption, 120); };
   window.addEventListener('resize', remeasure);
-  if (wide.addEventListener) wide.addEventListener('change', remeasure);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureDock);
-  window.addEventListener('scroll', relayout, { passive: true });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureCaption);
 
   const fallbackTimer = setTimeout(() => api.fail('timed out'), 12000);
   const api = window.ORCL = {
-    projects, areas: AREA, icons: ICONS, embed,
-    isDocked: () => docked,
+    projects, areas: AREA, icons: ICONS, embed, media: mediaOnly,
     attach(s) {
       scene = s;
       clearTimeout(fallbackTimer);
@@ -622,10 +526,10 @@ a{color:inherit}
       s.setMotion(motionOn);
       setHint();
       setTimeout(() => {
-        if (active >= 0) { s.setActive(active); s.present(active, true); snap = true; return; }
+        if (active >= 0) { s.setActive(active); s.present(active, true); leader.classList.add('is-on'); return; }
         if (userTouched) return;
         if (motionOn) startTour(0); else show(0, 'intro');
-      }, docked ? 3200 : 1300);
+      }, 1600);
     },
     fail(why) {
       if (scene) return;
@@ -636,7 +540,7 @@ a{color:inherit}
       if (window.console) console.info('[ORCL] Showing the static version: ' + why + '.');
     },
     ready() { clearTimeout(fallbackTimer); },
-    frame(dt) { place(dt); },
+    frame() { place(); },
     hover(i) {
       if (i >= 0) { poke(); show(i, 'hover'); }
       else if (source === 'hover') hideSoon(340);
@@ -658,7 +562,7 @@ a{color:inherit}
   };
   setMotion(motionOn, false);
   setHint();
-  measureDock();
+  measureCaption();
 })();
 </script>
 
@@ -715,7 +619,7 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
   const COL = { road: new THREE.Color('#E76F51'), train: new THREE.Color('#2A7F7F'), sense: new THREE.Color('#E9C9A5') };
   const WHITE = new THREE.Color('#F5F3EE');
   // Deep Space, the page background: with no tone mapping the palette colors come out exactly as specified
-  const BG = new THREE.Color('#17212B');
+  const BG = new THREE.Color('#141E3C');
   const hdr = (c, k) => c.clone().multiplyScalar(k);
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const ease = (cur, target, rate, dt) => cur + (target - cur) * (1 - Math.exp(-rate * dt));
@@ -767,7 +671,7 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
     const c = document.createElement('canvas');
     c.width = c.height = 1024;
     const g = c.getContext('2d');
-    g.fillStyle = '#17212B';
+    g.fillStyle = '#141E3C';
     g.fillRect(0, 0, 1024, 1024);
     const grd = g.createRadialGradient(512, 512, 0, 512, 512, 512);
     // Darker straight behind the orb (the glass magnifies what is behind it), brightest just around it
@@ -1478,24 +1382,27 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
     camera.aspect = vw / vh;
     frameCamera();
   }
+  // The canvas fills the framed box; positions handed to the page are in page (client) coordinates
+  let ox = 0, oy = 0;
+  function syncOffset() { const cr = canvas.getBoundingClientRect(); ox = cr.left; oy = cr.top; }
   function frameCamera() {
+    syncOffset();
+    // Frame the orb and its rings in the slot: the box above the caption
     const r = slot.getBoundingClientRect();
-    // On phones the project card docks at the bottom of the slot, so frame the orb in the space above it
-    const top = r.top, bottom = vw < 860 ? Math.max(r.top + 240, r.bottom - 210) : r.bottom;
-    const sw = Math.max(r.width, 200), sh = Math.max(bottom - top, 200);
+    const top = r.top - oy, bottom = r.bottom - oy;
+    const sw = Math.max(r.width, 120), sh = Math.max(bottom - top, 120);
     const narrow = sw < sh * 1.15;
     ringsGroup.scale.setScalar(narrow ? 0.9 : 1);
     const W = narrow ? 1.98 : 2.55, H = narrow ? 1.5 : 1.55;
     const t = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
-    const d = clamp(Math.max((H * vh) / (sh * t), (W * vh) / (sw * t)), 6.4, 19);
-    // Portals about 34 px across on a laptop and 30 px on a phone, at the orb's distance
+    const d = clamp(Math.max((H * vh) / (sh * t), (W * vh) / (sw * t)), 6.4, 40);
+    // Portals about 34 px across in a full-size box, down to 24 px in a small one, at the orb's distance
     ppuOrb = vh / (2 * d * t);
-    portalSize = clamp((vw < 720 ? 30 : 34) / (ppuOrb * ringsGroup.scale.x), 0.12, 0.32);
+    portalSize = clamp(clamp(sw * 0.052, 24, 34) / (ppuOrb * ringsGroup.scale.x), 0.12, 0.32);
     camera.position.set(0, 0, d);
     camera.lookAt(0, 0, 0);
-    const cx = r.left + r.width / 2;
-    let cy = (top + bottom) / 2;
-    if (vw < 860) cy = Math.min(cy, top + H * (vh / (2 * d * t)) + 10);
+    const cx = r.left - ox + r.width / 2;
+    const cy = (top + bottom) / 2;
     camera.setViewOffset(vw, vh, -(cx - vw / 2), -(cy - vh / 2), vw, vh);
     camera.updateProjectionMatrix();
     camera.updateMatrixWorld();
@@ -1506,13 +1413,14 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
   const tmpV = new THREE.Vector3(), tmpW = new THREE.Vector3();
   const orbScr = { x: 0, y: 0, r: 0, depth: 1 };
   function project() {
+    syncOffset();
     const th = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
     orb.getWorldPosition(tmpW);
     tmpV.copy(tmpW).applyMatrix4(camera.matrixWorldInverse);
     orbScr.depth = -tmpV.z;
     tmpV.copy(tmpW).project(camera);
-    orbScr.x = ((tmpV.x + 1) / 2) * vw;
-    orbScr.y = ((1 - tmpV.y) / 2) * vh;
+    orbScr.x = ox + ((tmpV.x + 1) / 2) * vw;
+    orbScr.y = oy + ((1 - tmpV.y) / 2) * vh;
     orbScr.r = (vh / (2 * orbScr.depth * th)) * orb.scale.x;
     for (const n of nodes) {
       n.mesh.getWorldPosition(tmpW);
@@ -1520,8 +1428,8 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
       const depth = -tmpV.z;
       tmpV.copy(tmpW).project(camera);
       const s = n.scr;
-      s.x = ((tmpV.x + 1) / 2) * vw;
-      s.y = ((1 - tmpV.y) / 2) * vh;
+      s.x = ox + ((tmpV.x + 1) / 2) * vw;
+      s.y = oy + ((1 - tmpV.y) / 2) * vh;
       s.ppu = vh / (2 * depth * th);
       s.r = 0.5 * 0.93 * n.portal.scale.x * ringsGroup.scale.x * s.ppu;
       s.behind = depth > orbScr.depth;
@@ -1599,19 +1507,6 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
       r.spinner.updateMatrixWorld(true);
       n.mesh.getWorldPosition(wp);
       let score = wp.z / R + 0.85 * Math.min(Math.abs(wp.x) / R, 0.62) - 0.8 * Math.max(0, -wp.y - 1.15) - 0.8 * Math.max(0, wp.y - 1.05) - 0.16 * Math.abs(s - cur);
-      if (O.isDocked && O.isDocked()) {
-        // the card sits in the heading column on the left: bring the point of light round to that side of the orb
-        wp.project(camera);
-        const sx = ((wp.x + 1) / 2) * vw;
-        score += 1.1 * clamp((orbScr.x - sx) / (orbScr.r * 2), 0, 0.75);
-      } else if (vw >= 860) {
-        // leave room for the card beside the point of light
-        wp.project(camera);
-        const sx = ((wp.x + 1) / 2) * vw;
-        const gapPx = 34 + 0.5 * 0.93 * portalSize * 1.55 * ringsGroup.scale.x * ppuOrb;
-        const room = sx >= orbScr.x ? vw - 12 - (sx + gapPx + 330) : sx - gapPx - 330 - 12;
-        if (room < 0) score -= Math.min(1.2, -room / 120);
-      }
       if (score > bestScore) { bestScore = score; best = s; }
     }
     // Where the point of light will end up, so its card can go straight there
@@ -1619,7 +1514,7 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
     r.spinner.updateMatrixWorld(true);
     n.mesh.getWorldPosition(wp);
     wp.project(camera);
-    n.final = { x: ((wp.x + 1) / 2) * vw, y: ((1 - wp.y) / 2) * vh };
+    n.final = { x: ox + ((wp.x + 1) / 2) * vw, y: oy + ((1 - wp.y) / 2) * vh };
     n.finalFrame = frames;
     r.spinner.rotation.y = r.spin;
     r.spinner.updateMatrixWorld(true);
@@ -1818,7 +1713,10 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
   canvas.addEventListener('webglcontextrestored', () => { dirty(); startLoop(); }, false);
   window.addEventListener('resize', resize);
   window.addEventListener('scroll', frameCamera, { passive: true });
-  if ('ResizeObserver' in window) new ResizeObserver(() => frameCamera()).observe(slot);
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(() => frameCamera()).observe(slot);
+    new ResizeObserver(() => resize()).observe(canvas);
+  }
 
   const api = {
     setActive(i) { activeIdx = i; dirty(); },
