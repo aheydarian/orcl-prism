@@ -84,6 +84,10 @@ a{color:inherit}
 .css-head .v{fill:#F5F3EE}
 .css-head .o{stroke:#E76F51;stroke-width:2.2;stroke-linecap:round}
 .css-rim{inset:0;box-shadow:inset 0 0 0 1.5px rgba(245,243,238,.3)}
+/* lighter placeholder on the Sand background */
+.app[data-bg=sand] .css-orb::before{background:radial-gradient(closest-side,rgba(245,243,238,.9),rgba(245,243,238,.35) 45%,rgba(245,243,238,0) 100%)}
+.app[data-bg=sand] .css-glass{background:radial-gradient(circle at 33% 27%,rgba(255,255,255,.85),rgba(255,255,255,0) 14%),radial-gradient(circle at 50% 50%,rgba(245,243,238,.5),rgba(52,73,94,.16) 78%);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.75),0 0 40px rgba(245,243,238,.6)}
+.app[data-bg=sand] .css-ring.r1{border-color:rgba(185,138,94,.6)}
 
 /* Ring around the point of light on show */
 .leader{position:absolute;inset:0;z-index:2;width:100%;height:100%;pointer-events:none;overflow:visible;opacity:0;transition:opacity .25s ease;--c:var(--teal)}
@@ -146,19 +150,20 @@ a{color:inherit}
 :root{--yellow:#FDDA24;--card:#F1F1EF;--rule:rgba(20,30,60,.2);--font-serif:"bodoni-urw","Libre Bodoni","Bodoni 72","Bodoni MT",Didot,serif}
 .home{position:relative;background:var(--white);color:var(--navy)}
 /* the thin vertical rule of the UVA page grid */
-.home::before{content:"";position:absolute;top:0;bottom:0;left:calc(50% - min(1318px,100% - 2 * var(--pad)) / 2 + 320px);width:1px;background:var(--rule);pointer-events:none}
+.home::before{content:"";position:absolute;z-index:0;top:0;bottom:0;left:calc(50% - min(1318px,100% - 2 * var(--pad)) / 2 + 320px);width:1px;background:var(--rule);pointer-events:none}
 .home-sec{position:relative;padding:72px 0 76px}
 .home-sec + .home-sec{border-top:1px solid var(--rule)}
 .home-sec.flush{border-top:0}
 .gut{padding-left:345px}
 .sec-title{position:relative;margin:0 0 18px;font-weight:700;font-size:44px;line-height:52px;color:var(--navy)}
 .sec-title::before{content:"";position:absolute;left:-33px;top:8px;width:7px;height:38px;background:var(--orange)}
-.sec-lede,.home-text p{max-width:700px;margin:0 0 6px;font-size:17px;line-height:28px;color:var(--gray)}
+.sec-lede,.home-text p{max-width:740px;margin:0 0 6px;font-size:17px;line-height:28px;color:var(--gray)}
 .home-text a,.cap a,.inline-link{color:var(--navy);text-decoration:underline;text-decoration-color:var(--orange);text-decoration-thickness:1px;text-underline-offset:4px}
 .home-text a:hover,.cap a:hover,.inline-link:hover{text-decoration-thickness:2px}
-.topic{padding-top:34px;margin-top:34px;border-top:1px solid var(--rule)}
+.topic{position:relative;padding-top:34px;margin-top:40px}
+.topic::before{content:"";position:absolute;top:0;left:-100vw;right:-100vw;border-top:1px solid var(--rule)}
 .topic-title{margin:0 0 12px;font-weight:500;font-size:34px;line-height:40px;color:var(--navy)}
-.topic p{max-width:700px;margin:0;font-size:17px;line-height:28px;color:var(--navy)}
+.topic p{max-width:760px;margin:0;font-size:17px;line-height:28px;color:var(--navy)}
 /* links with a round yellow arrow, as on the UVA pages */
 .ylink{display:inline-flex;align-items:center;gap:10px;margin-top:18px;font-weight:700;font-size:16px;line-height:1.25;color:var(--navy);text-decoration:none}
 .ylink .ybadge{flex:none;display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:var(--yellow);color:var(--navy)}
@@ -170,9 +175,9 @@ a{color:inherit}
 
 /* ORCL by the Numbers */
 .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:56px 21px;margin-top:42px}
-.stat-num{margin:0;font-family:var(--font-serif);font-style:italic;font-weight:700;font-size:82px;line-height:82px;color:#EB5F0C}
+.stat .stat-num{margin:0;font-family:var(--font-serif);font-style:italic;font-weight:700;font-size:82px;line-height:82px;color:#EB5F0C}
 .stat-label{margin:22px 0 14px;font-family:var(--font-cond);font-weight:700;font-synthesis:none;font-size:28px;line-height:30px;text-transform:uppercase;color:var(--navy)}
-.stat p{margin:0;font-size:14px;line-height:24px;color:var(--gray)}
+.stat p:not(.stat-num){margin:0;font-size:14px;line-height:24px;color:var(--gray)}
 
 /* Upcoming Events */
 .events{margin-top:40px;border-top:1px solid var(--rule)}
@@ -190,7 +195,7 @@ a{color:inherit}
 .event-meta{margin:2px 0 0;font-size:14px;line-height:24px}
 
 /* Research Across Domains */
-.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px 53px;margin-top:44px}
+.cards{position:relative;z-index:1;background:var(--white);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px 53px;margin-top:44px}
 .card-x{display:flex;flex-direction:column;border-top:1px solid var(--navy);background:var(--card);padding:30px 25px 32px}
 .card-x img{display:block;width:100%;aspect-ratio:353/235;object-fit:cover;background:#ddd}
 .card-x h3{margin:26px 0 14px;font-weight:700;font-size:20px;line-height:28px}
@@ -199,7 +204,7 @@ a{color:inherit}
 .card-x p{margin:0;font-size:17px;line-height:28px;color:var(--gray)}
 
 /* Watch: A Drive in Our Simulator */
-.video{position:relative;margin-top:0;aspect-ratio:1318/651;background:#000 center/cover no-repeat;border-top:3px solid var(--navy);overflow:hidden}
+.video{position:relative;z-index:1;margin-top:0;aspect-ratio:1318/651;background:#000 center/cover no-repeat;border-top:3px solid var(--navy);overflow:hidden}
 .video-box{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(857px,calc(100% - 48px));padding:44px 56px 44px;border-radius:4px;background:rgba(0,0,0,.7);color:var(--white);text-align:center}
 .video-box h2{margin:0 0 30px;font-weight:700;font-size:44px;line-height:52px}
 .video-box p{margin:0 auto;max-width:717px;font-size:17px;line-height:28px}
@@ -210,7 +215,7 @@ a{color:inherit}
 .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 
 /* Projects and Engagement */
-.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 25px;margin-top:44px}
+.gallery{position:relative;z-index:1;background:var(--white);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 25px;margin-top:44px}
 .gallery figure{margin:0}
 .gallery img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#ddd}
 .cap{margin:14px 0 0;font-size:14px;line-height:24px;color:var(--gray)}
