@@ -12,7 +12,7 @@ Option A, if the banner's image slot can take embed code: put this in place of t
 
 ```html
 <iframe src="https://aheydarian.github.io/orcl-prism/#media" title="ORCL research projects (interactive)" loading="lazy"
-  style="display:block;width:100%;aspect-ratio:670/507;height:auto;border:1px solid #E57200;background:#E9C9A5;position:relative"></iframe>
+  style="display:block;width:100%;aspect-ratio:670/507;height:auto;border:1px solid #E57200;background:#141E3C;position:relative"></iframe>
 ```
 
 Option B, if the banner only takes an image: replace the banner with an unrestricted source code section that holds the banner's own markup, with the iframe where the image was.
@@ -24,7 +24,7 @@ Option B, if the banner only takes an image: replace the banner with an unrestri
       <div class="unit_feature_inner">
         <figure class="unit_feature_figure">
           <iframe src="https://aheydarian.github.io/orcl-prism/#media" title="ORCL research projects (interactive)" loading="lazy"
-            style="display:block;width:100%;aspect-ratio:670/507;height:auto;border:1px solid #E57200;background:#E9C9A5;position:relative"></iframe>
+            style="display:block;width:100%;aspect-ratio:670/507;height:auto;border:1px solid #E57200;background:#141E3C;position:relative"></iframe>
         </figure>
         <div class="unit_feature_wrapper">
           <h1 class="unit_feature_title">Where Virtual Worlds Meet Human Behavior</h1>
@@ -40,6 +40,17 @@ Option B, if the banner only takes an image: replace the banner with an unrestri
 </div>
 ```
 
-The animation sits on Sand (#E9C9A5) from the lab palette. For UVA navy instead, use `https://aheydarian.github.io/orcl-prism/#media,bg=navy` as the src and `background:#141E3C` on the iframe.
+The animation sits on UVA navy. For the lighter Sand background from the lab palette instead, use `https://aheydarian.github.io/orcl-prism/#media,bg=sand` as the src and `background:#E9C9A5` on the iframe.
 
 Notes: `position:relative` keeps the page's thin vertical grid rule from drawing over the iframe. The animation pauses itself when scrolled out of view, has a pause button, starts paused for visitors who ask for reduced motion, and shows a still image if WebGL is not available.
+
+## Upcoming Events on the full page
+
+The events list is copied from the "Upcoming Events" block on the lab's UVA page, so events are still added and edited in Drupal as usual.
+
+- `update_events.py` reads that block and writes `events.json`.
+- `.github/workflows/update-events.yml` runs it twice a day, at 3:37 am and 3:37 pm Pacific (6:37 am and 6:37 pm Eastern) during daylight time, and commits `events.json` when the list changes. GitHub Pages then republishes the site.
+- To refresh right away, open the Actions tab, choose "Update events" and press "Run workflow".
+- The page loads `events.json` each time it opens and hides events that have ended, even between refreshes.
+- If the lab page cannot be read, the run fails, the last good list stays up, and GitHub notifies the repository owner.
+- GitHub pauses scheduled workflows in a public repository after 60 days without activity. If the repository has had no commit for 50 days, the workflow makes an empty commit to keep itself running.

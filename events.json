@@ -1,0 +1,32 @@
+{
+  "source": "https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab",
+  "updated": null,
+  "calendar": "https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/news/events",
+  "intro": "Defenses, talks and lab events.",
+  "events": [
+    {
+      "title": "Ph.D. Dissertation Defense by Carreen de Cárdenas",
+      "url": "https://engineering.virginia.edu/news-events/events/phd-dissertation-defense-carreen-de-cardenas",
+      "start": "2026-10-06T13:00:00-04:00",
+      "end": "2026-10-06T15:00:00-04:00",
+      "month": "Oct",
+      "day": "06",
+      "when": "Oct 06",
+      "time": "1:00 PM - 3:00 PM",
+      "location": "Rotunda Dome Room, University of Virginia",
+      "description": "Dissertation: “Seeing and Shaping Cities: Applying Eye-Tracking in Real-World and Virtual Environments to Enhance User-Centric Transportation Design”"
+    },
+    {
+      "title": "Ph.D. Proposal Presentation by Saja Alnusair",
+      "url": "https://engineering.virginia.edu/news-events/events/phd-proposal-presentation-saja-alnusair",
+      "start": "2026-10-30T10:00:00-04:00",
+      "end": "2026-10-30T12:00:00-04:00",
+      "month": "Oct",
+      "day": "30",
+      "when": "Oct 30",
+      "time": "10:00 AM - 12:00 PM",
+      "location": "Olsson Hall, Room 103",
+      "description": "Dissertation proposal on noise, acoustics and distraction in buildings, studied with VR and simulation."
+    }
+  ]
+}

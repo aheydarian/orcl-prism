@@ -253,6 +253,7 @@ a{color:inherit}
   .video-box h2{font-size:30px;line-height:36px;margin-bottom:18px}
   .cta-x{min-height:0}
 }
+.events-none{margin:0;padding:32px 0;font-size:17px;line-height:28px;color:var(--gray)}
 
 /* In place of the whole banner (#embed) or of the banner photo (#media) on the lab's UVA page */
 .app.is-embed .top,.app.is-embed .foot,.app.is-embed .home,.app.is-media .top,.app.is-media .foot,.app.is-media .intro,.app.is-media .home{display:none}
@@ -403,10 +404,10 @@ a{color:inherit}
     <section class="home-sec" aria-labelledby="h-events">
       <div class="wrap gut">
         <h2 class="sec-title" id="h-events">Upcoming Events</h2>
-        <p class="sec-lede">Defenses, talks and lab events.</p>
-        <a class="ylink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/news/events"><span class="lbl">See the full calendar</span><span class="ybadge" aria-hidden="true"><svg viewBox="0 0 12 12" focusable="false"><path d="M5 2.6H2.6V9.4H9.4V7M6.8 2.6H9.4V5.2M9.2 2.8L5.4 6.6"/></svg></span></a>
-        <div class="events">
-          <article class="event">
+        <p class="sec-lede" id="eventsLede">Defenses, talks and lab events.</p>
+        <a class="ylink" id="eventsCal" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/news/events"><span class="lbl">See the full calendar</span><span class="ybadge" aria-hidden="true"><svg viewBox="0 0 12 12" focusable="false"><path d="M5 2.6H2.6V9.4H9.4V7M6.8 2.6H9.4V5.2M9.2 2.8L5.4 6.6"/></svg></span></a>
+        <div class="events" id="eventsList">
+          <article class="event" data-end="2026-10-06T15:00:00-04:00">
             <div class="event-date" aria-hidden="true"><span class="m">Oct</span><span class="d">06</span></div>
             <div class="event-body">
               <h3 class="event-title"><a href="https://engineering.virginia.edu/news-events/events/phd-dissertation-defense-carreen-de-cardenas">Ph.D. Dissertation Defense by Carreen de Cárdenas</a></h3>
@@ -416,7 +417,7 @@ a{color:inherit}
               <p class="event-meta"><span class="sr-only">Location: </span>Rotunda Dome Room, University of Virginia</p>
             </div>
           </article>
-          <article class="event">
+          <article class="event" data-end="2026-10-30T12:00:00-04:00">
             <div class="event-date" aria-hidden="true"><span class="m">Oct</span><span class="d">30</span></div>
             <div class="event-body">
               <h3 class="event-title"><a href="https://engineering.virginia.edu/news-events/events/phd-proposal-presentation-saja-alnusair">Ph.D. Proposal Presentation by Saja Alnusair</a></h3>
@@ -639,8 +640,8 @@ a{color:inherit}
   // Where the page is shown: on its own; in place of the whole banner (#embed); or in place of the banner photo (#media)
   const flags = location.hash.slice(1).split(/[&,]/);
   const mediaOnly = flags.includes('media');
-  // Background of the animation box: Sand from the lab palette by default (#bg=navy for UVA navy)
-  const bgName = ((flags.find((f) => f.startsWith('bg=')) || 'bg=sand').slice(3) === 'navy') ? 'navy' : 'sand';
+  // Background of the animation box: UVA navy by default (#bg=sand for Sand from the lab palette)
+  const bgName = ((flags.find((f) => f.startsWith('bg=')) || 'bg=navy').slice(3) === 'sand') ? 'sand' : 'navy';
   app.dataset.bg = bgName;
   const lightBg = bgName === 'sand';
   const embed = mediaOnly || flags.includes('embed');
@@ -877,6 +878,56 @@ a{color:inherit}
     v.replaceChildren(f);
     f.focus();
   });
+
+  // Upcoming Events: events.json is refreshed from the lab's UVA page by a GitHub workflow;
+  // events that have ended drop off here even between refreshes
+  const evList = document.getElementById('eventsList');
+  if (evList && !embed) {
+    const upcoming = (end) => { const t = Date.parse(end || ''); return Number.isNaN(t) || t > Date.now(); };
+    const uvaUrl = (u) => (typeof u === 'string' && u.startsWith('https://engineering.virginia.edu/') ? u : null);
+    const mk = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+    const none = () => mk('p', 'events-none', 'No upcoming events right now.');
+    const card = (ev) => {
+      const a = mk('article', 'event');
+      a.dataset.end = ev.end || '';
+      const d = mk('div', 'event-date');
+      d.setAttribute('aria-hidden', 'true');
+      d.append(mk('span', 'm', ev.month || ''), mk('span', 'd', ev.day || ''));
+      const b = mk('div', 'event-body');
+      const h = mk('h3', 'event-title');
+      const href = uvaUrl(ev.url);
+      if (href) { const l = mk('a', null, ev.title); l.href = href; h.append(l); } else h.textContent = ev.title;
+      b.append(h);
+      if (ev.description) b.append(mk('p', 'event-desc', ev.description));
+      b.append(mk('p', 'event-when', ev.when || ''));
+      [['Time: ', ev.time], ['Location: ', ev.location]].forEach(([label, val]) => {
+        if (!val) return;
+        const p = mk('p', 'event-meta');
+        p.append(mk('span', 'sr-only', label), String(val));
+        b.append(p);
+      });
+      a.append(d, b);
+      return a;
+    };
+    const tidy = () => {
+      evList.querySelectorAll('.event').forEach((a) => { if (!upcoming(a.dataset.end)) a.remove(); });
+      if (!evList.querySelector('.event, .events-none')) evList.append(none());
+    };
+    tidy();
+    fetch('events.json', { cache: 'no-cache' })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!data || !Array.isArray(data.events)) return;
+        const list = data.events.filter((ev) => ev && typeof ev.title === 'string' && upcoming(ev.end)).map(card);
+        evList.replaceChildren(...(list.length ? list : [none()]));
+        const lede = document.getElementById('eventsLede');
+        if (lede && typeof data.intro === 'string' && data.intro) lede.textContent = data.intro;
+        const cal = document.getElementById('eventsCal');
+        if (cal && uvaUrl(data.calendar)) cal.href = data.calendar;
+      })
+      .catch(() => {});
+    setInterval(tidy, 60000);
+  }
 })();
 </script>
 
@@ -930,8 +981,8 @@ if (O && !O.started) {
 function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
   const projects = O.projects;
   const AREAS = ['road', 'train', 'sense'];
-  // Background theme of the box: light Sand (default) or UVA navy
-  const LIGHT = O.bg !== 'navy';
+  // Background theme of the box: UVA navy (default) or light Sand
+  const LIGHT = O.bg === 'sand';
   const COL = { road: new THREE.Color('#E76F51'), train: new THREE.Color('#2A7F7F'), sense: new THREE.Color(LIGHT ? '#B98A5E' : '#E9C9A5') };
   const WHITE = new THREE.Color('#F5F3EE');
   // Deep Space, the page background: with no tone mapping the palette colors come out exactly as specified
