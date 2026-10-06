@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#141E3C">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Francois+One&family=Libre+Franklin:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Francois+One&family=Libre+Bodoni:ital,wght@1,700&family=Libre+Franklin:wght@400;500;600;700&display=swap">
 <style>
 :root{
   /* UVA Engineering page colors */
@@ -44,7 +44,7 @@ a{color:inherit}
 .top{background:var(--navy);color:var(--white);border-bottom:1px solid rgba(255,255,255,.14)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 16px;min-height:129px;padding:24px 0}
 .lab-name{font-weight:700;font-size:32px;line-height:1;color:var(--white);text-decoration:none}
-.top-nav{display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;gap:2px}
+.top-nav{display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;gap:0}
 .top-nav a{font-weight:500;font-size:18px;line-height:1.2;color:var(--white);text-decoration:none;padding:8px 7px}
 
 /* Banner: the UVA Engineering page banner, with the animation where the photo goes */
@@ -61,6 +61,7 @@ a{color:inherit}
 .arrow path{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 
 /* The animation, framed like the banner photo */
+.app[data-bg=sand] .media{background:radial-gradient(closest-side at 50% 44%,#F5F3EE,#E9C9A5)}
 .media{position:relative;flex:0 0 50.84%;min-width:0;aspect-ratio:670/507;margin:0;border:1px solid var(--orange);background:var(--navy);overflow:hidden;container-type:size;--cap:110px}
 #scene{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity 1.2s ease;touch-action:pan-y}
 .app.is-3d #scene{opacity:1}
@@ -140,17 +141,125 @@ a{color:inherit}
 .foot-links{display:flex;flex-wrap:wrap;gap:24px}
 .foot a{color:var(--white);font-weight:700;text-decoration:none}
 
+
+/* ---------- The rest of the lab's UVA home page, below the banner ---------- */
+:root{--yellow:#FDDA24;--card:#F1F1EF;--rule:rgba(20,30,60,.2);--font-serif:"bodoni-urw","Libre Bodoni","Bodoni 72","Bodoni MT",Didot,serif}
+.home{position:relative;background:var(--white);color:var(--navy)}
+/* the thin vertical rule of the UVA page grid */
+.home::before{content:"";position:absolute;top:0;bottom:0;left:calc(50% - min(1318px,100% - 2 * var(--pad)) / 2 + 320px);width:1px;background:var(--rule);pointer-events:none}
+.home-sec{position:relative;padding:72px 0 76px}
+.home-sec + .home-sec{border-top:1px solid var(--rule)}
+.home-sec.flush{border-top:0}
+.gut{padding-left:345px}
+.sec-title{position:relative;margin:0 0 18px;font-weight:700;font-size:44px;line-height:52px;color:var(--navy)}
+.sec-title::before{content:"";position:absolute;left:-33px;top:8px;width:7px;height:38px;background:var(--orange)}
+.sec-lede,.home-text p{max-width:700px;margin:0 0 6px;font-size:17px;line-height:28px;color:var(--gray)}
+.home-text a,.cap a,.inline-link{color:var(--navy);text-decoration:underline;text-decoration-color:var(--orange);text-decoration-thickness:1px;text-underline-offset:4px}
+.home-text a:hover,.cap a:hover,.inline-link:hover{text-decoration-thickness:2px}
+.topic{padding-top:34px;margin-top:34px;border-top:1px solid var(--rule)}
+.topic-title{margin:0 0 12px;font-weight:500;font-size:34px;line-height:40px;color:var(--navy)}
+.topic p{max-width:700px;margin:0;font-size:17px;line-height:28px;color:var(--navy)}
+/* links with a round yellow arrow, as on the UVA pages */
+.ylink{display:inline-flex;align-items:center;gap:10px;margin-top:18px;font-weight:700;font-size:16px;line-height:1.25;color:var(--navy);text-decoration:none}
+.ylink .ybadge{flex:none;display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:var(--yellow);color:var(--navy)}
+.ybadge svg{width:11px;height:11px;display:block}
+.ybadge path{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ylink:hover .lbl{text-decoration:underline;text-decoration-color:var(--orange);text-decoration-thickness:2px;text-underline-offset:6px}
+.ylinks{display:flex;flex-direction:column;align-items:flex-start;gap:12px;margin-top:20px}
+.ylinks .ylink{margin-top:0}
+
+/* ORCL by the Numbers */
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:56px 21px;margin-top:42px}
+.stat-num{margin:0;font-family:var(--font-serif);font-style:italic;font-weight:700;font-size:82px;line-height:82px;color:#EB5F0C}
+.stat-label{margin:22px 0 14px;font-family:var(--font-cond);font-weight:700;font-synthesis:none;font-size:28px;line-height:30px;text-transform:uppercase;color:var(--navy)}
+.stat p{margin:0;font-size:14px;line-height:24px;color:var(--gray)}
+
+/* Upcoming Events */
+.events{margin-top:40px;border-top:1px solid var(--rule)}
+.event{display:flex;gap:20px;padding:32px 0;border-bottom:1px solid var(--rule)}
+.event:last-child{border-bottom:0}
+.event-date{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;width:90px;height:78px;background:var(--yellow);color:var(--navy);text-transform:uppercase}
+.event-date .m{font-weight:700;font-size:14px;line-height:1}
+.event-date .d{margin-top:2px;font-family:var(--font-cond);font-weight:700;font-synthesis:none;font-size:44px;line-height:1;letter-spacing:-1px}
+.event-body{min-width:0}
+.event-title{margin:0 0 10px;font-weight:700;font-size:24px;line-height:28px}
+.event-title a{color:var(--navy);text-decoration:none}
+.event-title a:hover{text-decoration:underline;text-decoration-color:var(--orange);text-underline-offset:5px}
+.event-desc{max-width:600px;margin:0 0 12px;font-size:14px;line-height:24px;color:var(--gray)}
+.event-when{margin:0;font-weight:500;font-size:17px;line-height:27px}
+.event-meta{margin:2px 0 0;font-size:14px;line-height:24px}
+
+/* Research Across Domains */
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px 53px;margin-top:44px}
+.card-x{display:flex;flex-direction:column;border-top:1px solid var(--navy);background:var(--card);padding:30px 25px 32px}
+.card-x img{display:block;width:100%;aspect-ratio:353/235;object-fit:cover;background:#ddd}
+.card-x h3{margin:26px 0 14px;font-weight:700;font-size:20px;line-height:28px}
+.card-x h3 a{color:var(--navy);text-decoration:none}
+.card-x h3 a:hover{text-decoration:underline;text-decoration-color:var(--orange);text-underline-offset:5px}
+.card-x p{margin:0;font-size:17px;line-height:28px;color:var(--gray)}
+
+/* Watch: A Drive in Our Simulator */
+.video{position:relative;margin-top:0;aspect-ratio:1318/651;background:#000 center/cover no-repeat;border-top:3px solid var(--navy);overflow:hidden}
+.video-box{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(857px,calc(100% - 48px));padding:44px 56px 44px;border-radius:4px;background:rgba(0,0,0,.7);color:var(--white);text-align:center}
+.video-box h2{margin:0 0 30px;font-weight:700;font-size:44px;line-height:52px}
+.video-box p{margin:0 auto;max-width:717px;font-size:17px;line-height:28px}
+.video-box a{color:var(--white);text-decoration:underline;text-decoration-color:var(--yellow);text-underline-offset:4px}
+.play{display:grid;place-items:center;width:90px;height:90px;margin:30px auto 0;border:0;border-radius:50%;background:var(--yellow);color:var(--navy);cursor:pointer}
+.play svg{width:26px;height:26px;fill:currentColor;margin-left:5px}
+.play:hover{transform:scale(1.04)}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* Projects and Engagement */
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 25px;margin-top:44px}
+.gallery figure{margin:0}
+.gallery img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#ddd}
+.cap{margin:14px 0 0;font-size:14px;line-height:24px;color:var(--gray)}
+.cap a{font-weight:700}
+
+/* Work With Us */
+.cta-x{position:relative;isolation:isolate;min-height:573px;display:flex;align-items:center;background:var(--navy) center/cover no-repeat;color:var(--white)}
+.cta-x::before{content:"";position:absolute;inset:0;z-index:-1;background:rgba(20,30,60,.82)}
+.cta-x .wrap{padding:80px 0}
+.cta-in{max-width:478px;padding-left:96px}
+.cta-in h2{margin:0;font-weight:500;font-size:34px;line-height:40px}
+.cta-in hr{margin:34px 0 40px;border:0;border-top:1px solid rgba(255,255,255,.85)}
+.cta-in p{margin:0;font-size:17px;line-height:28px}
+.cta-in .ylink{color:var(--white)}
+
+@media (max-width:1100px){
+  .gut{padding-left:0}
+  .home::before{display:none}
+  .sec-title{padding-left:20px}
+  .sec-title::before{left:0;width:5px}
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+  .gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cta-in{padding-left:0}
+}
+@media (max-width:720px){
+  .home-sec{padding:48px 0 52px}
+  .sec-title{font-size:32px;line-height:40px}
+  .sec-title::before{top:4px;height:32px}
+  .stats{grid-template-columns:1fr;gap:40px}
+  .stat-num{font-size:64px;line-height:64px}
+  .event{flex-direction:column;gap:14px}
+  .cards,.gallery{grid-template-columns:1fr}
+  .video{aspect-ratio:auto;min-height:520px}
+  .video-box{padding:28px 22px}
+  .video-box h2{font-size:30px;line-height:36px;margin-bottom:18px}
+  .cta-x{min-height:0}
+}
+
 /* In place of the whole banner (#embed) or of the banner photo (#media) on the lab's UVA page */
-.app.is-embed .top,.app.is-embed .foot,.app.is-media .top,.app.is-media .foot,.app.is-media .intro{display:none}
+.app.is-embed .top,.app.is-embed .foot,.app.is-embed .home,.app.is-media .top,.app.is-media .foot,.app.is-media .intro,.app.is-media .home{display:none}
 .app.is-media .banner{padding:0;background:var(--navy)}
 .app.is-media .wrap{width:100%}
 .app.is-media .media{position:fixed;inset:0;aspect-ratio:auto;border:0}
 /* The project list stays reachable from the keyboard: it shows over the animation while it has focus */
-.app.is-embed .index,.app.is-media .index{position:absolute;left:-9999px;top:0;padding:0}
-.app.is-embed .index:focus-within,.app.is-media .index:focus-within{left:12px;top:12px;z-index:9;width:min(560px,calc(100vw - 72px));max-height:calc(100vh - 24px);overflow:auto;padding:16px 18px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
-.app.is-embed .index:focus-within .wrap,.app.is-media .index:focus-within .wrap{width:auto}
-.app.is-embed .index:focus-within .index-cols,.app.is-media .index:focus-within .index-cols{grid-template-columns:1fr;gap:14px}
-.app.is-embed .index:focus-within .index-title,.app.is-media .index:focus-within .index-title{font-size:22px;line-height:28px}
+.index{position:absolute;left:-9999px;top:0;padding:0}
+.index:focus-within{position:fixed;left:12px;top:12px;z-index:9;width:min(560px,calc(100vw - 72px));max-height:calc(100vh - 24px);overflow:auto;padding:16px 18px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.index:focus-within .wrap{width:auto}
+.index:focus-within .index-cols{grid-template-columns:1fr;gap:14px}
+.index:focus-within .index-title{font-size:22px;line-height:28px}
 
 @media (max-width:1360px){
   .top-nav a.more{display:none}
@@ -237,6 +346,191 @@ a{color:inherit}
       </figure>
     </div>
   </main>
+
+  <div class="home" id="home">
+    <section class="home-sec" aria-labelledby="h-about">
+      <div class="wrap gut">
+        <h2 class="sec-title" id="h-about">About the Lab</h2>
+        <div class="home-text">
+          <p>We build virtual, augmented and mixed reality simulators with eye tracking and physiological sensing, and pair them with field studies and AI. We use them to test designs before they are built, train people for high-stakes work, and study behavior that is unsafe or impractical to observe in the real world, from streets and bike lanes to buildings and hospital rooms.</p>
+          <p>ORCL is co-directed by <a href="https://engineering.virginia.edu/faculty/arsalan-heydarian">Arsalan Heydarian</a> and <a href="https://engineering.virginia.edu/faculty/t-donna-chen">Donna Chen</a> and is part of UVA's Link Lab. Its projects are supported by the National Science Foundation, the Commonwealth Cyber Initiative, the Virginia Department of Transportation, the Federal Highway Administration, Leidos, and UVA's Coulter Center for Translational Research and School of Data Science.</p>
+        </div>
+        <div class="topic">
+          <h3 class="topic-title">Contact Us</h3>
+          <p>ORCL is in Thornton Hall, Room D107, at the University of Virginia. Email <a class="inline-link" href="mailto:orcl@virginia.edu">orcl@virginia.edu</a>.</p>
+          <p>Prospective students and collaborators are welcome to write with their interests.</p>
+          <a class="ylink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/who-we-are"><span class="lbl">Meet the team</span><span class="ybadge" aria-hidden="true"><svg viewBox="0 0 12 12" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-sec" aria-labelledby="h-numbers">
+      <div class="wrap gut">
+        <h2 class="sec-title" id="h-numbers">ORCL by the Numbers</h2>
+        <div class="stats">
+          <div class="stat">
+            <p class="stat-num">4</p>
+            <h3 class="stat-label">Immersive simulators</h3>
+            <p>Bicycle, e-scooter, pedestrian and driving simulators in Thornton Hall.</p>
+            <a class="ylink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/facilities"><span class="lbl">See our facilities</span><span class="ybadge" aria-hidden="true"><svg viewBox="0 0 12 12" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+          </div>
+          <div class="stat">
+            <p class="stat-num">25</p>
+            <h3 class="stat-label">VR, AR and MR headsets</h3>
+            <p>Meta Quest, HTC Vive Pro Eye, Apple Vision Pro and Microsoft HoloLens.</p>
+          </div>
+          <div class="stat">
+            <p class="stat-num">10</p>
+            <h3 class="stat-label">Research projects</h3>
+            <p>Across transportation, micromobility, health care, cybersecurity and human factors.</p>
+            <a class="ylink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research"><span class="lbl">Explore our research</span><span class="ybadge" aria-hidden="true"><svg viewBox="0 0 12 12" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+          </div>
+          <div class="stat">
+            <p class="stat-num">43</p>
+            <h3 class="stat-label">Students in our XR course</h3>
+            <p>Across three semesters of World Building with Virtual and Augmented Reality.</p>
+            <a class="ylink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/teaching/world-building-vr-and-ar"><span class="lbl">About the course</span><span class="ybadge" aria-hidden="true"><svg viewBox="0 0 12 12" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-sec" aria-labelledby="h-events">
+      <div class="wrap gut">
+        <h2 class="sec-title" id="h-events">Upcoming Events</h2>
+        <p class="sec-lede">Defenses, talks and lab events.</p>
+        <a class="ylink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/news/events"><span class="lbl">See the full calendar</span><span class="ybadge" aria-hidden="true"><svg viewBox="0 0 12 12" focusable="false"><path d="M5 2.6H2.6V9.4H9.4V7M6.8 2.6H9.4V5.2M9.2 2.8L5.4 6.6"/></svg></span></a>
+        <div class="events">
+          <article class="event">
+            <div class="event-date" aria-hidden="true"><span class="m">Oct</span><span class="d">06</span></div>
+            <div class="event-body">
+              <h3 class="event-title"><a href="https://engineering.virginia.edu/news-events/events/phd-dissertation-defense-carreen-de-cardenas">Ph.D. Dissertation Defense by Carreen de Cárdenas</a></h3>
+              <p class="event-desc">Dissertation: “Seeing and Shaping Cities: Applying Eye-Tracking in Real-World and Virtual Environments to Enhance User-Centric Transportation Design”</p>
+              <p class="event-when">Oct 06</p>
+              <p class="event-meta"><span class="sr-only">Time: </span>1:00 PM - 3:00 PM</p>
+              <p class="event-meta"><span class="sr-only">Location: </span>Rotunda Dome Room, University of Virginia</p>
+            </div>
+          </article>
+          <article class="event">
+            <div class="event-date" aria-hidden="true"><span class="m">Oct</span><span class="d">30</span></div>
+            <div class="event-body">
+              <h3 class="event-title"><a href="https://engineering.virginia.edu/news-events/events/phd-proposal-presentation-saja-alnusair">Ph.D. Proposal Presentation by Saja Alnusair</a></h3>
+              <p class="event-desc">Dissertation proposal on noise, acoustics and distraction in buildings, studied with VR and simulation.</p>
+              <p class="event-when">Oct 30</p>
+              <p class="event-meta"><span class="sr-only">Time: </span>10:00 AM - 12:00 PM</p>
+              <p class="event-meta"><span class="sr-only">Location: </span>Olsson Hall, Room 103</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-sec" aria-labelledby="h-domains">
+      <div class="wrap">
+        <div class="gut">
+          <h2 class="sec-title" id="h-domains">Research Across Domains</h2>
+          <p class="sec-lede">Immersive simulation, eye tracking, physiological sensing and AI form one toolkit, and it carries from one field to the next.</p>
+        </div>
+        <div class="cards">
+          <article class="card-x">
+            <img src="https://engineering.virginia.edu/sites/default/files/styles/classic_xsml/public/_common/centers-labs-groups/ORCL/orcl-card-roundabout.jpg.webp" alt="A cyclist's view approaching a roundabout in ORCL's bicycle simulator" loading="lazy">
+            <h3><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research">Transportation Safety</a></h3>
+            <p>Bicycle, e-scooter and pedestrian simulators, naturalistic riding studies and virtual reality design review with the Virginia Department of Transportation.</p>
+            <div class="ylinks">
+              <a class="ylink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/vr-bicycle-and-pedestrian-simulators-orclsim"><span class="lbl">Bicycle and pedestrian simulators</span><span class="ybadge" aria-hidden="true"><svg viewBox="0 0 12 12" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+              <a class="ylink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/vr-design-review-and-public-involvement"><span class="lbl">VR design review</span><span class="ybadge" aria-hidden="true"><svg viewBox="0 0 12 12" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+            </div>
+          </article>
+          <article class="card-x">
+            <img src="https://engineering.virginia.edu/sites/default/files/styles/classic_xsml/public/_common/centers-labs-groups/ORCL/orcl-card-vr-acls.jpg.webp" alt="A virtual hospital room with a patient in bed and care team members" loading="lazy">
+            <h3><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/vr-training-acutely-deteriorating-patient">Health Care</a></h3>
+            <p>Virtual reality training for recognizing and responding to acutely deteriorating patients, with AI-driven care team members.</p>
+            <div class="ylinks">
+              <a class="ylink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/vr-training-acutely-deteriorating-patient"><span class="lbl">VR resuscitation training</span><span class="ybadge" aria-hidden="true"><svg viewBox="0 0 12 12" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+            </div>
+          </article>
+          <article class="card-x">
+            <img src="https://engineering.virginia.edu/sites/default/files/styles/classic_xsml/public/_common/centers-labs-groups/ORCL/orcl-cyber-range-illustration.jpg.webp" alt="An illustration of a layered industrial control network" loading="lazy">
+            <h3><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/immersive-cyber-range-critical-infrastructure">Cybersecurity</a></h3>
+            <p>An immersive cyber range that prepares Virginia's workforce to defend the operational technology that runs critical infrastructure.</p>
+            <div class="ylinks">
+              <a class="ylink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/immersive-cyber-range-critical-infrastructure"><span class="lbl">Immersive cyber range</span><span class="ybadge" aria-hidden="true"><svg viewBox="0 0 12 12" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+            </div>
+          </article>
+          <article class="card-x">
+            <img src="https://engineering.virginia.edu/sites/default/files/styles/classic_xsml/public/_common/centers-labs-groups/ORCL/orcl-card-rider.jpg.webp" alt="A rider wearing a virtual reality headset pedals a bicycle simulator" loading="lazy">
+            <h3><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research">Human Factors and Sensing</a></h3>
+            <p>Eye tracking, heart rate and electrodermal activity show how people perceive risk and make decisions in the lab and on the street.</p>
+            <div class="ylinks">
+              <a class="ylink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/pedestrian-attention-and-crossing-decisions"><span class="lbl">Pedestrian attention</span><span class="ybadge" aria-hidden="true"><svg viewBox="0 0 12 12" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+              <a class="ylink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/harmony-driver-state-naturalistic-driving"><span class="lbl">Driver state in the wild</span><span class="ybadge" aria-hidden="true"><svg viewBox="0 0 12 12" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+            </div>
+          </article>
+          <article class="card-x">
+            <img src="https://engineering.virginia.edu/sites/default/files/styles/classic_xsml/public/_common/centers-labs-groups/ORCL/orcl-card-shared-road.jpg.webp" alt="A virtual street where riders share the road with cars" loading="lazy">
+            <h3><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research">Micromobility Safety</a></h3>
+            <p>How e-scooter and bicycle riders, including teens, scan the road and handle risk, on real streets and in our simulators.</p>
+            <div class="ylinks">
+              <a class="ylink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/e-scooter-riders-street-and-vr"><span class="lbl">E-scooter riding</span><span class="ybadge" aria-hidden="true"><svg viewBox="0 0 12 12" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+              <a class="ylink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/adolescent-micromobility-safety"><span class="lbl">Adolescent micromobility safety</span><span class="ybadge" aria-hidden="true"><svg viewBox="0 0 12 12" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+            </div>
+          </article>
+          <article class="card-x">
+            <img src="https://engineering.virginia.edu/sites/default/files/styles/classic_xsml/public/_common/centers-labs-groups/ORCL/orcl-card-xr-class.jpg.webp" alt="Students in the World Building with Virtual and Augmented Reality course" loading="lazy">
+            <h3><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/teaching/world-building-vr-and-ar">XR Education</a></h3>
+            <p>A civil and environmental engineering course in which student teams build virtual and augmented reality worlds for real problems.</p>
+            <div class="ylinks">
+              <a class="ylink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/teaching/world-building-vr-and-ar"><span class="lbl">World Building with VR and AR</span><span class="ybadge" aria-hidden="true"><svg viewBox="0 0 12 12" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-sec flush" aria-labelledby="h-video" style="padding-top:0">
+      <div class="wrap">
+        <div class="video" id="video" style="background-image:url('https://engineering.virginia.edu/sites/default/files/styles/wide_lrg/public/_common/centers-labs-groups/ORCL/orcl-driving-simulator-video-cover.jpg.webp')">
+          <div class="video-box">
+            <h2 id="h-video">Watch: A Drive in Our Simulator</h2>
+            <p>A first-person run through ORCL's driving simulator, built in Unreal Engine. Our bicycle, e-scooter and pedestrian simulators put riders and walkers in the same kind of virtual streets. More videos are on our <a href="https://www.youtube.com/@UVA-ORCL">YouTube channel</a>.</p>
+            <button class="play" id="playBtn" type="button" aria-label="Play the video: A Drive in Our Simulator"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.8v16.4L20 12z"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-sec" aria-labelledby="h-gallery">
+      <div class="wrap">
+        <div class="gut">
+          <h2 class="sec-title" id="h-gallery">Projects and Engagement</h2>
+          <p class="sec-lede">A look at ORCL's simulators, research projects and students.</p>
+        </div>
+        <div class="gallery">
+          <figure><img src="https://engineering.virginia.edu/sites/default/files/styles/portrait_full_med/public/2026-09/orcl-vr-bike-lane_1.jpg.webp" alt="A cyclist's view of a protected bike lane in ORCL's bicycle simulator" loading="lazy"><figcaption class="cap"><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/vr-bicycle-and-pedestrian-simulators-orclsim">Bicycle and pedestrian simulators</a>: testing street designs before they are built.</figcaption></figure>
+          <figure><img src="https://engineering.virginia.edu/sites/default/files/styles/portrait_full_med/public/2026-09/orcl-vr-shared-road_0.jpg.webp" alt="A virtual street with a crosswalk and a turning car" loading="lazy"><figcaption class="cap"><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/vr-bicycle-and-pedestrian-simulators-orclsim">Virtual streets</a> built to scale for design and training studies.</figcaption></figure>
+          <figure><img src="https://engineering.virginia.edu/sites/default/files/styles/portrait_full_med/public/2026-09/orcl-xr-course-class.jpg.webp" alt="Students in the World Building with VR and AR course" loading="lazy"><figcaption class="cap"><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/teaching/world-building-vr-and-ar">World Building with VR/AR</a>: students build immersive applications in ORCL.</figcaption></figure>
+          <figure><img src="https://engineering.virginia.edu/sites/default/files/styles/portrait_full_med/public/2026-09/orcl-vr-roundabout_0.jpg.webp" alt="A rider's view of a proposed roundabout in VR" loading="lazy"><figcaption class="cap"><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/vr-design-review-and-public-involvement">VR for design review</a>: agency staff and the public ride through proposed designs.</figcaption></figure>
+          <figure><img src="https://engineering.virginia.edu/sites/default/files/styles/portrait_full_med/public/2026-09/orcl-vr-intersection_1.jpg.webp" alt="A rider's view of an intersection crosswalk in VR" loading="lazy"><figcaption class="cap"><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/adolescent-micromobility-safety">Adolescent micromobility safety</a>: an NSF project on safer bicycle and e-scooter riding for teens.</figcaption></figure>
+          <figure><img src="https://engineering.virginia.edu/sites/default/files/styles/portrait_full_med/public/_common/centers-labs-groups/ORCL/orcl-research-day-2026-bike-demo.jpg.webp" alt="A lab member shows visitors the VR bicycle simulator at Link Lab Research Day" loading="lazy"><figcaption class="cap"><a href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/outreach">Link Lab Research Day 2026</a>: a lab member shows visitors the VR bicycle simulator.</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-x" aria-labelledby="h-work" style="background-image:url('https://engineering.virginia.edu/sites/default/files/styles/ultrawide_xlrg/public/_common/centers-labs-groups/ORCL/orcl-research-day-2026-bike-demo.jpg.webp')">
+      <div class="wrap">
+        <div class="cta-in">
+          <h2 id="h-work">Work With Us</h2>
+          <hr>
+          <p>We are actively looking to expand our collaborations with industry, government agencies, health systems and universities. Reach out about sponsored research, project partnerships, funding, student engagement or a visit to our lab in Thornton Hall, Room D107.</p>
+          <div class="ylinks">
+            <a class="ylink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/contact"><span class="lbl">Contact ORCL</span><span class="ybadge" aria-hidden="true"><svg viewBox="0 0 12 12" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+            <a class="ylink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/contact"><span class="lbl">Request a lab tour</span><span class="ybadge" aria-hidden="true"><svg viewBox="0 0 12 12" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
 
   <nav class="index" aria-labelledby="indexTitle">
     <div class="wrap">
@@ -340,6 +634,10 @@ a{color:inherit}
   // Where the page is shown: on its own; in place of the whole banner (#embed); or in place of the banner photo (#media)
   const flags = location.hash.slice(1).split(/[&,]/);
   const mediaOnly = flags.includes('media');
+  // Background of the animation box: Sand from the lab palette by default (#bg=navy for UVA navy)
+  const bgName = ((flags.find((f) => f.startsWith('bg=')) || 'bg=sand').slice(3) === 'navy') ? 'navy' : 'sand';
+  app.dataset.bg = bgName;
+  const lightBg = bgName === 'sand';
   const embed = mediaOnly || flags.includes('embed');
   if (mediaOnly) app.classList.add('is-media');
   else if (embed) app.classList.add('is-embed');
@@ -357,7 +655,7 @@ a{color:inherit}
   const ICON_PLAY = '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2.6 1.2v7.6L8.8 5z"/></svg>';
 
   function setHint() {
-    if (app.classList.contains('is-fallback')) hint.textContent = embed ? 'Click the orb to see the projects one by one' : 'Point to a project name below to preview it';
+    if (app.classList.contains('is-fallback')) hint.textContent = 'Click the orb to see the projects one by one';
     else if (fine.matches) hint.textContent = 'Hover an icon to preview a project · Click to open it';
     else hint.textContent = 'Tap an icon to preview a project';
   }
@@ -365,7 +663,7 @@ a{color:inherit}
   function fill(i) {
     const p = projects[i], a = AREA[p.area];
     card.style.setProperty('--c', a.color);
-    leader.style.setProperty('--c', a.color);
+    leader.style.setProperty('--c', lightBg && p.area === 'sense' ? '#9C7246' : a.color);
     cardArea.textContent = a.chip;
     cardIco.innerHTML = svgIcon(p.icon, 'ci');
     cardNum.textContent = pad(i + 1) + ' / ' + pad(N);
@@ -517,7 +815,7 @@ a{color:inherit}
 
   const fallbackTimer = setTimeout(() => api.fail('timed out'), 12000);
   const api = window.ORCL = {
-    projects, areas: AREA, icons: ICONS, embed, media: mediaOnly,
+    projects, areas: AREA, icons: ICONS, embed, media: mediaOnly, bg: bgName,
     attach(s) {
       scene = s;
       clearTimeout(fallbackTimer);
@@ -563,6 +861,17 @@ a{color:inherit}
   setMotion(motionOn, false);
   setHint();
   measureCaption();
+  const playBtn = document.getElementById('playBtn');
+  if (playBtn) playBtn.addEventListener('click', () => {
+    const v = document.getElementById('video');
+    const f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/GPdij9Bpc0s?autoplay=1&rel=0';
+    f.title = 'Watch: A Drive in Our Simulator';
+    f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    f.allowFullscreen = true;
+    v.replaceChildren(f);
+    f.focus();
+  });
 })();
 </script>
 
@@ -616,10 +925,12 @@ if (O && !O.started) {
 function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
   const projects = O.projects;
   const AREAS = ['road', 'train', 'sense'];
-  const COL = { road: new THREE.Color('#E76F51'), train: new THREE.Color('#2A7F7F'), sense: new THREE.Color('#E9C9A5') };
+  // Background theme of the box: light Sand (default) or UVA navy
+  const LIGHT = O.bg !== 'navy';
+  const COL = { road: new THREE.Color('#E76F51'), train: new THREE.Color('#2A7F7F'), sense: new THREE.Color(LIGHT ? '#B98A5E' : '#E9C9A5') };
   const WHITE = new THREE.Color('#F5F3EE');
   // Deep Space, the page background: with no tone mapping the palette colors come out exactly as specified
-  const BG = new THREE.Color('#141E3C');
+  const BG = new THREE.Color(LIGHT ? '#E9C9A5' : '#141E3C');
   const hdr = (c, k) => c.clone().multiplyScalar(k);
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const ease = (cur, target, rate, dt) => cur + (target - cur) * (1 - Math.exp(-rate * dt));
@@ -671,8 +982,32 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
     const c = document.createElement('canvas');
     c.width = c.height = 1024;
     const g = c.getContext('2d');
-    g.fillStyle = '#141E3C';
+    g.fillStyle = LIGHT ? '#E9C9A5' : '#141E3C';
     g.fillRect(0, 0, 1024, 1024);
+    if (LIGHT) {
+      // Soft White light behind the orb, fading into Sand; faint Slate circles
+      const lg = g.createRadialGradient(512, 512, 0, 512, 512, 512);
+      lg.addColorStop(0, 'rgba(245,243,238,0.95)');
+      lg.addColorStop(0.3, 'rgba(245,243,238,0.7)');
+      lg.addColorStop(0.62, 'rgba(245,243,238,0.18)');
+      lg.addColorStop(1, 'rgba(245,243,238,0)');
+      g.fillStyle = lg;
+      g.fillRect(0, 0, 1024, 1024);
+      g.lineWidth = 1.4;
+      g.strokeStyle = 'rgba(52,73,94,0.075)';
+      [118, 172, 236, 306, 392, 470].forEach((r) => { g.beginPath(); g.arc(512, 512, r, 0, Math.PI * 2); g.stroke(); });
+      g.strokeStyle = 'rgba(52,73,94,0.11)';
+      for (let k = 0; k < 72; k++) {
+        const a = (k / 72) * Math.PI * 2, r2 = k % 6 === 0 ? 320 : 313;
+        g.beginPath(); g.moveTo(512 + Math.cos(a) * 306, 512 + Math.sin(a) * 306); g.lineTo(512 + Math.cos(a) * r2, 512 + Math.sin(a) * r2); g.stroke();
+      }
+      const tex = new THREE.CanvasTexture(c);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      const plane = new THREE.Mesh(new THREE.PlaneGeometry(18, 18), new THREE.MeshBasicMaterial({ map: tex }));
+      plane.position.z = -5;
+      scene.add(plane);
+      return;
+    }
     const grd = g.createRadialGradient(512, 512, 0, 512, 512, 512);
     // Darker straight behind the orb (the glass magnifies what is behind it), brightest just around it
     grd.addColorStop(0, 'rgba(52,73,94,0.1)');
@@ -859,6 +1194,16 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
     transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
   });
   const orb = new THREE.Mesh(new THREE.SphereGeometry(1, 128, 96), glass);
+  if (LIGHT) {
+    const glassBody = new THREE.Mesh(new THREE.SphereGeometry(0.999, 96, 64), new THREE.ShaderMaterial({
+      uniforms: { uCol: { value: new THREE.Color('#34495E') } },
+      vertexShader: 'varying vec3 vN; varying vec3 vV;\nvoid main(){ vec4 mv = modelViewMatrix * vec4(position, 1.0); vN = normalize(normalMatrix * normal); vV = normalize(-mv.xyz); gl_Position = projectionMatrix * mv; }',
+      fragmentShader: 'uniform vec3 uCol;\nvarying vec3 vN; varying vec3 vV;\nvoid main(){\n  float f = 1.0 - abs(dot(normalize(vN), normalize(vV)));\n  gl_FragColor = vec4(uCol, 0.035 + 0.34 * pow(f, 3.0));\n  #include <colorspace_fragment>\n}',
+      transparent: true, depthWrite: false,
+    }));
+    glassBody.renderOrder = -1;
+    root.add(glassBody);
+  }
   root.add(orb);
 
   const rimMat = new THREE.ShaderMaterial({
@@ -1256,11 +1601,11 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
   });
   const gazeLineGeo = new THREE.BufferGeometry();
   gazeLineGeo.setAttribute('position', new THREE.Float32BufferAttribute([0, 0, 0, 0, 0, 0], 3));
-  const gazeLineMat = new THREE.LineBasicMaterial({ color: new THREE.Color(0, 0, 0), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false });
+  const gazeLineMat = new THREE.LineBasicMaterial({ color: new THREE.Color(0, 0, 0), transparent: true, blending: LIGHT ? THREE.NormalBlending : THREE.AdditiveBlending, depthWrite: false });
   const gazeLine = new THREE.Line(gazeLineGeo, gazeLineMat);
   gazeLine.frustumCulled = false;
   inner.add(gazeLine);
-  const gazeDot = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: new THREE.Color(0, 0, 0), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false }));
+  const gazeDot = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: new THREE.Color(0, 0, 0), transparent: true, blending: LIGHT ? THREE.NormalBlending : THREE.AdditiveBlending, depthWrite: false }));
   gazeDot.scale.setScalar(0.075);
   inner.add(gazeDot);
   const SAND = new THREE.Color('#E9C9A5');
@@ -1356,7 +1701,9 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
   }
   const dustGeo = new THREE.BufferGeometry();
   dustGeo.setAttribute('position', new THREE.BufferAttribute(dpos, 3));
-  const dust = new THREE.Points(dustGeo, new THREE.PointsMaterial({ size: 0.05, map: glowTex, color: new THREE.Color('#F5F3EE'), transparent: true, opacity: 0.28, depthWrite: false, blending: THREE.AdditiveBlending }));
+  const dust = new THREE.Points(dustGeo, LIGHT
+    ? new THREE.PointsMaterial({ size: 0.045, map: glowTex, color: new THREE.Color('#34495E'), transparent: true, opacity: 0.32, depthWrite: false })
+    : new THREE.PointsMaterial({ size: 0.05, map: glowTex, color: new THREE.Color('#F5F3EE'), transparent: true, opacity: 0.28, depthWrite: false, blending: THREE.AdditiveBlending }));
   root.add(dust);
 
   // Post-processing: bloom for the glowing parts
@@ -1371,7 +1718,8 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
   // Layout
   let vw = 1, vh = 1;
   let dprCap = Math.min(window.devicePixelRatio || 1, 1.75);
-  let useBloom = !TEST.noBloom;
+  // Bloom only on the dark background; on Sand it would wash the light areas out
+  let useBloom = !TEST.noBloom && !LIGHT;
   function resize() {
     vw = Math.max(1, canvas.clientWidth);
     vh = Math.max(1, canvas.clientHeight);
@@ -1575,7 +1923,7 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
       const goal = sc.i === gaze.target ? 1 - THREE.MathUtils.smoothstep(err, 0.06, 0.3) : 0;
       sc.lit = motion ? ease(sc.lit, goal, 6, dt) : (sc.i === gaze.target ? 1 : 0);
       sc.mat.color.setScalar(SCR_DIM + (1 - SCR_DIM) * sc.lit);
-      sc.halo.material.opacity = 0.42 * sc.lit;
+      sc.halo.material.opacity = LIGHT ? 0 : 0.42 * sc.lit;
       if (motion && sc.lit > 0.03) {
         sc.phase += dt; sc.tick += dt;
         if (sc.tick >= 1 / 20 || sc.shown === 0) { sc.tick = 0; drawScreen(sc.g, sc, sc.lit, sc.phase); sc.tex.needsUpdate = true; sc.shown = Math.max(0.04, sc.lit); }
@@ -1591,14 +1939,16 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
     fixTmp.copy(ts.mesh.position).addScaledVector(ts.right, gaze.jx).addScaledVector(ts.up, gaze.jy).addScaledVector(ts.n, 0.014);
     gaze.fp.lerp(fixTmp, motion ? 1 - Math.exp(-18 * dt) : 1);
     gazeDot.position.copy(gaze.fp);
-    gazeDot.material.color.copy(SAND).multiplyScalar(1.15 * ts.lit);
+    if (LIGHT) { gazeDot.material.color.copy(COL.road); gazeDot.material.opacity = ts.lit; }
+    else gazeDot.material.color.copy(SAND).multiplyScalar(1.15 * ts.lit);
     headset.localToWorld(vTmp.copy(visorLocal));
     inner.worldToLocal(vTmp);
     const gp = gazeLineGeo.attributes.position;
     gp.setXYZ(0, vTmp.x, vTmp.y, vTmp.z);
     gp.setXYZ(1, gaze.fp.x, gaze.fp.y, gaze.fp.z);
     gp.needsUpdate = true;
-    gazeLineMat.color.copy(SAND).multiplyScalar(0.5 * ts.lit);
+    if (LIGHT) { gazeLineMat.color.copy(COL.road); gazeLineMat.opacity = 0.8 * ts.lit; }
+    else gazeLineMat.color.copy(SAND).multiplyScalar(0.5 * ts.lit);
     // The visor network takes on the color of the active research area; a heartbeat for the sensing study
     const activeArea2 = activeIdx >= 0 ? projects[activeIdx].area : null;
     const hb = motion ? heartbeat(clock) : 0.25;
@@ -1643,7 +1993,7 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
     root.rotation.y = ease(root.rotation.y, parX * 0.1, 2.2, dt);
     root.rotation.x = ease(root.rotation.x, parY * 0.06, 2.2, dt);
     orbH = ease(orbH, orbHover ? 1 : 0, 6, dt);
-    rimMat.uniforms.uI.value = 0.2 + 0.3 * orbH;
+    rimMat.uniforms.uI.value = (LIGHT ? 0.55 : 1) * (0.2 + 0.3 * orbH);
     rimMat.uniforms.uTime.value = clock;
     orb.scale.setScalar(1 + 0.025 * orbH);
     rim.scale.copy(orb.scale);
