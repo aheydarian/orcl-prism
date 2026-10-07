@@ -348,7 +348,7 @@ a{color:inherit}
           <a class="card-link arrow-link" id="cardLink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research" tabindex="-1"><span class="lbl">Open project</span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
         </div>
         <button class="motion" id="motionBtn" type="button"></button>
-        <figcaption class="sr-only">An animation of a person in a VR headset who looks from screen to screen inside a glass orb, circled by the lab's ten research projects. The project list on this page leads to the same projects.</figcaption>
+        <figcaption class="sr-only">An animation of a person in a VR headset who looks from screen to screen inside a glass orb, circled by the lab's research projects. The project list on this page leads to the same projects.</figcaption>
       </figure>
     </div>
   </main>
@@ -386,7 +386,7 @@ a{color:inherit}
             <p>Meta Quest, HTC Vive Pro Eye, Apple Vision Pro and Microsoft HoloLens.</p>
           </div>
           <div class="stat">
-            <p class="stat-num">10</p>
+            <p class="stat-num" data-stat="projects">10</p>
             <h3 class="stat-label">Research projects</h3>
             <p>Across transportation, micromobility, health care, cybersecurity and human factors.</p>
             <a class="ylink" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research"><span class="lbl">Explore our research</span><span class="ybadge" aria-hidden="true"><svg viewBox="0 0 12 12" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
@@ -407,16 +407,6 @@ a{color:inherit}
         <p class="sec-lede" id="eventsLede">Defenses, talks and lab events.</p>
         <a class="ylink" id="eventsCal" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/news/events"><span class="lbl">See the full calendar</span><span class="ybadge" aria-hidden="true"><svg viewBox="0 0 12 12" focusable="false"><path d="M5 2.6H2.6V9.4H9.4V7M6.8 2.6H9.4V5.2M9.2 2.8L5.4 6.6"/></svg></span></a>
         <div class="events" id="eventsList">
-          <article class="event" data-end="2026-10-06T15:00:00-04:00">
-            <div class="event-date" aria-hidden="true"><span class="m">Oct</span><span class="d">06</span></div>
-            <div class="event-body">
-              <h3 class="event-title"><a href="https://engineering.virginia.edu/news-events/events/phd-dissertation-defense-carreen-de-cardenas">Ph.D. Dissertation Defense by Carreen de Cárdenas</a></h3>
-              <p class="event-desc">Dissertation: “Seeing and Shaping Cities: Applying Eye-Tracking in Real-World and Virtual Environments to Enhance User-Centric Transportation Design”</p>
-              <p class="event-when">Oct 06</p>
-              <p class="event-meta"><span class="sr-only">Time: </span>1:00 PM - 3:00 PM</p>
-              <p class="event-meta"><span class="sr-only">Location: </span>Rotunda Dome Room, University of Virginia</p>
-            </div>
-          </article>
           <article class="event" data-end="2026-10-30T12:00:00-04:00">
             <div class="event-date" aria-hidden="true"><span class="m">Oct</span><span class="d">30</span></div>
             <div class="event-body">
@@ -544,6 +534,7 @@ a{color:inherit}
         <h2 class="index-title" id="indexTitle">Research Projects</h2>
         <a class="index-all arrow-link" href="https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research"><span class="lbl">All research</span><span class="arrow" aria-hidden="true"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.2 6H9.4M6.6 3.1L9.5 6L6.6 8.9"/></svg></span></a>
       </div>
+      <!-- projects:start -->
       <div class="index-cols">
         <section class="area" data-area="road" aria-labelledby="area-road">
           <h3 class="area-name" id="area-road">Road Users and Micromobility Safety</h3>
@@ -583,6 +574,7 @@ a{color:inherit}
         <p id="pd8">An Apple Vision Pro trainer that helps transportation technicians learn the traffic signal cabinet, built with the Virginia Department of Transportation.</p>
         <p id="pd9">A naturalistic driving study that linked drivers' stress and emotion to road conditions, using wearables, cameras and phones.</p>
       </div>
+      <!-- projects:end -->
 
     </div>
   </nav>
@@ -621,6 +613,7 @@ a{color:inherit}
     shield: { d: 'M12 2.8L19.6 5.7V11.3C19.6 16 16.4 19.6 12 21.2C7.6 19.6 4.4 16 4.4 11.3V5.7ZM9.1 11.3H14.9V16.2H9.1ZM10.4 11.3V9.7C10.4 8.8 11.1 8.1 12 8.1S13.6 8.8 13.6 9.7V11.3', dots: [[12, 13.7, 0.85]] },
     signal: { d: 'M10 2.6H14C14.8 2.6 15.4 3.2 15.4 4V15.8C15.4 16.6 14.8 17.2 14 17.2H10C9.2 17.2 8.6 16.6 8.6 15.8V4C8.6 3.2 9.2 2.6 10 2.6ZM12 17.2V21.4M9.4 21.4H14.6M8.6 5L6.6 4.4M8.6 8.9L6.6 8.3M8.6 12.8L6.6 12.2M15.4 5L17.4 4.4M15.4 8.9L17.4 8.3M15.4 12.8L17.4 12.2', dots: [[12, 6, 1.35, '#E76F51'], [12, 9.9, 1.35, '#E9C9A5'], [12, 13.8, 1.35, '#2A7F7F']] },
     wheel: { d: 'M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0M9.8 12.6a2.2 2.2 0 1 0 4.4 0a2.2 2.2 0 1 0-4.4 0M3.4 11.4L9.8 12.4M14.2 12.4L20.6 11.4M12 14.8V20.8' },
+    vr: { d: 'M4.6 7.4H19.4C20.6 7.4 21.4 8.2 21.4 9.4V14.6C21.4 15.8 20.6 16.6 19.4 16.6H15.6L13.6 14C12.8 13 11.2 13 10.4 14L8.4 16.6H4.6C3.4 16.6 2.6 15.8 2.6 14.6V9.4C2.6 8.2 3.4 7.4 4.6 7.4ZM2.6 11.2H1.2M21.4 11.2H22.8' },
   };
   const svgIcon = (k, cls) => {
     const ic = ICONS[k];
@@ -1959,7 +1952,7 @@ function build(THREE, EffectComposer, RenderPass, UnrealBloomPass, OutputPass) {
     rimUniforms.uKeyDir.value.copy(KEY_DIR).transformDirection(camera.matrixWorldInverse);
     rimUniforms.uWarmDir.value.copy(WARM_DIR).transformDirection(camera.matrixWorldInverse);
     // The head looks at the screen for the project on show; with no project on show it looks around
-    const want = activeIdx >= 0 ? (SCREEN_FOR_ICON[projects[activeIdx].icon] ?? -1) : -1;
+    const want = activeIdx >= 0 ? (SCREEN_FOR_ICON[projects[activeIdx].icon] ?? { road: 1, train: 3, sense: 5 }[projects[activeIdx].area] ?? -1) : -1;
     if (motion) {
       gaze.timer -= dt;
       if (want >= 0) { if (want !== gaze.target) { gaze.target = want; gaze.timer = 3; } }

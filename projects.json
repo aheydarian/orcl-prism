@@ -1,0 +1,91 @@
+{
+  "source": "https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research",
+  "updated": null,
+  "areas": {
+    "road": "Road Users and Micromobility Safety",
+    "train": "AI-Driven Immersive Training",
+    "sense": "Human State Sensing"
+  },
+  "projects": [
+    {
+      "title": "VR Bicycle and Pedestrian Simulators (ORCLSim)",
+      "label": "Bicycle and Pedestrian Simulators",
+      "url": "https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/vr-bicycle-and-pedestrian-simulators-orclsim",
+      "area": "road",
+      "icon": "bike",
+      "text": "How cyclists and pedestrians respond to street designs, measured in VR with eye tracking and physiological sensing."
+    },
+    {
+      "title": "E-Scooter Riders on the Street and in VR",
+      "label": "E-Scooter Riders",
+      "url": "https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/e-scooter-riders-street-and-vr",
+      "area": "road",
+      "icon": "scooter",
+      "text": "How e-scooter riders scan the road and respond to traffic, studied with instrumented e-scooters and a motion-platform simulator."
+    },
+    {
+      "title": "Adolescent Micromobility Safety",
+      "label": "Adolescent Micromobility Safety",
+      "url": "https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/adolescent-micromobility-safety",
+      "area": "road",
+      "icon": "helmet",
+      "text": "Sensing, AI and VR training to make bicycle, e-bike and e-scooter riding safer for teens."
+    },
+    {
+      "title": "Pedestrian Attention and Crossing Decisions",
+      "label": "Pedestrian Attention",
+      "url": "https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/pedestrian-attention-and-crossing-decisions",
+      "area": "road",
+      "icon": "walk",
+      "text": "Where pedestrians look and how safe they feel at crossings, by day and at night, on Charlottesville streets and in VR."
+    },
+    {
+      "title": "Seeing the City: Eye Tracking on a Downtown Street",
+      "label": "Seeing the City",
+      "url": "https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/seeing-city-eye-tracking-downtown-street",
+      "area": "road",
+      "icon": "eye",
+      "text": "Mobile eye tracking and heart rate as people walked a downtown street in Staunton, Virginia, open and closed to cars."
+    },
+    {
+      "title": "VR for Design Review and Public Involvement",
+      "label": "VR for Design Review",
+      "url": "https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/vr-design-review-and-public-involvement",
+      "area": "road",
+      "icon": "roundabout",
+      "text": "VR simulations that let VDOT staff and the public ride and walk through a proposed roundabout before it is built."
+    },
+    {
+      "title": "VR Training for the Acutely Deteriorating Patient",
+      "label": "VR Clinical Training",
+      "url": "https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/vr-training-acutely-deteriorating-patient",
+      "area": "train",
+      "icon": "heart",
+      "text": "An AI-driven VR simulation for advanced cardiac life support training, built with UVA Emergency Medicine."
+    },
+    {
+      "title": "Immersive Cyber Range for Critical Infrastructure",
+      "label": "Immersive Cyber Range",
+      "url": "https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/immersive-cyber-range-critical-infrastructure",
+      "area": "train",
+      "icon": "shield",
+      "text": "VR training for defending the industrial control systems behind critical infrastructure."
+    },
+    {
+      "title": "XR Training for Traffic Signal Technicians",
+      "label": "Signal Technician Training",
+      "url": "https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/xr-training-traffic-signal-technicians",
+      "area": "train",
+      "icon": "signal",
+      "text": "An Apple Vision Pro trainer that helps transportation technicians learn the traffic signal cabinet, built with the Virginia Department of Transportation."
+    },
+    {
+      "title": "HARMONY: Driver State in Naturalistic Driving",
+      "label": "HARMONY Driving Study",
+      "url": "https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab/research/harmony-driver-state-naturalistic-driving",
+      "area": "sense",
+      "icon": "wheel",
+      "text": "A naturalistic driving study that linked drivers' stress and emotion to road conditions, using wearables, cameras and phones."
+    }
+  ]
+}

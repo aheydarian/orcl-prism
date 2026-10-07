@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Refresh events.json from the "Upcoming Events" list on the lab's UVA Engineering home page.
 
-Run once a day by .github/workflows/update-events.yml. The page (index.html) loads events.json
-and hides events that have ended. If the UVA site refuses the request (it sits behind Cloudflare,
-which blocks automated requests unless UVA allows them), or the events block is missing, the old
-file is kept and a warning is logged. Other fetch errors fail the run.
+Run once a day by .github/workflows/update-events.yml, with update_projects.py. The page
+(index.html) loads events.json and hides events that have ended. If the UVA site refuses the
+request (it sits behind Cloudflare, which blocks automated requests unless UVA allows them; see
+uva_fetch.py), or the events block is missing, the old file is kept and a warning is logged.
+Other fetch errors fail the run.
 
 Local test:  python update_events.py --html saved-page.html --out /tmp/events.json
 """
@@ -12,9 +13,6 @@ import argparse
 import json
 import re
 import sys
-import time
-import urllib.error
-import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import urljoin
@@ -22,10 +20,11 @@ from zoneinfo import ZoneInfo
 
 from bs4 import BeautifulSoup
 
+from uva_fetch import Refused, fetch, refused_warning
+
 SOURCE = 'https://engineering.virginia.edu/labs-groups/omni-reality-cognition-lab'
 OUT = Path(__file__).with_name('events.json')
 ET = ZoneInfo('America/New_York')
-UA = 'ORCL-events-updater/1.0 (+https://github.com/aheydarian/orcl-prism)'
 MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 TIME_RANGE = re.compile(r'(\d{1,2}(?::\d{2})?\s*[ap]\.?m\.?)\s*[-–—]\s*(\d{1,2}(?::\d{2})?\s*[ap]\.?m\.?)', re.I)
 
@@ -107,32 +106,6 @@ def parse_events(html, base=SOURCE):
     return out
 
 
-class Refused(Exception):
-    """The site answered, but refused this client (for example a Cloudflare block or challenge)."""
-
-
-def fetch(url, tries=3):
-    for i in range(tries):
-        req = urllib.request.Request(url, headers={'User-Agent': UA, 'Accept': 'text/html'})
-        try:
-            with urllib.request.urlopen(req, timeout=30) as r:
-                return r.read().decode('utf-8', 'replace')
-        except urllib.error.HTTPError as e:
-            if e.code in (401, 403, 429):
-                body = e.read(6000).decode('utf-8', 'replace')
-                m = re.search(r'<title[^>]*>(.*?)</title>', body, re.S | re.I)
-                title = re.sub(r'\s+', ' ', m.group(1)).strip()[:80] if m else 'none'
-                info = ', '.join(f'{k}: {e.headers.get(k)}' for k in ('server', 'cf-mitigated', 'cf-ray') if e.headers.get(k))
-                raise Refused(f'HTTP {e.code}; {info or "no server headers"}; page title: {title}')
-            err = e
-        except Exception as e:  # network hiccup: wait and retry
-            err = e
-        print(f'fetch attempt {i + 1} failed: {err}', file=sys.stderr)
-        if i == tries - 1:
-            raise err
-        time.sleep(20 * (i + 1))
-
-
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument('--html', help='parse this saved page instead of fetching the live one')
@@ -142,8 +115,7 @@ def main():
     try:
         html = Path(a.html).read_text(encoding='utf-8') if a.html else fetch(SOURCE)
     except Refused as r:
-        print(f'::warning::The UVA site refused the request ({r}). events.json was left as it is. '
-              'UVA web services can allow this updater (user agent ORCL-events-updater) on the lab page.')
+        refused_warning('events.json was left as it is', r)
         return 0
     out = Path(a.out)
     old = json.loads(out.read_text(encoding='utf-8')) if out.exists() else {}
