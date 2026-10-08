@@ -65,6 +65,11 @@ a{color:inherit}
 .media{position:relative;flex:0 0 50.84%;min-width:0;aspect-ratio:670/507;margin:0;border:1px solid var(--orange);background:var(--navy);overflow:hidden;container-type:size;--cap:110px}
 #scene{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity 1.2s ease;touch-action:pan-y}
 .app.is-3d #scene{opacity:1}
+/* Standalone page and #embed: the animation sits straight on the banner, with no frame */
+.app:not(.is-media) .media{border:0}
+.app[data-bg=navy]:not(.is-media) .media{background:transparent}
+.app[data-bg=navy]:not(.is-media) #scene{mix-blend-mode:lighten;-webkit-mask-image:radial-gradient(closest-side at 50% 44%,#000 82%,transparent 100%);mask-image:radial-gradient(closest-side at 50% 44%,#000 82%,transparent 100%)}
+.app[data-bg=navy]:not(.is-media) .card{background:transparent;text-shadow:0 1px 10px rgba(20,30,60,.95),0 0 2px rgba(20,30,60,.9)}
 .slot{position:absolute;left:0;right:0;top:0;bottom:var(--cap);pointer-events:none}
 
 /* Static orb: shown while the 3D scene loads, and as the fallback */
