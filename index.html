@@ -67,9 +67,9 @@ a{color:inherit}
 .app.is-3d #scene{opacity:1}
 /* Standalone page and #embed: the animation sits straight on the banner, with no frame */
 .app:not(.is-media) .media{border:0}
-.app[data-bg=navy]:not(.is-media) .media{background:transparent}
+.app[data-bg=navy]:not(.is-media) .media{background:transparent;overflow:visible}
 .app[data-bg=navy]:not(.is-media) #scene{mix-blend-mode:lighten;-webkit-mask-image:radial-gradient(closest-side at 50% 44%,#000 82%,transparent 100%);mask-image:radial-gradient(closest-side at 50% 44%,#000 82%,transparent 100%)}
-.app[data-bg=navy]:not(.is-media) .card{background:transparent;text-shadow:0 1px 10px rgba(20,30,60,.95),0 0 2px rgba(20,30,60,.9)}
+.app[data-bg=navy]:not(.is-media) .card,.app[data-bg=navy]:not(.is-media) .hint{background:transparent;text-shadow:0 1px 10px rgba(20,30,60,.95),0 0 2px rgba(20,30,60,.9)}
 .slot{position:absolute;left:0;right:0;top:0;bottom:var(--cap);pointer-events:none}
 
 /* Static orb: shown while the 3D scene loads, and as the fallback */
